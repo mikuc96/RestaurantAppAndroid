@@ -1,4 +1,4 @@
-package com.example.waiter;
+package com.example.kitchen;
 
 import android.os.Handler;
 import android.os.Message;
@@ -10,62 +10,57 @@ import java.net.Socket;
 
 import static java.lang.Thread.sleep;
 
-public class ConnectionWithClient {
-    private final String MAKE_ORDER = "ORDER";
+public class ConnectionWithWaiter {
+    private final String START_MEAL_PREPARING = "START_PREPARING";
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
-    private final String PAY = "PAY";
-
     private String mealId = "100"; //id tez bedzie przesylany przez sockety
 
     private Thread m_objThread;
-    private ServerSocket client_server;
-    private OrderCommunication orderDisplay;
+    private ServerSocket waiter_server;
+    private MealPreparing mealStatusDisplay;
 
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             String clientMsg = msg.obj.toString();
             switch (clientMsg){
-                case MAKE_ORDER:
-                    orderDisplay.takeOrder(mealId);
+                case START_MEAL_PREPARING:
+                    mealStatusDisplay.startMealPreparing(mealId);
                     break;
                 case CANCEL_ORDER:
-                    orderDisplay.acceptOrderCancellation(mealId);
+                    mealStatusDisplay.cancelPreparing(mealId);
                     break;
                 case ORDER_PROGRESS:
-                    orderDisplay.notifyOrderProgress(mealId);
-                    break;
-                case PAY:
-                    orderDisplay.showPaymentNotification(mealId);
+                    mealStatusDisplay.notifyOrderProgress(mealId);
                     break;
             }
         }
     };
 
-    void setEventListener(OrderCommunication orderCom) {
-        orderDisplay = orderCom;
+    void setEventListener(MealPreparing orderCom) {
+        mealStatusDisplay = orderCom;
     }
     void startListening() {
         m_objThread=new Thread(new Runnable() {
             public void run()
             {
                 try {
-                    client_server =new ServerSocket(2001);
-                    Socket connectedSocket = client_server.accept();
+                    waiter_server =new ServerSocket(2002);
+                    Socket connectedSocket = waiter_server.accept();
                     ObjectInputStream ois =new ObjectInputStream(connectedSocket.getInputStream());
                     ObjectOutputStream oos =new ObjectOutputStream(connectedSocket.getOutputStream());
-                    Message clientMessage;
+                    Message waiterMessage;
                     for(int i=0 ; i<100; i++) {
-                        clientMessage = Message.obtain();
-                        clientMessage.obj = ois.readObject();
-                        mHandler.sendMessage(clientMessage);
-                        oos.writeObject("Waiter: Thank you I got your message: " + clientMessage.obj.toString());
+                        waiterMessage = Message.obtain();
+                        waiterMessage.obj = ois.readObject();
+                        mHandler.sendMessage(waiterMessage);
+                        oos.writeObject("Kitchen: Thank you I got your message: " + waiterMessage.obj.toString());
                         sleep(1000);
                     }
                     ois.close();
                     oos.close();
-                    client_server.close();
+                    waiter_server.close();
                 }
                 catch (Exception e)
                 {
@@ -83,3 +78,4 @@ public class ConnectionWithClient {
         }
     }
 }
+
