@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,7 +15,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="59dp"
+        android:layout_below="@+id/make_order_btn"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/make_order_btn"
@@ -22,6 +27,10 @@
         android:layout_height="wrap_content"
         android:text="MakeOrder"
         tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="280dp" />
+        tools:layout_editor_absoluteY="280dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView_1"
+        android:layout_marginTop="29dp" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

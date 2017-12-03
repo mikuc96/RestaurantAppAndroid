@@ -15,11 +15,12 @@ import java.net.Socket;
 
 import static java.lang.Thread.sleep;
 
-public class Waiter extends AppCompatActivity implements OrderCommunication {
+public class Waiter extends AppCompatActivity implements OrderCommunicationWithClient {
     private final String START_PREPARING = "START_PREPARING";
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
     private String mealId = "100"; //id tez bedzie przesylany przez sockety
+    private ConnectionWithClient clientComm;
     Button connectBtn;
     TextView serverMessage;
 
@@ -51,19 +52,22 @@ public class Waiter extends AppCompatActivity implements OrderCommunication {
 
     public void waitForOrder(View view)
     {
-        ConnectionWithClient clientComm = new ConnectionWithClient();
+        clientComm = new ConnectionWithClient();
         clientComm.setEventListener(this);
         clientComm.startListening();
         Toast.makeText(getApplicationContext(),	"waiting for order", Toast.LENGTH_SHORT).show();
     }
 
-    private void tmpReport(String info){
-        serverMessage.setText("" + info);
-        Toast.makeText(getApplicationContext(),	"Waiter: " + info, Toast.LENGTH_SHORT).show();
-    }
+
     @Override
-    public int takeOrder(String mealId) {
+    public int takeOrder(String mealId){
+        try {
+            wait(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         tmpReport("Took order "+mealId);
+        clientComm.sendNotificationToClient("Took order "+mealId);
         return 0;
     }
 
@@ -74,8 +78,14 @@ public class Waiter extends AppCompatActivity implements OrderCommunication {
     }
 
     @Override
-    public int notifyOrderProgress(String mealId) {
+    public int notifyOrderProgress(String mealId){
+        try {
+            wait(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         tmpReport("Progress: ##% for order: "+mealId);
+        clientComm.sendNotificationToClient("Progress: ##% for order: "+mealId);
         return 0;
     }
 
@@ -83,6 +93,10 @@ public class Waiter extends AppCompatActivity implements OrderCommunication {
     public int showPaymentNotification(String mealId) {
         tmpReport("Client want to pay: "+mealId);
         return 0;
+    }
+    private void tmpReport(String info){
+        serverMessage.setText("" + info);
+        Toast.makeText(getApplicationContext(),	"Waiter: " + info, Toast.LENGTH_SHORT).show();
     }
 
 

@@ -16,25 +16,36 @@ public class ConnectionWithClient {
     private final String ORDER_PROGRESS = "PROGRESS";
     private final String PAY = "PAY";
 
-    private String mealId = "100"; //id tez bedzie przesylany przez sockety
+    private String mealId = "000";
 
     private Thread m_objThread;
     private ServerSocket client_server;
-    private OrderCommunication orderDisplay;
+    private OrderCommunicationWithClient orderDisplay;
 
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            String clientMsg = msg.obj.toString();
-            switch (clientMsg){
+            String[] waiterDecodedRequest;
+            String clientRqs = msg.obj.toString();
+            waiterDecodedRequest = decodeIDsFromClientRequest(clientRqs);
+            mealId = waiterDecodedRequest[1];
+            switch (waiterDecodedRequest[2]){
                 case MAKE_ORDER:
-                    orderDisplay.takeOrder(mealId);
+                    try {
+                        orderDisplay.takeOrder(mealId);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case CANCEL_ORDER:
                     orderDisplay.acceptOrderCancellation(mealId);
                     break;
                 case ORDER_PROGRESS:
-                    orderDisplay.notifyOrderProgress(mealId);
+                    try {
+                        orderDisplay.notifyOrderProgress(mealId);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case PAY:
                     orderDisplay.showPaymentNotification(mealId);
@@ -43,7 +54,7 @@ public class ConnectionWithClient {
         }
     };
 
-    void setEventListener(OrderCommunication orderCom) {
+    void setEventListener(OrderCommunicationWithClient orderCom) {
         orderDisplay = orderCom;
     }
     void startListening() {
@@ -59,13 +70,14 @@ public class ConnectionWithClient {
                     for(int i=0 ; i<100; i++) {
                         clientMessage = Message.obtain();
                         clientMessage.obj = ois.readObject();
+
                         mHandler.sendMessage(clientMessage);
                         oos.writeObject("Waiter: Thank you I got your message: " + clientMessage.obj.toString());
                         sleep(1000);
                     }
-                    ois.close();
-                    oos.close();
-                    client_server.close();
+                ois.close();
+                oos.close();
+                client_server.close();
                 }
                 catch (Exception e)
                 {
@@ -81,5 +93,41 @@ public class ConnectionWithClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+
+    void sendNotificationToClient(final String notificationMsg) {
+        m_objThread=new Thread(new Runnable() {
+            public void run()
+            {
+                try {
+                    client_server =new ServerSocket(2001);
+                    Socket connectedSocket = client_server.accept();
+                    ObjectOutputStream oos =new ObjectOutputStream(connectedSocket.getOutputStream());
+                    oos.writeObject("Waiter: Notification for client: " + notificationMsg);
+                    sleep(100);
+
+                    oos.close();
+                    client_server.close();
+                }
+                catch (Exception e)
+                {
+//                    Message msg3= Message.obtain();
+//                    msg3.obj=e.getMessage();
+                    e.printStackTrace();
+                }
+            }
+        });
+        m_objThread.start();
+        try {
+            m_objThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    String[] decodeIDsFromClientRequest(String msg){
+        return msg.split("/");
     }
 }

@@ -14,7 +14,7 @@ public class ConnectionWithWaiter {
     private final String START_MEAL_PREPARING = "START_PREPARING";
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
-    private String mealId = "100"; //id tez bedzie przesylany przez sockety
+    private String mealId = "000"; //id tez bedzie przesylany przez sockety
 
     private Thread m_objThread;
     private ServerSocket waiter_server;
@@ -23,8 +23,12 @@ public class ConnectionWithWaiter {
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            String clientMsg = msg.obj.toString();
-            switch (clientMsg){
+            String[] waiterDecodedRequest = new String[3];
+
+            String waiterRequest = msg.obj.toString();
+            waiterDecodedRequest= decodeIDsFromClientRequest(waiterRequest);
+            mealId = waiterDecodedRequest[1];
+            switch (waiterDecodedRequest[2]){
                 case START_MEAL_PREPARING:
                     mealStatusDisplay.startMealPreparing(mealId);
                     break;
@@ -76,6 +80,9 @@ public class ConnectionWithWaiter {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    String[] decodeIDsFromClientRequest(String msg){
+        return msg.split("/");
     }
 }
 

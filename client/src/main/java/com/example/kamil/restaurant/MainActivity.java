@@ -20,13 +20,13 @@ public class MainActivity extends AppCompatActivity {
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
     private final String PAY = "PAY";
-
+    private final String CLIENT_ID = "123456";
+    private String mealId = "100";
     TextView serverMessage;
     Thread m_objThreadClient;
     Socket clientSocket;
-    Button makeOrder;
 
-    private int mealId = 100;
+    Button makeOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private String encodeRequest(String clientID, String mealId, String request_name){
+        return clientID +'/'+ mealId +'/'+ request_name;
+    }
+
     public void modifyOrder(View view){
         final String[] client_requests = {MAKE_ORDER, CANCEL_ORDER, ORDER_PROGRESS, PAY};
 
@@ -53,15 +57,15 @@ public class MainActivity extends AppCompatActivity {
                 {
                     clientSocket= new Socket("127.0.0.1",2001);
                     ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
-                    ObjectInputStream ois =new ObjectInputStream(clientSocket.getInputStream());
-                    Message serverResponse;
-//                    oos.writeObject(mealId);
+                    ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+                    Message waiterResponse;
 
                     for(String req: client_requests) {
-                        oos.writeObject(req);
-                        serverResponse = Message.obtain();
-                        serverResponse.obj = ois.readObject();
-                        responseDisplay.sendMessage(serverResponse);
+                        String requestStr = encodeRequest(CLIENT_ID, mealId, req);
+                        oos.writeObject(requestStr);
+                        waiterResponse = Message.obtain();
+                        waiterResponse.obj = ois.readObject();
+                        responseDisplay.sendMessage(waiterResponse);
                         sleep(10000);
                     }
                     oos.close();
