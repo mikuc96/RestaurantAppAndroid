@@ -10,13 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.waiter.dummy.DummyContent;
-import com.example.waiter.dummy.DummyContent.DummyItem;
-
-import android.app.Activity;
-import android.widget.ListView;
-
-import java.util.List;
+import com.example.waiter.dummy.OrderContent;
+import com.example.waiter.dummy.OrderContent.SingleOrder;
 
 /**
  * A fragment representing a list of Items.
@@ -75,7 +70,7 @@ public class OrdersWaitingForAcceptionFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyOrdersWaitingForAcceptionRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyOrdersWaitingForAcceptionRecyclerViewAdapter(OrderContent.currentOrderList, mListener));
         }
         return view;
     }
@@ -112,6 +107,6 @@ public class OrdersWaitingForAcceptionFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Co ma robic po klikieciu na el listy
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(SingleOrder item);
     }
 }

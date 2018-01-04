@@ -19,7 +19,7 @@ public class Waiter extends AppCompatActivity implements OrderCommunicationWithC
     private final String START_PREPARING = "START_PREPARING";
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
-    private String mealId = "100"; //id tez bedzie przesylany przez sockety
+    private String mealId = "100"; //order_id tez bedzie przesylany przez sockety
     private ConnectionWithClient clientComm;
     Button connectBtn;
     TextView serverMessage;

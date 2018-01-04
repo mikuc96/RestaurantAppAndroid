@@ -1,6 +1,5 @@
 package com.example.waiter;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.waiter.dummy.DummyContent;
+import com.example.waiter.dummy.OrderContent;
 
 public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingForAcceptionFragment.OnListFragmentInteractionListener {
 
@@ -34,7 +33,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(OrderContent.SingleOrder item) {
         return;
     }
 

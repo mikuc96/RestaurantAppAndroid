@@ -7,21 +7,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.waiter.OrdersWaitingForAcceptionFragment.OnListFragmentInteractionListener;
-import com.example.waiter.dummy.DummyContent.DummyItem;
+import com.example.waiter.dummy.OrderContent.SingleOrder;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link SingleOrder} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyOrdersWaitingForAcceptionRecyclerViewAdapter extends RecyclerView.Adapter<MyOrdersWaitingForAcceptionRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<SingleOrder> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyOrdersWaitingForAcceptionRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyOrdersWaitingForAcceptionRecyclerViewAdapter(List<SingleOrder> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +36,8 @@ public class MyOrdersWaitingForAcceptionRecyclerViewAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(String.valueOf(mValues.get(position).meal_name));
+        holder.mContentView.setText(String.valueOf(mValues.get(position).timer));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +60,13 @@ public class MyOrdersWaitingForAcceptionRecyclerViewAdapter extends RecyclerView
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public SingleOrder mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = (TextView) view.findViewById(R.id.meal_name);
+            mContentView = (TextView) view.findViewById(R.id.timer);
         }
 
         @Override
