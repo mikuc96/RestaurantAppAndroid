@@ -33,8 +33,9 @@ public class MyOrdersInPreparingRecyclerViewAdapter extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(final ViewHolderInProcessing holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(String.valueOf(mValues.get(position).meal_name));
-        holder.mContentView.setText(String.valueOf(mValues.get(position).timer));
+        holder.mMealNameView.setText(String.valueOf(mValues.get(position).meal_name));
+        holder.mTimerView.setText(String.valueOf(mValues.get(position).timer));
+        holder.mTableIdView.setText(String.valueOf(mValues.get(position).table_id));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,20 +57,22 @@ public class MyOrdersInPreparingRecyclerViewAdapter extends RecyclerView.Adapter
 
     public class ViewHolderInProcessing extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mMealNameView;
+        public final TextView mTimerView;
+        public final TextView mTableIdView;
         public SingleOrder mItem;
 
         public ViewHolderInProcessing(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.meal_name);
-            mContentView = (TextView) view.findViewById(R.id.timer);
+            mMealNameView = (TextView) view.findViewById(R.id.meal_name);
+            mTimerView = (TextView) view.findViewById(R.id.timer);
+            mTableIdView = (TextView) view.findViewById(R.id.table_id);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mTimerView.getText() + "'";
         }
     }
 }
