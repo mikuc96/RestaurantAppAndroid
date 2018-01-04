@@ -1,41 +1,43 @@
 package com.example.waiter;
 
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.waiter.OrdersWaitingForAcceptionFragment.OnListFragmentInteractionListener;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.example.waiter.OrdersInPreparingFragment.OnFragmentOfProcessingOrdersInteractionListener;
 import com.example.waiter.dummy.OrderContent.SingleOrder;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link SingleOrder} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyOrdersWaitingForAcceptionRecyclerViewAdapter extends RecyclerView.Adapter<MyOrdersWaitingForAcceptionRecyclerViewAdapter.ViewHolderForWaitingForAcceptionOrders> {
+public class MyOrdersInPreparingRecyclerViewAdapter extends RecyclerView.Adapter<MyOrdersInPreparingRecyclerViewAdapter.ViewHolderInProcessing> {
 
     private final List<SingleOrder> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final OnFragmentOfProcessingOrdersInteractionListener mListener;
 
-    public MyOrdersWaitingForAcceptionRecyclerViewAdapter(List<SingleOrder> items, OnListFragmentInteractionListener listener) {
+
+    public MyOrdersInPreparingRecyclerViewAdapter(List<SingleOrder> items, OnFragmentOfProcessingOrdersInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
 
-
     @Override
-    public ViewHolderForWaitingForAcceptionOrders onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolderInProcessing onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_orderswaitingforacception, parent, false);
-        return new ViewHolderForWaitingForAcceptionOrders(view);
+        return new ViewHolderInProcessing(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolderForWaitingForAcceptionOrders holder, int position) {
+    public void onBindViewHolder(final ViewHolderInProcessing holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(String.valueOf(mValues.get(position).meal_name));
         holder.mContentView.setText(String.valueOf(mValues.get(position).timer));
@@ -46,24 +48,26 @@ public class MyOrdersWaitingForAcceptionRecyclerViewAdapter extends RecyclerView
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onFragmentInteraction(holder.mItem);
                 }
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
         return mValues.size();
     }
 
-    public class ViewHolderForWaitingForAcceptionOrders extends RecyclerView.ViewHolder {
+    public class ViewHolderInProcessing extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
         public SingleOrder mItem;
 
-        public ViewHolderForWaitingForAcceptionOrders(View view) {
+        public ViewHolderInProcessing(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.meal_name);
@@ -76,9 +80,3 @@ public class MyOrdersWaitingForAcceptionRecyclerViewAdapter extends RecyclerView
         }
     }
 }
-
-
-
-
-
-
