@@ -26,7 +26,6 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
             public void onClick(View v) {
                 refreshLists(R.id.elements_waiting_for_acceptation);
                 refreshLists(R.id.elements_preparing_in_kitchen);
-
             }
         });
 

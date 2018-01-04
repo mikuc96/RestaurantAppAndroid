@@ -12,6 +12,7 @@ import java.util.Map;
 public class OrderContent {
 
     public static final List<SingleOrder> currentOrderList = new ArrayList<SingleOrder>();
+    public static final List<SingleOrder> preparingOrderList = new ArrayList<SingleOrder>();
     public static final Map<String, SingleOrder> ITEM_MAP = new HashMap<String, SingleOrder>();
 
     private static final int COUNT = 25;
@@ -20,10 +21,16 @@ public class OrderContent {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
             addSingleOrderToOrderList(createSingleOrderData(i, i+100, i%9));
+            addSingleOrderToProcessingList(createSingleOrderData(i+10, i+30, i%9));
         }
     }
 
     public static void addSingleOrderToOrderList(SingleOrder item) {
+        currentOrderList.add(item);
+        ITEM_MAP.put(String.valueOf(item.order_id), item);
+    }
+
+    public static void addSingleOrderToProcessingList(SingleOrder item) {
         currentOrderList.add(item);
         ITEM_MAP.put(String.valueOf(item.order_id), item);
     }

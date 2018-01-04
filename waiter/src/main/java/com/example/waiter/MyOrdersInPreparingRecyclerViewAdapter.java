@@ -7,12 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.example.waiter.OrdersInPreparingFragment.OnFragmentOfProcessingOrdersInteractionListener;
 import com.example.waiter.dummy.OrderContent.SingleOrder;
 
@@ -32,7 +26,7 @@ public class MyOrdersInPreparingRecyclerViewAdapter extends RecyclerView.Adapter
     @Override
     public ViewHolderInProcessing onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_orderswaitingforacception, parent, false);
+                .inflate(R.layout.fragment_order_in_processing, parent, false);
         return new ViewHolderInProcessing(view);
     }
 
@@ -53,7 +47,6 @@ public class MyOrdersInPreparingRecyclerViewAdapter extends RecyclerView.Adapter
             }
         });
     }
-
 
 
     @Override
