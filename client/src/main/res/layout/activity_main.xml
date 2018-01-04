@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="com.example.kamil.restaurant.MainActivity">
+    tools:context="com.example.kamil.restaurant.SocketCommunication">
 
     <TextView
         android:id="@+id/textView_1"
