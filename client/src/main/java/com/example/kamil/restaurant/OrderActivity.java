@@ -20,9 +20,8 @@ public class OrderActivity extends Activity {
     int price=0;
     private Button erase_order_btn;
     private Button make_order_btn;
-
-
     private OrderDataBase order;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
