@@ -35,10 +35,12 @@
       android:textSize="15sp"
       android:text=""
       android:id="@+id/textDescription"
+      android:textAlignment="center"
       android:layout_gravity="center"/>
 
   <FrameLayout
-      android:id="@+id/stopwatch_container"
+      android:layout_marginTop="10dp"
+      android:id="@+id/orderSentContainer"
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 </LinearLayout>

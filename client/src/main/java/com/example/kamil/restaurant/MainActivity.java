@@ -27,8 +27,8 @@ public class MainActivity extends Activity implements ListMenuDish.WorkoutListLi
             ft.commit();
         } else {
             Intent intent = new Intent(this, DetailActivity.class);
-            intent.putExtra(DetailActivity.EXTRA_WORKOUT_ID, (int)id);
+            intent.putExtra(DetailActivity.EXTRA_DISH_ID, (int)id);
             startActivity(intent);
-//        }
+        }
     }
-}}
+}

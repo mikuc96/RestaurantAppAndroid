@@ -11,19 +11,18 @@ import android.widget.TextView;
 
 
 public class DetailDish extends Fragment {
-    private long workoutId;
-
-
+    public static long  dishId;
+    OrderSent os=new OrderSent();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            workoutId = savedInstanceState.getLong("workoutId");
+            dishId = savedInstanceState.getLong("dishId");
         } else {
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
             OrderSent orderSent = new OrderSent();
-            ft.replace(R.id.stopwatch_container, orderSent);
+            ft.replace(R.id.orderSentContainer, orderSent);
             ft.addToBackStack(null);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
@@ -37,13 +36,12 @@ public class DetailDish extends Fragment {
         View view = getView();
         if (view != null) {
 
-
             TextView title=(TextView) view.findViewById(R.id.textTitle);
             TextView price=(TextView) view.findViewById(R.id.textPrice);
             TextView description=(TextView) view.findViewById(R.id.textDescription);
             ImageView image=(ImageView)view.findViewById(R.id.img_dish);
 
-            DishesDataBase dish = DishesDataBase.dishes[(int) workoutId];
+            DishesDataBase dish = DishesDataBase.dishes[(int) dishId];
             title.setText(dish.getName());
             price.setText("Cena: "+dish.getPrice());
             description.setText(dish.getDescription());
@@ -52,16 +50,15 @@ public class DetailDish extends Fragment {
             image.setImageResource(dish.getImg());
             image.setContentDescription(dish.getName());
 
-
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putLong("workoutId", workoutId);
+        savedInstanceState.putLong("dishId", dishId);
     }
 
     public void setWorkout(long id) {
-        this.workoutId = id;
+        this.dishId = id;
     }
 }

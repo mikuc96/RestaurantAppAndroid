@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:25.4.0'
     implementation 'com.android.support:recyclerview-v7:25.4.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])

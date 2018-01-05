@@ -6,18 +6,16 @@
                 android:orientation="horizontal">
 
     <Button
-        android:id="@+id/start_button"
+        android:id="@+id/add_to_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
-        android:layout_alignBaseline="@+id/reset_button"
-        android:layout_alignBottom="@+id/reset_button"
-        android:layout_toStartOf="@+id/stop_button"
+        android:layout_alignBaseline="@+id/rate_dish"
+        android:layout_alignBottom="@+id/rate_dish"
+        android:layout_toStartOf="@+id/rate_dish"
         android:text="@string/start" />
   
   <Button
-      android:id="@+id/stop_button"
+      android:id="@+id/rate_dish"
       android:layout_centerHorizontal="true"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -25,11 +23,11 @@
       android:text="@string/stop" />
 
     <Button
-        android:id="@+id/reset_button"
+        android:id="@+id/show_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/stop_button"
+        android:layout_toEndOf="@+id/rate_dish"
         android:text="@string/reset" />
 </RelativeLayout>
