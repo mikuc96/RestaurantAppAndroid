@@ -58,6 +58,12 @@ public class MyOrdersWaitingForAcceptionRecyclerViewAdapter
                 int newPosition = holder.getAdapterPosition();
                 Log.d("thien.van","on Click onBindViewHolder");
                 mOrderListToAccept.remove(newPosition);
+                notifyItemRemoved(newPosition);
+                notifyItemRangeChanged(newPosition, mOrderListToAccept.size());
+//                recycler.removeViewAt(newPosition);
+//                mAdapter.notifyItemRemoved(newPosition);
+//                mAdapter.notifyItemRangeChanged(newPosition, mOrderListToAccept.size());
+
 //                OrderContent.removeElementFromOrderList(); // widac  samo mOrderListToAccept.remove(newPosition) wystarcza
             }
         });

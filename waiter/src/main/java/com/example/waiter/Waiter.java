@@ -32,14 +32,12 @@ public class Waiter extends AppCompatActivity implements OrderCommunicationWithC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter);
+
+        clientComm = new ConnectionWithClient();
+        clientComm.setEventListener(this);
+        clientComm.startListening();
+
         serverMessage=(TextView)findViewById(R.id.textView_1);
-        connectBtn = (Button) findViewById(R.id.connect_btn);
-        connectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                waitForOrder(v);
-            }
-        });
 
         sendOrderToKitchen = (Button) findViewById(R.id.order_to_kitchen_btn);
         sendOrderToKitchen.setOnClickListener(new View.OnClickListener() {
@@ -48,14 +46,6 @@ public class Waiter extends AppCompatActivity implements OrderCommunicationWithC
                 sendOrdrerToKitchen(v);
             }
         });
-    }
-
-    public void waitForOrder(View view)
-    {
-        clientComm = new ConnectionWithClient();
-        clientComm.setEventListener(this);
-        clientComm.startListening();
-        Toast.makeText(getApplicationContext(),	"waiting for order", Toast.LENGTH_SHORT).show();
     }
 
 
