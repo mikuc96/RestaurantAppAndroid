@@ -1,5 +1,8 @@
 package com.example.waiter.dummy;
 
+import android.os.Build;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,28 +14,46 @@ import java.util.Map;
  */
 public class OrderContent {
 
-    public static final List<SingleOrder> currentOrderList = new ArrayList<SingleOrder>();
-    public static final List<SingleOrder> preparingOrderList = new ArrayList<SingleOrder>();
-    public static final Map<String, SingleOrder> ITEM_MAP = new HashMap<String, SingleOrder>();
+    public static List<SingleOrder> currentOrderList = new ArrayList<SingleOrder>();
+    public static List<SingleOrder> processingOrderList = new ArrayList<SingleOrder>();
+    public static Map<String, SingleOrder> currentOrderMap = new HashMap<String, SingleOrder>();
+    public static Map<String, SingleOrder> processingOrderMap = new HashMap<String, SingleOrder>();
 
-    private static final int COUNT = 25;
+    private static final int COUNT = 1;
 
     static { // todo usunac
-        // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
-            addSingleOrderToOrderList(createSingleOrderData(i, i+100, i%9));
-            addSingleOrderToProcessingList(createSingleOrderData(i+10, i+30, i%9));
+            addSingleOrderToOrderList(i , i+50, i %9);
+//            moveElementToProcessingList(createSingleOrderData(i+10, i+30, i%9));
+            SingleOrder item = createSingleOrderData(10 , 99, 23);
         }
     }
 
-    public static void addSingleOrderToOrderList(SingleOrder item) {
+    public static void addSingleOrderToOrderList(int order_id, int meal_id, int table_id) {
+        SingleOrder item = createSingleOrderData(order_id , meal_id, table_id);
         currentOrderList.add(item);
-        ITEM_MAP.put(String.valueOf(item.order_id), item);
+        currentOrderMap.put(String.valueOf(item.order_id), item);
     }
 
-    public static void addSingleOrderToProcessingList(SingleOrder item) {
-        currentOrderList.add(item);
-        ITEM_MAP.put(String.valueOf(item.order_id), item);
+    private static void removeElementFromList(SingleOrder item){
+        currentOrderList.remove(item);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            currentOrderMap.remove(String.valueOf(item.order_id), item);
+        }
+    }
+
+    public static void removeElementFromOrderList(int order_id, int meal_id, int table_id) {
+        SingleOrder item = createSingleOrderData(order_id , meal_id, table_id);
+        removeElementFromList(item);
+    }
+
+
+    public static void moveElementToProcessingList(int position) {
+        Log.d("ppppppposition ", String.valueOf(position));
+        SingleOrder item = currentOrderList.get(position);
+        removeElementFromList(item);
+        processingOrderList.add(item);
+        processingOrderMap.put(String.valueOf(item.order_id), item);
     }
 
     private static SingleOrder createSingleOrderData(int unique_order_id, int meal_id, int table_id) {

@@ -14,23 +14,13 @@ import android.view.ViewGroup;
 import com.example.waiter.dummy.OrderContent;
 import com.example.waiter.dummy.OrderContent.SingleOrder;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnFragmentOfProcessingOrdersInteractionListener} interface
- * to handle interaction events.
- * Use the {@link OrdersInPreparingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class OrdersInPreparingFragment extends Fragment {
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnFragmentOfProcessingOrdersInteractionListener mListener;
 
     public OrdersInPreparingFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -59,7 +49,7 @@ public class OrdersInPreparingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_orderswaitingforacception_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_order_in_processing_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -70,7 +60,7 @@ public class OrdersInPreparingFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyOrdersInPreparingRecyclerViewAdapter(OrderContent.currentOrderList, mListener));
+            recyclerView.setAdapter(new MyOrdersInPreparingRecyclerViewAdapter(OrderContent.processingOrderList, mListener));
         }
         return view;
     }

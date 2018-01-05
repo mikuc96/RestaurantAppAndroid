@@ -2,6 +2,7 @@ package com.example.waiter;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,15 @@ import com.example.waiter.dummy.OrderContent.SingleOrder;
 
 import java.util.List;
 
-public class MyOrdersInPreparingRecyclerViewAdapter extends RecyclerView.Adapter<MyOrdersInPreparingRecyclerViewAdapter.ViewHolderInProcessing> {
+public class MyOrdersInPreparingRecyclerViewAdapter
+        extends RecyclerView.Adapter<MyOrdersInPreparingRecyclerViewAdapter.ViewHolderInProcessing> {
 
-    private final List<SingleOrder> mValues;
+    private final List<SingleOrder> mOrderListInPreparing;
     private final OnFragmentOfProcessingOrdersInteractionListener mListener;
 
 
     public MyOrdersInPreparingRecyclerViewAdapter(List<SingleOrder> items, OnFragmentOfProcessingOrdersInteractionListener listener) {
-        mValues = items;
+        mOrderListInPreparing = items;
         mListener = listener;
     }
 
@@ -27,15 +29,16 @@ public class MyOrdersInPreparingRecyclerViewAdapter extends RecyclerView.Adapter
     public ViewHolderInProcessing onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_order_in_processing, parent, false);
+        Log.d("aaaaaaaaaaaaaaaa","creating view holderaaaaaaaaaa");
         return new ViewHolderInProcessing(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolderInProcessing holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mMealNameView.setText(String.valueOf(mValues.get(position).meal_name));
-        holder.mTimerView.setText(String.valueOf(mValues.get(position).timer));
-        holder.mTableIdView.setText(String.valueOf(mValues.get(position).table_id));
+        holder.mItem = mOrderListInPreparing.get(position);
+        holder.mMealNameView.setText(String.valueOf(mOrderListInPreparing.get(position).meal_name));
+        holder.mTimerView.setText(String.valueOf(mOrderListInPreparing.get(position).timer));
+        holder.mTableIdView.setText(String.valueOf(mOrderListInPreparing.get(position).table_id));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +55,7 @@ public class MyOrdersInPreparingRecyclerViewAdapter extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mOrderListInPreparing.size();
     }
 
     public class ViewHolderInProcessing extends RecyclerView.ViewHolder {
