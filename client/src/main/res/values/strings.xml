@@ -20,4 +20,7 @@
     <string name="start">Dodaj do zamówienia</string>
     <string name="stop">Oceń Danie</string>
     <string name="reset">Przejdz do zamówienia </string>
+    <string name="kasuj_list_da">Kasuj Listę Dań</string>
+    <string name="zap_a">Zapłać</string>
+    <string name="z_zam_wienie">Złóż zamówienie</string>
 </resources>

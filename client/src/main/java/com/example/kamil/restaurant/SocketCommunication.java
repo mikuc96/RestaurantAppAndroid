@@ -15,7 +15,7 @@ import java.net.Socket;
 
 import static java.lang.Thread.sleep;
 
-public class SocketCommunication extends AppCompatActivity {
+public class SocketCommunication  {
     private final String MAKE_ORDER = "ORDER";
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
@@ -26,29 +26,14 @@ public class SocketCommunication extends AppCompatActivity {
     Thread m_objThreadClient;
     Socket clientSocket;
 
-    Button makeOrder;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-//        serverMessage=(TextView)findViewById(R.id.textView_1);
-//
-//        makeOrder = (Button) findViewById(R.id.make_order_btn);
-        makeOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                modifyOrder(v);
-            }
-        });
-    }
 
     private String encodeRequest(String clientID, String mealId, String request_name){
         return clientID +'/'+ mealId +'/'+ request_name;
     }
 
-    public void modifyOrder(View view){
-        final String[] client_requests = {MAKE_ORDER, CANCEL_ORDER, ORDER_PROGRESS, PAY};
+    public void modifyOrder(final String info_req){
+
+//        final String[] client_requests = {MAKE_ORDER, CANCEL_ORDER, ORDER_PROGRESS, PAY};
 
         m_objThreadClient=new Thread(new Runnable() {
             public void run()
@@ -60,14 +45,13 @@ public class SocketCommunication extends AppCompatActivity {
                     ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
                     Message waiterResponse;
 
-                    for(String req: client_requests) {
-                        String requestStr = encodeRequest(CLIENT_ID, mealId, req);
+                        String requestStr = encodeRequest(CLIENT_ID, mealId, info_req);
                         oos.writeObject(requestStr);
                         waiterResponse = Message.obtain();
                         waiterResponse.obj = ois.readObject();
                         responseDisplay.sendMessage(waiterResponse);
-                        sleep(10000);
-                    }
+
+
                     oos.close();
                     ois.close();
                 }
@@ -82,15 +66,13 @@ public class SocketCommunication extends AppCompatActivity {
         m_objThreadClient.start();
     }
 
-//    public void cancelOrder(View view){}
 
-//    public void getOrderProgress(View view){}
 
     Handler responseDisplay = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             String serverMsg = msg.obj.toString();
-            Toast.makeText(getApplicationContext(),	"Got message" + serverMsg, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),	"Got message" + serverMsg, Toast.LENGTH_SHORT).show();
             serverMessage.setText(""+msg.obj.toString());
         }
     };
