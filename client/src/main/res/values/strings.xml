@@ -15,4 +15,9 @@
         completions."
     </string>
     <string name="title_activity_default_window">DefaultWindow</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="start">Dodaj do zamówienia</string>
+    <string name="stop">Oceń Danie</string>
+    <string name="reset">Przejdz do zamówienia </string>
 </resources>

@@ -32,9 +32,9 @@ public class SocketCommunication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        serverMessage=(TextView)findViewById(R.id.textView_1);
-
-        makeOrder = (Button) findViewById(R.id.make_order_btn);
+//        serverMessage=(TextView)findViewById(R.id.textView_1);
+//
+//        makeOrder = (Button) findViewById(R.id.make_order_btn);
         makeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
