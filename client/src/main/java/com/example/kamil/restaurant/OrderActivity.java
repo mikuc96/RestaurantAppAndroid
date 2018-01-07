@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class OrderActivity extends Activity {
     private final String MAKE_ORDER = "ORDER";
@@ -22,6 +23,7 @@ public class OrderActivity extends Activity {
     private Button make_order_btn;
     private final String CLIENT_ID = "123456";
     private String mealId = "100";
+    private String tableId = "9";
 
     private OrderDataBase order;
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +67,9 @@ public class OrderActivity extends Activity {
 
     public void SendInfo()
     {
-
+        String orderId = String.valueOf(new Random().nextInt());
         SocketCommunication sc=new SocketCommunication();
-        sc.modifyOrder(CLIENT_ID, mealId,MAKE_ORDER);
+        sc.modifyOrder(CLIENT_ID, orderId, mealId, tableId, MAKE_ORDER);
 
         Toast.makeText(getApplicationContext(),"Zamówienie zostało wysłane, czas oczekiwania około 20min", Toast.LENGTH_SHORT).show();
     }

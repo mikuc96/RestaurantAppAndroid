@@ -1,12 +1,55 @@
 package com.example.waiter;
 
-/**
- * Communication waiter - client
- */
 
-interface OrderCommunicationWithClient {
-    int takeOrder(String mealId) throws InterruptedException;
-    int acceptOrderCancellation(String mealId);
-    int notifyOrderProgress(String mealId) throws InterruptedException;
-    int showPaymentNotification(String mealId);
+import android.util.Log;
+import com.example.waiter.dummy.OrderContent;
+import static java.lang.Thread.sleep;
+
+public class OrderCommunicationWithClient implements OrderCommunicationWithClientInterface {
+
+
+
+    @Override
+    public int takeOrder(Integer[] order) { //[client_id, orderId, mealId, tableId, req_name]
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        OrderContent.addSingleOrderToOrderList(order[1], order[2], order[3]);
+
+        tmpReport("Took order " + String.valueOf(order[2]));
+//        clientComm.sendNotificationToClient("Took order " + mealId);
+        return 0;
+    }
+
+    @Override
+    public int acceptOrderCancellation(Integer[] order) {
+        tmpReport("accepted order cancellation " + String.valueOf(order[2]));
+        return 0;
+    }
+
+    @Override
+    public int notifyOrderProgress(Integer[] order) {
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        tmpReport("Progress: ##% for order: " + String.valueOf(order[2]));
+//        clientComm.sendNotificationToClient("Progress: ##% for order: " + mealId);
+        return 0;
+    }
+
+    @Override
+    public int showPaymentNotification(Integer[] order) {
+        tmpReport("Client want to pay: " + String.valueOf(order[2]));
+        return 0;
+    }
+
+
+    private void tmpReport(String info) {
+//        Toast.makeText(getApplicationContext(),	"Waiter: " + info, Toast.LENGTH_SHORT).show();
+        Log.d("take order ", info);
+    }
 }

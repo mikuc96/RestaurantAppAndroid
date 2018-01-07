@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Kitchen extends AppCompatActivity implements MealPreparing{
+public class Kitchen extends AppCompatActivity {
     Button connectBtn;
     TextView serverMessage;
     @Override
@@ -27,32 +27,11 @@ public class Kitchen extends AppCompatActivity implements MealPreparing{
 
     public void waitForOrder(View view)
     {
+        OrderCommunication oCom = new OrderCommunication();
         ConnectionWithWaiter clientComm = new ConnectionWithWaiter();
-        clientComm.setEventListener(this);
+        clientComm.setEventListener(oCom);
         clientComm.startListening();
         Toast.makeText(getApplicationContext(),	"waiting for order to prepare", Toast.LENGTH_SHORT).show();
     }
 
-
-    private void tmpReport(String info){
-        serverMessage.setText("" + info);
-        Toast.makeText(getApplicationContext(),	"Waiter: " + info, Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public int startMealPreparing(String mealId) {
-        tmpReport("Started meal preparing "+mealId);
-        return 0;
-    }
-
-    @Override
-    public int cancelPreparing(String mealId) {
-        tmpReport("Canceling the order "+mealId);
-        return 0;
-    }
-
-    @Override
-    public int notifyOrderProgress(String mealId) {
-        tmpReport("Progress: ##% for order: "+mealId);
-        return 0;
-    }
 }

@@ -1,5 +1,6 @@
 package com.example.kitchen;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 
@@ -18,8 +19,9 @@ public class ConnectionWithWaiter {
 
     private Thread m_objThread;
     private ServerSocket waiter_server;
-    private MealPreparing mealStatusDisplay;
+    private OrderCommunicationInterface mealStatusDisplay;
 
+    @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -42,7 +44,7 @@ public class ConnectionWithWaiter {
         }
     };
 
-    void setEventListener(MealPreparing orderCom) {
+    void setEventListener(OrderCommunicationInterface orderCom) {
         mealStatusDisplay = orderCom;
     }
     void startListening() {
@@ -68,18 +70,11 @@ public class ConnectionWithWaiter {
                 }
                 catch (Exception e)
                 {
-                    Message msg3= Message.obtain();
-                    msg3.obj=e.getMessage();
-                    mHandler.sendMessage(msg3);
+                    e.printStackTrace();
                 }
             }
         });
         m_objThread.start();
-        try {
-            m_objThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
     String[] decodeIDsFromClientRequest(String msg){
         return msg.split("/");
