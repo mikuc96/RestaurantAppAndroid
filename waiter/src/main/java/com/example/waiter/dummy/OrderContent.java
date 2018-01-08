@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Helper class for providing sample meal_name for user interfaces created by
@@ -18,7 +19,7 @@ public class OrderContent {
     public static List<SingleOrder> processingOrderList = new ArrayList<SingleOrder>();
     public static Map<String, SingleOrder> currentOrderMap = new HashMap<String, SingleOrder>();
     public static Map<String, SingleOrder> processingOrderMap = new HashMap<String, SingleOrder>();
-
+    static Random tmp_generator = new Random();
     private static final int COUNT = 1;
 
     static { // todo usunac
@@ -51,7 +52,7 @@ public class OrderContent {
     public static void moveElementToProcessingList(int position) {
         Log.d("ppppppposition ", String.valueOf(position));
         SingleOrder item = currentOrderList.get(position);
-        removeElementFromList(item);
+//        removeElementFromList(item);
         processingOrderList.add(item);
         processingOrderMap.put(String.valueOf(item.order_id), item);
     }
@@ -87,7 +88,7 @@ public class OrderContent {
         public SingleOrder(int order_id, int meal_id, String recipe, int table_id) {
             this.order_id = order_id;
             if(meal_id > 0 ) // todo pobrac z bazy
-                this.meal_name = "Glupia potrawa";
+                this.meal_name = String.valueOf(tmp_generator.nextInt());
             this.recipe = recipe;
             this.table_id = table_id;
             this.timer = 120;

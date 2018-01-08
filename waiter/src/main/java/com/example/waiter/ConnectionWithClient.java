@@ -1,12 +1,15 @@
 package com.example.waiter;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 import static java.lang.Thread.sleep;
 
@@ -17,44 +20,49 @@ public class ConnectionWithClient {
     private final String PAY = "PAY";
 
     private String mealId = "000";
+    private String order_id = "010";
+    private String table_id = "001";
 
     private Thread m_objThread;
     private ServerSocket client_server;
-    private OrderCommunicationWithClient orderDisplay;
+    private OrderCommunicationWithClientInterface orderDisplay;
 
+
+    @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            String[] waiterDecodedRequest;
+            String[] decodedOrd;
+            Integer[] order;
             String clientRqs = msg.obj.toString();
-            waiterDecodedRequest = decodeIDsFromClientRequest(clientRqs);
-            mealId = waiterDecodedRequest[1];
-            switch (waiterDecodedRequest[2]){
+            decodedOrd = decodeIDsFromClientRequest(clientRqs);// [client_id, orderId, mealId, tableId, req_name]
+            order = Arrays.copyOfRange(decodedOrd, 0, 4, Integer[].class);
+            switch (decodedOrd[4]){
                 case MAKE_ORDER:
                     try {
-                        orderDisplay.takeOrder(mealId);
+                        orderDisplay.takeOrder(order);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
                 case CANCEL_ORDER:
-                    orderDisplay.acceptOrderCancellation(mealId);
+                    orderDisplay.acceptOrderCancellation(order);
                     break;
                 case ORDER_PROGRESS:
                     try {
-                        orderDisplay.notifyOrderProgress(mealId);
+                        orderDisplay.notifyOrderProgress(order);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
                 case PAY:
-                    orderDisplay.showPaymentNotification(mealId);
+                    orderDisplay.showPaymentNotification(order);
                     break;
             }
         }
     };
 
-    void setEventListener(OrderCommunicationWithClient orderCom) {
+    void setEventListener(OrderCommunicationWithClientInterface orderCom) {
         orderDisplay = orderCom;
     }
     void startListening() {
@@ -81,22 +89,16 @@ public class ConnectionWithClient {
                 }
                 catch (Exception e)
                 {
-                    Message msg3= Message.obtain();
-                    msg3.obj=e.getMessage();
-                    mHandler.sendMessage(msg3);
+                    e.printStackTrace();
                 }
             }
         });
         m_objThread.start();
-        try {
-            m_objThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 
     void sendNotificationToClient(final String notificationMsg) {
+        Log.d("sendNotificationToCnt", "sendNotificationToClient");
         m_objThread=new Thread(new Runnable() {
             public void run()
             {
@@ -112,8 +114,6 @@ public class ConnectionWithClient {
                 }
                 catch (Exception e)
                 {
-//                    Message msg3= Message.obtain();
-//                    msg3.obj=e.getMessage();
                     e.printStackTrace();
                 }
             }

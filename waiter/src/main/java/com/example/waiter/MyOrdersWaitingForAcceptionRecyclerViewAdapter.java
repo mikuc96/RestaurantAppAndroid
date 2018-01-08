@@ -56,15 +56,9 @@ public class MyOrdersWaitingForAcceptionRecyclerViewAdapter
             @Override
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
-                Log.d("thien.van","on Click onBindViewHolder");
                 mOrderListToAccept.remove(newPosition);
                 notifyItemRemoved(newPosition);
                 notifyItemRangeChanged(newPosition, mOrderListToAccept.size());
-//                recycler.removeViewAt(newPosition);
-//                mAdapter.notifyItemRemoved(newPosition);
-//                mAdapter.notifyItemRangeChanged(newPosition, mOrderListToAccept.size());
-
-//                OrderContent.removeElementFromOrderList(); // widac  samo mOrderListToAccept.remove(newPosition) wystarcza
             }
         });
 
@@ -73,9 +67,10 @@ public class MyOrdersWaitingForAcceptionRecyclerViewAdapter
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
                 OrderContent.moveElementToProcessingList(newPosition);
-                Log.d("thien.van","on Click onBindViewHolder");
-//                mOrderListToAccept.remove(newPosition);
-
+                mOrderListToAccept.remove(newPosition);
+                notifyItemRemoved(newPosition);
+                notifyItemRangeChanged(newPosition, mOrderListToAccept.size());
+                mListener.onListFragmentInteraction(holder.mItem);
             }
         });
     }

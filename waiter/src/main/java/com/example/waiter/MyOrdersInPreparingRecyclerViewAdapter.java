@@ -29,7 +29,6 @@ public class MyOrdersInPreparingRecyclerViewAdapter
     public ViewHolderInProcessing onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_order_in_processing, parent, false);
-        Log.d("aaaaaaaaaaaaaaaa","creating view holderaaaaaaaaaa");
         return new ViewHolderInProcessing(view);
     }
 

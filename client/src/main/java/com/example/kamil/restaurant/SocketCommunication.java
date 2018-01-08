@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,18 +22,15 @@ public class SocketCommunication  {
     private final String ORDER_PROGRESS = "PROGRESS";
     private final String PAY = "PAY";
 
-    TextView serverMessage;
     Thread m_objThreadClient;
     Socket clientSocket;
 
 
-    private String encodeRequest(String clientID, String mealId, String request_name){
+    private String encodeRequest(String clientID,String orderId, String mealId,String tableId, String request_name){
         return clientID +'/'+ mealId +'/'+ request_name;
     }
 
-    public void modifyOrder(final String client_id,final String mealId,final String info_req){
-
-//        final String[] client_requests = {MAKE_ORDER, CANCEL_ORDER, ORDER_PROGRESS, PAY};
+    public void modifyOrder(final String client_id, final String orderId, final String mealId, final String tableId, final String req_name){ // todo na array
 
         m_objThreadClient=new Thread(new Runnable() {
             public void run()
@@ -43,8 +41,8 @@ public class SocketCommunication  {
                     ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
                     ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
                     Message waiterResponse;
-
-                        String requestStr = encodeRequest(client_id, mealId, info_req);
+//                    for in ...
+                        String requestStr = encodeRequest(client_id, orderId, mealId, tableId, req_name);
                         oos.writeObject(requestStr);
                         waiterResponse = Message.obtain();
                         waiterResponse.obj = ois.readObject();
@@ -70,9 +68,9 @@ public class SocketCommunication  {
     Handler responseDisplay = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            Log.d("Client respDisplay ", "responseDisplay");
             String serverMsg = msg.obj.toString();
 //            Toast.makeText(getApplicationContext(),	"Got message" + serverMsg, Toast.LENGTH_SHORT).show();
-            serverMessage.setText(""+msg.obj.toString());
         }
     };
 
