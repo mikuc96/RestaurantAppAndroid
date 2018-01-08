@@ -23,8 +23,6 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter_dashboard);
-
-//        recyclerView.refreshRecyclerLists();
         bindButtons();
         waitForOrder();
     }
@@ -40,7 +38,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),	"Adding  meal", Toast.LENGTH_SHORT).show();
                 int i = generator.nextInt(10);
-                OrderContent.addSingleOrderToOrderList(i, i + 100, i % 9);
+                OrderContent.addSingleOrderToOrderList(i, i*10, i + 100, i % 9);
                 recyclerView.refreshRecyclerLists();
             }
         });

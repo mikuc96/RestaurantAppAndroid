@@ -1,12 +1,12 @@
 package com.example.waiter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.waiter.OrdersWaitingForAcceptionFragment.OnListFragmentInteractionListener;
 import com.example.waiter.dummy.OrderContent;
@@ -16,13 +16,16 @@ import java.util.List;
 import java.util.Random;
 
 
-public class MyOrdersWaitingForAcceptionRecyclerViewAdapter
-        extends RecyclerView.Adapter<MyOrdersWaitingForAcceptionRecyclerViewAdapter.ViewHolderForWaitingForAcceptionOrders> {
+public class RecyclerViewAdapterOrdersWaitingForAcception
+        extends RecyclerView.Adapter<RecyclerViewAdapterOrdersWaitingForAcception.ViewHolderForWaitingForAcceptionOrders> {
 
     private final List<SingleOrder> mOrderListToAccept;
     private final OnListFragmentInteractionListener mListener;
+    private final String START_MEAL_PREPARING = "START_PREPARING";
+    private final String CANCEL_ORDER = "CANCEL";
+    private final String ORDER_PROGRESS = "PROGRESS";
 
-    public MyOrdersWaitingForAcceptionRecyclerViewAdapter(List<SingleOrder> items, OnListFragmentInteractionListener listener) {
+    public RecyclerViewAdapterOrdersWaitingForAcception(List<SingleOrder> items, OnListFragmentInteractionListener listener) {
         mOrderListToAccept = items;
         mListener = listener;
     }
@@ -66,6 +69,7 @@ public class MyOrdersWaitingForAcceptionRecyclerViewAdapter
             @Override
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
+                SendAcceptedOrder(newPosition);
                 OrderContent.moveElementToProcessingList(newPosition);
                 mOrderListToAccept.remove(newPosition);
                 notifyItemRemoved(newPosition);
@@ -79,6 +83,14 @@ public class MyOrdersWaitingForAcceptionRecyclerViewAdapter
     public int getItemCount() {
         return mOrderListToAccept.size();
     }
+
+    private void SendAcceptedOrder(int listPosition)
+    {
+        KitchenSockets sc=new KitchenSockets();
+        SingleOrder singleOrd = OrderContent.currentOrderList.get(listPosition);
+        sc.sendOrder(singleOrd, START_MEAL_PREPARING);
+    }
+
 
     public class ViewHolderForWaitingForAcceptionOrders extends RecyclerView.ViewHolder {
         public final View mView;

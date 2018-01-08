@@ -60,7 +60,7 @@ public class OrdersWaitingForAcceptionFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyOrdersWaitingForAcceptionRecyclerViewAdapter(OrderContent.currentOrderList, mListener));
+            recyclerView.setAdapter(new RecyclerViewAdapterOrdersWaitingForAcception(OrderContent.currentOrderList, mListener));
         }
         return view;
     }

@@ -13,15 +13,13 @@ import android.view.ViewGroup;
 import com.example.kitchen.dummy.DummyContent;
 import com.example.kitchen.dummy.DummyContent.DummyItem;
 
-import java.util.List;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class MealsProceesingDashboardFragment extends Fragment {
+public class MealsProcessingFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -33,13 +31,13 @@ public class MealsProceesingDashboardFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public MealsProceesingDashboardFragment() {
+    public MealsProcessingFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static MealsProceesingDashboardFragment newInstance(int columnCount) {
-        MealsProceesingDashboardFragment fragment = new MealsProceesingDashboardFragment();
+    public static MealsProcessingFragment newInstance(int columnCount) {
+        MealsProcessingFragment fragment = new MealsProcessingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);

@@ -1,7 +1,6 @@
 package com.example.waiter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -60,7 +59,7 @@ public class OrdersInPreparingFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyOrdersInPreparingRecyclerViewAdapter(OrderContent.processingOrderList, mListener));
+            recyclerView.setAdapter(new RecyclerViewAdapterOrdersInPreparing(OrderContent.processingOrderList, mListener));
         }
         return view;
     }

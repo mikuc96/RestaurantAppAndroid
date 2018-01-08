@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.kitchen.MealsProceesingDashboardFragment.OnListFragmentInteractionListener;
+import com.example.kitchen.MealsProcessingFragment.OnListFragmentInteractionListener;
 import com.example.kitchen.dummy.DummyContent.DummyItem;
 
 import java.util.List;
@@ -36,8 +36,8 @@ public class MyMealsProceesingDashboardRecyclerViewAdapter extends RecyclerView.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mMealName.setText(mValues.get(position).id);
+        holder.mTimer.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,20 +58,20 @@ public class MyMealsProceesingDashboardRecyclerViewAdapter extends RecyclerView.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mMealName;
+        public final TextView mTimer;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.meal_name);
-            mContentView = (TextView) view.findViewById(R.id.timer);
+            mMealName = (TextView) view.findViewById(R.id.meal_name);
+            mTimer = (TextView) view.findViewById(R.id.timer);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mTimer.getText() + "'";
         }
     }
 }

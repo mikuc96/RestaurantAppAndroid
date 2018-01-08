@@ -1,8 +1,11 @@
 package com.example.waiter;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+
+import com.example.waiter.dummy.OrderContent;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,16 +14,15 @@ import java.net.Socket;
 import static java.lang.Thread.sleep;
 
 
-public class ConnectionWithKitchen {
+public class KitchenSockets {
     private final String START_PREPARING = "START_PREPARING";
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
     Thread m_objThreadKitchen;
     Socket kitchenSocket;
 
-    public void sendOrdrerToKitchen(){
-        final String[] waiterReqests = {START_PREPARING, CANCEL_ORDER, ORDER_PROGRESS};
-
+    public void sendOrder(OrderContent.SingleOrder singleOrd, String request_name){
+        final String msg = encodeOrder(singleOrd, request_name);
         m_objThreadKitchen=new Thread(new Runnable() {
             public void run()
             {
@@ -31,13 +33,11 @@ public class ConnectionWithKitchen {
                     ObjectInputStream ois =new ObjectInputStream(kitchenSocket.getInputStream());
                     Message serverResponse;
 
-                    for(String req: waiterReqests) {
-                        oos.writeObject(req);
-                        serverResponse = Message.obtain();
-                        serverResponse.obj = ois.readObject();
-                        kitchenResponseDisplay.sendMessage(serverResponse);
-                        sleep(10000);
-                    }
+                    oos.writeObject(msg);
+                    serverResponse = Message.obtain();
+                    serverResponse.obj = ois.readObject();
+                    kitchenResponseDisplay.sendMessage(serverResponse);
+                    sleep(10000);
                     oos.close();
                     ois.close();
                 }
@@ -52,13 +52,17 @@ public class ConnectionWithKitchen {
     }
 
 
+    @SuppressLint("HandlerLeak")
     Handler kitchenResponseDisplay = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            String serverMsg = msg.obj.toString();
-//            Toast.makeText(getApplicationContext(),	"Got message" + serverMsg, Toast.LENGTH_SHORT).show();
-//            serverMessage.setText(""+msg.obj.toString());
+//            String serverMsg = msg.obj.toString();
+    ;
         }
     };
+
+    public String encodeOrder(OrderContent.SingleOrder singleOrd, String request_name){ //[client_id, orderId, mealId, tableId, req_name]
+        return singleOrd.client_id +'/'+ singleOrd.order_id + '/' + singleOrd.meal_id +'/'+ singleOrd.table_id +'/'+request_name;
+    }
 
 }

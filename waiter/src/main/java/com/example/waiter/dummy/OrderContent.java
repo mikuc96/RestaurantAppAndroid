@@ -3,6 +3,7 @@ package com.example.waiter.dummy;
 import android.os.Build;
 import android.util.Log;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,14 +25,14 @@ public class OrderContent {
 
     static { // todo usunac
         for (int i = 1; i <= COUNT; i++) {
-            addSingleOrderToOrderList(i , i+50, i %9);
+            addSingleOrderToOrderList(i, i+2, i+50, i %9);
 //            moveElementToProcessingList(createSingleOrderData(i+10, i+30, i%9));
-            SingleOrder item = createSingleOrderData(10 , 99, 23);
+            SingleOrder item = createSingleOrderData(10, 12 , 99, 23);
         }
     }
 
-    public static void addSingleOrderToOrderList(int order_id, int meal_id, int table_id) {
-        SingleOrder item = createSingleOrderData(order_id , meal_id, table_id);
+    public static void addSingleOrderToOrderList(int client_id, int order_id, int meal_id, int table_id) {
+        SingleOrder item = createSingleOrderData(client_id, order_id , meal_id, table_id);
         currentOrderList.add(item);
         currentOrderMap.put(String.valueOf(item.order_id), item);
     }
@@ -43,8 +44,8 @@ public class OrderContent {
         }
     }
 
-    public static void removeElementFromOrderList(int order_id, int meal_id, int table_id) {
-        SingleOrder item = createSingleOrderData(order_id , meal_id, table_id);
+    public static void removeElementFromOrderList(int client_id, int order_id, int meal_id, int table_id) {
+        SingleOrder item = createSingleOrderData(client_id, order_id , meal_id, table_id);
         removeElementFromList(item);
     }
 
@@ -56,9 +57,9 @@ public class OrderContent {
         processingOrderMap.put(String.valueOf(item.order_id), item);
     }
 
-    private static SingleOrder createSingleOrderData(int unique_order_id, int meal_id, int table_id) {
-//        return new SingleOrder(String.valueOf(unique_order_id), "Item " + unique_order_id, getRecipe(unique_order_id), table_id);
-        return new SingleOrder(unique_order_id, meal_id, getRecipe(unique_order_id), table_id);
+    private static SingleOrder createSingleOrderData(int client_id, int order_id, int meal_id, int table_id) {
+//        return new SingleOrder(String.valueOf(order_id), "Item " + order_id, getRecipe(order_id), table_id);
+        return new SingleOrder(client_id, order_id, meal_id, getRecipe(order_id), table_id);
     }
 
     private static String getRecipe(int position) {
@@ -67,10 +68,12 @@ public class OrderContent {
 
 
     public static class SingleOrder {
-        public final Integer order_id;
+        public final String order_id;
         public String meal_name = "Jeszcze Glupsza Nazwa Potrawy"; //final
+        public String meal_id = "111";
+        public String client_id = "111";
         public final String recipe;
-        public final Integer table_id;
+        public final String table_id;
         public Integer timer;
         public Boolean is_paying;
         public Boolean is_accepted_by_waiter;
@@ -80,12 +83,14 @@ public class OrderContent {
         public Boolean is_rejected_by_kitchen;
 
 
-        public SingleOrder(int order_id, int meal_id, String recipe, int table_id) {
-            this.order_id = order_id;
+        public SingleOrder(int client_id, int order_id, int meal_id, String recipe, int table_id) {
+            this.order_id = String.valueOf(order_id);
+            this.table_id = String.valueOf(table_id);
+            this.meal_id = String.valueOf(meal_id);
+            this.client_id = String.valueOf(client_id);
             if(meal_id > 0 ) // todo pobrac z bazy
                 this.meal_name = String.valueOf(tmp_generator.nextInt());
             this.recipe = recipe;
-            this.table_id = table_id;
             this.timer = 120;
             this.is_paying = false;
             this.is_accepted_by_waiter = false;

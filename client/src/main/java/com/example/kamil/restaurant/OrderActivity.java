@@ -73,7 +73,4 @@ public class OrderActivity extends Activity {
 
         Toast.makeText(getApplicationContext(),"Zamówienie zostało wysłane, czas oczekiwania około 20min", Toast.LENGTH_SHORT).show();
     }
-
-
-
 }

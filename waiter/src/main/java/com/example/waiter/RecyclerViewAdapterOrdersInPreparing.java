@@ -2,27 +2,30 @@ package com.example.waiter;
 
 
 import android.support.v7.widget.RecyclerView;
-import android.text.style.BackgroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.Checkable;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.waiter.OrdersInPreparingFragment.OnFragmentOfProcessingOrdersInteractionListener;
 import com.example.waiter.dummy.OrderContent.SingleOrder;
 
+import java.text.MessageFormat;
 import java.util.List;
 
-public class MyOrdersInPreparingRecyclerViewAdapter
-        extends RecyclerView.Adapter<MyOrdersInPreparingRecyclerViewAdapter.ViewHolderInProcessing> {
+public class RecyclerViewAdapterOrdersInPreparing
+        extends RecyclerView.Adapter<RecyclerViewAdapterOrdersInPreparing.ViewHolderInProcessing> {
 
     private final List<SingleOrder> mOrderListInPreparing;
     private final OnFragmentOfProcessingOrdersInteractionListener mListener;
 
 
-    public MyOrdersInPreparingRecyclerViewAdapter(List<SingleOrder> items, OnFragmentOfProcessingOrdersInteractionListener listener) {
+    public RecyclerViewAdapterOrdersInPreparing(List<SingleOrder> items, OnFragmentOfProcessingOrdersInteractionListener listener) {
         mOrderListInPreparing = items;
         mListener = listener;
     }
@@ -38,8 +41,8 @@ public class MyOrdersInPreparingRecyclerViewAdapter
     public void onBindViewHolder(final ViewHolderInProcessing holder, int position) {
         holder.mItem = mOrderListInPreparing.get(position);
         holder.mMealNameView.setText(String.valueOf(mOrderListInPreparing.get(position).meal_name));
-        holder.mTimerView.setText(String.valueOf(mOrderListInPreparing.get(position).timer));
-        holder.mTableIdView.setText(String.valueOf(mOrderListInPreparing.get(position).table_id));
+        holder.mTimerView.setText(formatTime(mOrderListInPreparing.get(position).timer));
+        holder.mTableIdView.setText("Stolik: " + String.valueOf(mOrderListInPreparing.get(position).table_id));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,13 +50,22 @@ public class MyOrdersInPreparingRecyclerViewAdapter
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
+                    holder.mImageView.setColorFilter(R.color.colorPrimary);
                     mListener.onFragmentInteraction(holder.mItem);
                 }
             }
         });
-        holder.mView.setBackgroundColor(R.color.colorAccent);
+        holder.mImageView.setColorFilter(R.color.colorAccent);
     }
 
+    private String formatTime(Integer t){
+        Integer hours = t / 3600;
+        Integer minutes = (t % 3600) / 60;
+        Integer seconds = t % 60;
+        Integer[] args = {hours, minutes, seconds};
+        MessageFormat fmt = new MessageFormat("{0}:{1}:{2}");
+        return fmt.format(args);
+    }
 
     @Override
     public int getItemCount() {
@@ -63,10 +75,11 @@ public class MyOrdersInPreparingRecyclerViewAdapter
     public class ViewHolderInProcessing extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mMealNameView;
-        public final TextView mTimerView;
         public final TextView mTableIdView;
+        public TextView mTimerView;
         public SingleOrder mItem;
-        RelativeLayout rl;
+        public ImageView mImageView;
+        CheckBox mGivenToClient;
 
         public ViewHolderInProcessing(View view) {
             super(view);
@@ -74,7 +87,8 @@ public class MyOrdersInPreparingRecyclerViewAdapter
             mMealNameView = (TextView) view.findViewById(R.id.meal_name);
             mTimerView = (TextView) view.findViewById(R.id.timer);
             mTableIdView = (TextView) view.findViewById(R.id.table_id);
-            view.setBackgroundColor(R.color.colorPrimary);
+            mImageView = (ImageView) view.findViewById(R.id.status);
+            mGivenToClient= (CheckBox) view.findViewById(R.id.given_to_client);
         }
 
         @Override
