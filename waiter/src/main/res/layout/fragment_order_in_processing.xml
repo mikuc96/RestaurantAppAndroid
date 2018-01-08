@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+
+    <ImageView
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:id="@+id/imageView1"
+        android:layout_marginStart="10dp"
+        app:srcCompat="@android:color/holo_green_dark" />
 
     <TextView
         android:id="@+id/meal_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginLeft="80dp"
         android:text="Name"
         android:textAppearance="?attr/textAppearanceListItem" />
 
@@ -19,8 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/meal_name"
         android:layout_alignBottom="@+id/meal_name"
-        android:layout_marginStart="43dp"
-        android:layout_toEndOf="@+id/timer"
+        android:layout_marginStart="180dp"
         android:text="Table Id"
         android:textAppearance="?attr/textAppearanceListItem" />
 
@@ -29,8 +35,8 @@
         android:layout_below="@id/meal_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-15dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="80dp"
         android:text="00:00:00"
         android:textAppearance="?attr/textAppearanceListItem" />
 

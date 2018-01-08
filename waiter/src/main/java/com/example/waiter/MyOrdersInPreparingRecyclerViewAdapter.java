@@ -2,10 +2,12 @@ package com.example.waiter;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.waiter.OrdersInPreparingFragment.OnFragmentOfProcessingOrdersInteractionListener;
@@ -49,6 +51,7 @@ public class MyOrdersInPreparingRecyclerViewAdapter
                 }
             }
         });
+        holder.mView.setBackgroundColor(R.color.colorAccent);
     }
 
 
@@ -63,6 +66,7 @@ public class MyOrdersInPreparingRecyclerViewAdapter
         public final TextView mTimerView;
         public final TextView mTableIdView;
         public SingleOrder mItem;
+        RelativeLayout rl;
 
         public ViewHolderInProcessing(View view) {
             super(view);
@@ -70,6 +74,7 @@ public class MyOrdersInPreparingRecyclerViewAdapter
             mMealNameView = (TextView) view.findViewById(R.id.meal_name);
             mTimerView = (TextView) view.findViewById(R.id.timer);
             mTableIdView = (TextView) view.findViewById(R.id.table_id);
+            view.setBackgroundColor(R.color.colorPrimary);
         }
 
         @Override

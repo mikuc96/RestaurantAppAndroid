@@ -27,7 +27,7 @@ public class SocketCommunication  {
 
 
     private String encodeRequest(String clientID,String orderId, String mealId,String tableId, String request_name){
-        return clientID +'/'+ mealId +'/'+ request_name;
+        return clientID +'/'+ orderId + '/' + mealId +'/'+ tableId +'/'+request_name;
     }
 
     public void modifyOrder(final String client_id, final String orderId, final String mealId, final String tableId, final String req_name){ // todo na array

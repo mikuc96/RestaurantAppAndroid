@@ -52,7 +52,6 @@ public class OrderContent {
     public static void moveElementToProcessingList(int position) {
         Log.d("ppppppposition ", String.valueOf(position));
         SingleOrder item = currentOrderList.get(position);
-//        removeElementFromList(item);
         processingOrderList.add(item);
         processingOrderMap.put(String.valueOf(item.order_id), item);
     }
@@ -63,13 +62,9 @@ public class OrderContent {
     }
 
     private static String getRecipe(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Recipe of Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore recipe information here.");
-        }
-        return builder.toString();
+        return "Przepis";
     }
+
 
     public static class SingleOrder {
         public final Integer order_id;

@@ -16,9 +16,10 @@ public class OrderCommunicationWithClient implements OrderCommunicationWithClien
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        OrderContent.addSingleOrderToOrderList(order[1], order[2], order[3]);
 
-        tmpReport("Took order " + String.valueOf(order[2]));
+        Log.d("WWWWWWWWWW","wwwwwwww");
+        OrderContent.addSingleOrderToOrderList(order[1], order[2], order[3]);
+//        tmpReport("Took order " + String.valueOf(order[2]));
 //        clientComm.sendNotificationToClient("Took order " + mealId);
         return 0;
     }

@@ -33,11 +33,19 @@ public class ConnectionWithClient {
         @Override
         public void handleMessage(Message msg) {
             String[] decodedOrd;
-            Integer[] order;
+            Integer[] order = new Integer[4];
             String clientRqs = msg.obj.toString();
             decodedOrd = decodeIDsFromClientRequest(clientRqs);// [client_id, orderId, mealId, tableId, req_name]
-            order = Arrays.copyOfRange(decodedOrd, 0, 4, Integer[].class);
-            switch (decodedOrd[4]){
+//            order[0] = 01;
+//            order[1] = 11;
+//            order[2] = 22;
+//            order[3] = 33;
+            for( int i = 0; i < 4; i++){
+                order[i] = Integer.parseInt(decodedOrd[i]);
+                Log.d("el " + String.valueOf(i) + "  ", String.valueOf(order[i]));
+            }
+//            order = Arrays.copyOfRange(decodedOrd, 0, 3, Integer[].class);
+            switch (decodedOrd[4]){ //
                 case MAKE_ORDER:
                     try {
                         orderDisplay.takeOrder(order);
@@ -70,27 +78,31 @@ public class ConnectionWithClient {
             public void run()
             {
                 try {
-                    client_server =new ServerSocket(2001);
-                    Socket connectedSocket = client_server.accept();
-                    ObjectInputStream ois =new ObjectInputStream(connectedSocket.getInputStream());
-                    ObjectOutputStream oos =new ObjectOutputStream(connectedSocket.getOutputStream());
                     Message clientMessage;
-                    for(int i=0 ; i<100; i++) {
+                    Socket connectedSocket;
+                    client_server =new ServerSocket(2001);
+                    connectedSocket = client_server.accept();
+                    ObjectInputStream ois =new ObjectInputStream(connectedSocket.getInputStream());;
+                    ObjectOutputStream oos =new ObjectOutputStream(connectedSocket.getOutputStream());;
+                    for(int i=0 ; i<100000; i++) {
                         clientMessage = Message.obtain();
                         clientMessage.obj = ois.readObject();
 
                         mHandler.sendMessage(clientMessage);
                         oos.writeObject("Waiter: Thank you I got your message: " + clientMessage.obj.toString());
                         sleep(1000);
+
                     }
-                ois.close();
-                oos.close();
-                client_server.close();
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                    ois.close();
+                    oos.close();
+                    client_server.close();
+                    Log.d("TTTTTTTT", "koniec watku m_objThread");
+
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
             }
         });
         m_objThread.start();
@@ -128,6 +140,12 @@ public class ConnectionWithClient {
 
 
     String[] decodeIDsFromClientRequest(String msg){
-        return msg.split("/");
+        String[] code = msg.split("/");
+        Log.d("el 0 ", String.valueOf(code[0]));
+        Log.d("el 1 ", String.valueOf(code[1]));
+        Log.d("el 2 ", String.valueOf(code[2]));
+        Log.d("el 3 ", String.valueOf(code[3]));
+        Log.d("el 4 ", String.valueOf(code[4]));
+        return code;
     }
 }

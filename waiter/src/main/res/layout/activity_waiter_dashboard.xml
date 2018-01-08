@@ -31,7 +31,6 @@
         android:id="@+id/tables_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/test_add_meal"
         android:layout_centerHorizontal="true"
         android:text="tables"
         />
