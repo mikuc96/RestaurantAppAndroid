@@ -28,6 +28,7 @@
         ></FrameLayout>
 
     <Button
+        android:id="@+id/tables_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/refresh_tmp_btn"
@@ -43,5 +44,15 @@
         android:layout_weight="1"
         android:layout_centerHorizontal="true"
         android:text="Refresh" />
+
+    <Button
+        android:id="@+id/test_add_meal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/refresh_tmp_btn"
+        android:layout_below="@+id/refresh_tmp_btn"
+        android:layout_marginTop="11dp"
+        android:layout_weight="1"
+        android:text="Add meal" />
 
 </RelativeLayout>

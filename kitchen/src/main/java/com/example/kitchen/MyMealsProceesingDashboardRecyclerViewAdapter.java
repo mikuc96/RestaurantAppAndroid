@@ -66,7 +66,7 @@ public class MyMealsProceesingDashboardRecyclerViewAdapter extends RecyclerView.
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.meal_name);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mContentView = (TextView) view.findViewById(R.id.timer);
         }
 
         @Override

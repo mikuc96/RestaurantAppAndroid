@@ -20,8 +20,7 @@ public class SocketCommunication  {
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
     private final String PAY = "PAY";
-    private final String CLIENT_ID = "123456";
-    private String mealId = "100";
+
     TextView serverMessage;
     Thread m_objThreadClient;
     Socket clientSocket;
@@ -31,7 +30,7 @@ public class SocketCommunication  {
         return clientID +'/'+ mealId +'/'+ request_name;
     }
 
-    public void modifyOrder(final String info_req){
+    public void modifyOrder(final String client_id,final String mealId,final String info_req){
 
 //        final String[] client_requests = {MAKE_ORDER, CANCEL_ORDER, ORDER_PROGRESS, PAY};
 
@@ -45,7 +44,7 @@ public class SocketCommunication  {
                     ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
                     Message waiterResponse;
 
-                        String requestStr = encodeRequest(CLIENT_ID, mealId, info_req);
+                        String requestStr = encodeRequest(client_id, mealId, info_req);
                         oos.writeObject(requestStr);
                         waiterResponse = Message.obtain();
                         waiterResponse.obj = ois.readObject();
