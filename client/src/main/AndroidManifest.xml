@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".StartActivity"
             android:screenOrientation="sensor"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -35,7 +35,12 @@
         <activity
             android:name=".OrderActivity"
             android:label="Order Details"></activity>
-        <activity android:name=".StartActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="Menu"></activity>
+
+        <activity android:name=".RegisterActivity" android:theme="@style/AppTheme" />
+
     </application>
 
 </manifest>
