@@ -47,7 +47,6 @@ public class KitchenSockets {
                 }
             }
         });
-
         m_objThreadKitchen.start();
     }
 

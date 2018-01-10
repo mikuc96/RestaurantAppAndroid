@@ -5,8 +5,8 @@ package com.example.kitchen;
  */
 
 public interface OrderCommunicationInterface {
-    int startMealPreparing(String mealId);
-    int cancelPreparing(String mealId);
-    int notifyOrderProgress(String mealId);
+    int startMealPreparing(Integer[] order);
+    int cancelPreparing(Integer[] order);
+    int notifyOrderProgress(Integer[] order);
 
 }

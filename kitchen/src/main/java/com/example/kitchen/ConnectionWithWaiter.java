@@ -3,6 +3,7 @@ package com.example.kitchen;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,20 +26,24 @@ public class ConnectionWithWaiter {
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            String[] waiterDecodedRequest = new String[3];
+            String[] decodedOrd;
+            Integer[] order = new Integer[4];
 
             String waiterRequest = msg.obj.toString();
-            waiterDecodedRequest= decodeIDsFromClientRequest(waiterRequest);
-            mealId = waiterDecodedRequest[1];
-            switch (waiterDecodedRequest[2]){
+            decodedOrd= decodeIDsFromClientRequest(waiterRequest);// [client_id, orderId, mealId, tableId, req_name]
+            for( int i = 0; i < 4; i++){
+                order[i] = Integer.parseInt(decodedOrd[i]);
+                Log.d("el " + String.valueOf(i) + "  ", String.valueOf(order[i]));
+            }
+            switch (decodedOrd[4]){
                 case START_MEAL_PREPARING:
-                    mealStatusDisplay.startMealPreparing(mealId);
+                    mealStatusDisplay.startMealPreparing(order);
                     break;
                 case CANCEL_ORDER:
-                    mealStatusDisplay.cancelPreparing(mealId);
+                    mealStatusDisplay.cancelPreparing(order);
                     break;
                 case ORDER_PROGRESS:
-                    mealStatusDisplay.notifyOrderProgress(mealId);
+                    mealStatusDisplay.notifyOrderProgress(order);
                     break;
             }
         }

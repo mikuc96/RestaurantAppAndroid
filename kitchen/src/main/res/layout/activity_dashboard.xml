@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/refresh_tmp_btn"
+        android:layout_marginTop="60dp"
         android:background="@drawable/rounded_corners"
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="30dp"
@@ -22,10 +23,15 @@
         android:id="@+id/refresh_tmp_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_centerHorizontal="true"
         android:text="Refresh" />
 
-
+    <Button
+        android:id="@+id/add_meal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/refresh_tmp_btn"
+        android:text="Add" />
 
 </RelativeLayout>

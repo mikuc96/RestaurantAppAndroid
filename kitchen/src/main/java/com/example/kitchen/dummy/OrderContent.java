@@ -1,37 +1,24 @@
-package com.example.waiter.dummy;
+package com.example.kitchen.dummy;
 
 import android.os.Build;
 import android.util.Log;
 
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Helper class for providing sample meal_name for user interfaces created by
- * TODO: Replace all uses of this class before publishing your app.
- */
+
 public class OrderContent {
 
-    public static List<SingleOrder> currentOrderList = new ArrayList<SingleOrder>();
-    public static List<SingleOrder> processingOrderList = new ArrayList<SingleOrder>();
-    public static Map<String, SingleOrder> currentOrderMap = new HashMap<String, SingleOrder>();
-    public static Map<String, SingleOrder> processingOrderMap = new HashMap<String, SingleOrder>();
+    public static final List<SingleOrder> processingOrderList = new ArrayList<SingleOrder>();
+    public static final Map<String, SingleOrder> processingOrderMap = new HashMap<String, SingleOrder>();
     static Random tmp_generator = new Random();
 
 
     public static void addSingleOrderToOrderList(int client_id, int order_id, int meal_id, int table_id) {
         SingleOrder item = createSingleOrderData(client_id, order_id , meal_id, table_id);
-        currentOrderList.add(item);
-        currentOrderMap.put(String.valueOf(item.order_id), item);
-    }
-
-
-    public static void moveElementToProcessingList(int position) {
-        SingleOrder item = currentOrderList.get(position);
         processingOrderList.add(item);
         processingOrderMap.put(String.valueOf(item.order_id), item);
     }
@@ -40,7 +27,6 @@ public class OrderContent {
     private static SingleOrder createSingleOrderData(int client_id, int order_id, int meal_id, int table_id) {
         return new SingleOrder(client_id, order_id, meal_id, getRecipe(order_id), table_id);
     }
-
 
     private static String getRecipe(int position) {
         return "Przepis";

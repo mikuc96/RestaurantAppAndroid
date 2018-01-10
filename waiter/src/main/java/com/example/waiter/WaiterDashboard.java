@@ -66,6 +66,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
         recyclerView.refreshRecyclerLists();
     }
 
+
     public void waitForOrder()
     {
         OrderCommunicationWithClient clientCom = new OrderCommunicationWithClient();

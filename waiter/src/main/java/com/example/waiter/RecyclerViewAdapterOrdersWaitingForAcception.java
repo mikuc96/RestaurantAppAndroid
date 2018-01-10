@@ -39,7 +39,7 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolderForWaitingForAcceptionOrders holder, int position) {
+    public void onBindViewHolder(final ViewHolderForWaitingForAcceptionOrders holder, final int position) {
         holder.mItem = mOrderListToAccept.get(position);
         holder.mNameView.setText(String.valueOf(mOrderListToAccept.get(position).meal_name));
         holder.mTimerView.setText(String.valueOf(mOrderListToAccept.get(position).timer));
@@ -48,8 +48,6 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
@@ -59,9 +57,7 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
             @Override
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
-                mOrderListToAccept.remove(newPosition);
-                notifyItemRemoved(newPosition);
-                notifyItemRangeChanged(newPosition, mOrderListToAccept.size());
+                removeFromList(newPosition);
             }
         });
 
@@ -71,9 +67,7 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
                 int newPosition = holder.getAdapterPosition();
                 SendAcceptedOrder(newPosition);
                 OrderContent.moveElementToProcessingList(newPosition);
-                mOrderListToAccept.remove(newPosition);
-                notifyItemRemoved(newPosition);
-                notifyItemRangeChanged(newPosition, mOrderListToAccept.size());
+                removeFromList(newPosition);
                 mListener.onListFragmentInteraction(holder.mItem);
             }
         });
@@ -83,6 +77,14 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
     public int getItemCount() {
         return mOrderListToAccept.size();
     }
+
+
+    private void removeFromList(Integer position){
+        mOrderListToAccept.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mOrderListToAccept.size());
+    }
+
 
     private void SendAcceptedOrder(int listPosition)
     {

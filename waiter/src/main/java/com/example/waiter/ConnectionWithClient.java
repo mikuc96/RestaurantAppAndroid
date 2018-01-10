@@ -36,10 +36,7 @@ public class ConnectionWithClient {
             Integer[] order = new Integer[4];
             String clientRqs = msg.obj.toString();
             decodedOrd = decodeIDsFromClientRequest(clientRqs);// [client_id, orderId, mealId, tableId, req_name]
-//            order[0] = 01;
-//            order[1] = 11;
-//            order[2] = 22;
-//            order[3] = 33;
+
             for( int i = 0; i < 4; i++){
                 order[i] = Integer.parseInt(decodedOrd[i]);
                 Log.d("el " + String.valueOf(i) + "  ", String.valueOf(order[i]));
