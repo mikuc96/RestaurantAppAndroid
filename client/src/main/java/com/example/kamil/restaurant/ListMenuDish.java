@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.kamil.restaurant.DishesDataBase;
+import com.example.kamil.restaurant.DataBase.DishesDataBase;
 
 public class ListMenuDish extends ListFragment {
     static interface WorkoutListListener {

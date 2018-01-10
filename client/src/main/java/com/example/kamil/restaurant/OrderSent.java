@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.kamil.restaurant.R;
+import com.example.kamil.restaurant.DataBase.DishesDataBase;
+import com.example.kamil.restaurant.DataBase.OrderDataBase;
 
 import java.util.ArrayList;
 

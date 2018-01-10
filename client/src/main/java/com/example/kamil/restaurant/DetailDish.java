@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kamil.restaurant.DataBase.DishesDataBase;
+
 
 public class DetailDish extends Fragment {
     public static long  dishId;
@@ -43,7 +45,7 @@ public class DetailDish extends Fragment {
 
             DishesDataBase dish = DishesDataBase.dishes[(int) dishId];
             title.setText(dish.getName());
-            price.setText("Cena: "+dish.getPrice());
+            price.setText("Cena: "+dish.getPrice()+"zł");
             description.setText(dish.getDescription());
             description.setText(dish.getDescription());
 
