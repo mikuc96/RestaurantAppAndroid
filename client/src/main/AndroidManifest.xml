@@ -38,8 +38,7 @@
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile" />
-        <activity android:name=".Helper" />
-        <activity android:name=".Dialog.LoginDialog" />
+
     </application>
 
 </manifest>

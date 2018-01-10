@@ -22,7 +22,7 @@ public class MainActivity extends Activity implements ListMenuDish.WorkoutListLi
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             details.setWorkout(id);
             ft.replace(R.id.fragment_container, details);
-            ft.addToBackStack(null);
+//            ft.addToBackStack(null);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
         } else {

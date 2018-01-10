@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import com.example.kamil.restaurant.DataBase.UserDataBase;
-import com.example.kamil.restaurant.Helper;
 import com.example.kamil.restaurant.R;
 import com.example.kamil.restaurant.StartActivity;
 
@@ -16,14 +15,12 @@ public class LoginDialog extends AppCompatDialogFragment {
 
     TextView email, password;
     AlertDialog.Builder builder1;
-    Helper help;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final int temp=View.VISIBLE;
+
         AlertDialog.Builder ad=new AlertDialog.Builder(getActivity());
         LayoutInflater li=getActivity().getLayoutInflater();
         View view=li.inflate(R.layout.activity_login, null);
-        help=new Helper();
         builder1=new AlertDialog.Builder(getContext());
         email = (TextView) view.findViewById(R.id.login_email);
         password = (TextView) view.findViewById(R.id.login_password);
@@ -35,13 +32,13 @@ public class LoginDialog extends AppCompatDialogFragment {
 
                 if (UserDataBase.loginUser(email.getText().toString(), password.getText().toString())) {
 
-                    StartActivity.btnProfile.setVisibility(temp);
-                    help.showDialog(builder1, getContext(), "Login, ok!");
+                    StartActivity.btnProfile.setVisibility(View.VISIBLE);
+                    Helper.showDialog(builder1, getContext(), "Login, ok!");
                     StartActivity.logged = Boolean.TRUE;
                     StartActivity.who = email.getText().toString();
 
                 } else {
-                    help.showDialog(builder1, getContext(), "Login filed!");
+                    Helper.showDialog(builder1, getContext(), "Login filed!");
                 }
             }
         })

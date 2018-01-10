@@ -1,9 +1,10 @@
-package com.example.kamil.restaurant;
+package com.example.kamil.restaurant.Dialog;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 
 
 public class Helper {

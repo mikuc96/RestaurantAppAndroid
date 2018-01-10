@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.kamil.restaurant.DataBase.UserDataBase;
-import com.example.kamil.restaurant.Helper;
 import com.example.kamil.restaurant.R;
 
 /**
