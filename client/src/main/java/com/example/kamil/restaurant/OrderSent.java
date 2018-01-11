@@ -1,15 +1,23 @@
 package com.example.kamil.restaurant;
 
+import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.kamil.restaurant.R;
+import com.example.kamil.restaurant.DataBase.DishesDataBase;
+import com.example.kamil.restaurant.DataBase.OrderDataBase;
+import com.example.kamil.restaurant.Dialog.RatingDialog;
 
 import java.util.ArrayList;
 
@@ -17,24 +25,17 @@ public class OrderSent extends Fragment implements View.OnClickListener {
 
     private static ArrayList<DishesDataBase>orderList=new ArrayList<>();
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_order_sent, container, false);
         Button add_to_order = (Button) layout.findViewById(R.id.add_to_order);
         add_to_order.setOnClickListener(this);
-        Button rate_dish = (Button) layout.findViewById(R.id.rate_dish);
-        rate_dish.setOnClickListener(this);
         Button show_order = (Button) layout.findViewById(R.id.show_order);
         show_order.setOnClickListener(this);
         return layout;
     }
+
 
     @Override
     public void onClick(View v) {
@@ -42,9 +43,7 @@ public class OrderSent extends Fragment implements View.OnClickListener {
         case R.id.add_to_order:
             onClickAdd(v);
             break;
-        case R.id.rate_dish:
-            onClickRate(v);
-            break;
+
         case R.id.show_order:
             onClickShowOrder(v);
             break;
@@ -59,8 +58,8 @@ public class OrderSent extends Fragment implements View.OnClickListener {
     }
 
     public void onClickRate(View view) {
-        Intent intent = new Intent(getActivity().getApplication(), OrderActivity.class);
-        startActivity(intent);
+        RatingDialog rd=new RatingDialog();
+
     }
 
     public void onClickShowOrder(View view) {

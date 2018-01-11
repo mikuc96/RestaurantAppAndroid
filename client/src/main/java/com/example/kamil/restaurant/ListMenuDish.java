@@ -2,6 +2,7 @@ package com.example.kamil.restaurant;
 
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.kamil.restaurant.DishesDataBase;
+import com.example.kamil.restaurant.DataBase.DishesDataBase;
 
 public class ListMenuDish extends ListFragment {
     static interface WorkoutListListener {
@@ -36,7 +37,7 @@ public class ListMenuDish extends ListFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
         this.listener = (WorkoutListListener)activity;
     }

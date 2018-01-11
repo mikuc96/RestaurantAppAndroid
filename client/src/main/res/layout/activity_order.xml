@@ -5,14 +5,11 @@
     android:orientation="vertical"
     tools:context=".OrderActivity" >
 
-
-
       <ListView
           android:layout_margin="10dp"
           android:id="@+id/listView1"
           android:layout_width="match_parent"
           android:layout_height="300dp">
-
       </ListView>
 
       <TextView
@@ -37,13 +34,5 @@
           android:layout_height="match_parent"
           android:text="@string/z_zam_wienie"
           android:id="@+id/make_order_btn"/>
-
-
-
-
-
-
-
-
 
 </LinearLayout>

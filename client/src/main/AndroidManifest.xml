@@ -27,19 +27,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity
             android:name=".DetailActivity"
             android:label="Szczegóły" />
         <activity
             android:name=".OrderActivity"
-            android:label="Order Details"></activity>
+            android:label="Order Details" />
         <activity
             android:name=".MainActivity"
-            android:label="Menu"></activity>
-
-        <activity android:name=".RegisterActivity" android:theme="@style/AppTheme" />
+            android:label="Menu" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" />
 
     </application>
 

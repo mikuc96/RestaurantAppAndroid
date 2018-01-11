@@ -1,7 +1,6 @@
 package com.example.kamil.restaurant;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +8,9 @@ import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.kamil.restaurant.DataBase.DishesDataBase;
+import com.example.kamil.restaurant.DataBase.OrderDataBase;
 
 import java.util.ArrayList;
 import java.util.Random;

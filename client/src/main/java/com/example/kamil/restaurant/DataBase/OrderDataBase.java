@@ -1,4 +1,4 @@
-package com.example.kamil.restaurant;
+package com.example.kamil.restaurant.DataBase;
 
 import java.util.ArrayList;
 
@@ -18,22 +18,16 @@ public class OrderDataBase {
         this.id = id;
     }
 
-
     public void addOrder() {
-
         orders.add(new OrderDataBase(orderList, id));
     }
 
     public ArrayList<DishesDataBase> getOrder() {
         return orderList;
-
-
     }
 
     public void eraseOrderList() {
-
         orderList.clear();
-
     }
 
 }
