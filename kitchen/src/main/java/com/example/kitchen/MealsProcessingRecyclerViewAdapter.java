@@ -10,18 +10,20 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.kitchen.MealsProcessingFragment.OnListFragmentInteractionListener;
+import com.example.kitchen.dummy.OrderContent;
 import com.example.kitchen.dummy.OrderContent.SingleOrder;
 
 import java.text.MessageFormat;
 import java.util.List;
 
 
-public class MealsProceesingRecyclerViewAdapter extends RecyclerView.Adapter<MealsProceesingRecyclerViewAdapter.OrderViewHolder> {
+public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<MealsProcessingRecyclerViewAdapter.OrderViewHolder> {
 
     private final List<SingleOrder> mOrderList;
     private final OnListFragmentInteractionListener mListener;
+    private final int TIME_UNIT = 300;
 
-    public MealsProceesingRecyclerViewAdapter(List<SingleOrder> items, OnListFragmentInteractionListener listener) {
+    public MealsProcessingRecyclerViewAdapter(List<SingleOrder> items, OnListFragmentInteractionListener listener) {
         mOrderList = items;
         mListener = listener;
     }
@@ -38,13 +40,12 @@ public class MealsProceesingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
         holder.mItem = mOrderList.get(position);
         holder.mMealName.setText(mOrderList.get(position).meal_name);
         holder.mTimer.setText(formatTime(mOrderList.get(position).timer));
-
+//        if holder.mItem.is_prepared
+        // color.set()
         holder.mBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
@@ -55,6 +56,7 @@ public class MealsProceesingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
                 removeFromList(newPosition);
+                //send to waiter
             }
         });
 
@@ -62,7 +64,7 @@ public class MealsProceesingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
             @Override
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
-                notifyItemChanged(newPosition);
+                updateTimer(newPosition, -TIME_UNIT);
             }
         });
 
@@ -71,7 +73,7 @@ public class MealsProceesingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
             @Override
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
-                notifyItemChanged(newPosition);
+                updateTimer(newPosition, TIME_UNIT);
             }
         });
 
@@ -79,6 +81,9 @@ public class MealsProceesingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
             @Override
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
+                SingleOrder singleOrd = getListElement(newPosition);
+                singleOrd.is_prepared = Boolean.FALSE;
+                //timer start()
                 notifyItemChanged(newPosition);
             }
         });
@@ -87,7 +92,11 @@ public class MealsProceesingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
             @Override
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
+                SingleOrder singleOrd = getListElement(newPosition);
+                singleOrd.is_prepared = Boolean.TRUE;
+                //timer stop()
                 notifyItemChanged(newPosition);
+                //notify waiter
             }
         });
     }
@@ -107,6 +116,16 @@ public class MealsProceesingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mOrderList.size());
         Log.d("asaasasssssssssssss", String.valueOf(mOrderList.size()));
+    }
+
+    private SingleOrder getListElement(Integer listPosition){
+        return OrderContent.processingOrderList.get(listPosition);
+    }
+
+    private void updateTimer(Integer listPosition, Integer val){
+        SingleOrder singleOrd = getListElement(listPosition);
+        singleOrd.timer += val;
+        notifyItemChanged(listPosition);
     }
 
     @Override

@@ -59,7 +59,7 @@ public class MealsProcessingFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MealsProceesingRecyclerViewAdapter(OrderContent.processingOrderList, mListener));
+            recyclerView.setAdapter(new MealsProcessingRecyclerViewAdapter(OrderContent.processingOrderList, mListener));
         }
         return view;
     }

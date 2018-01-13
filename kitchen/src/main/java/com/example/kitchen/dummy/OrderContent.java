@@ -43,7 +43,6 @@ public class OrderContent {
         public Integer timer;
         public Boolean is_paying;
         public Boolean is_accepted_by_waiter;
-        public Boolean is_preparing;
         public Boolean is_prepared;
         public Boolean is_just_served;
         public Boolean is_rejected_by_kitchen;
@@ -60,7 +59,6 @@ public class OrderContent {
             this.timer = 120;
             this.is_paying = false;
             this.is_accepted_by_waiter = false;
-            this.is_preparing = false;
             this.is_prepared = false;
             this.is_just_served = false;
             this.is_rejected_by_kitchen = false;
