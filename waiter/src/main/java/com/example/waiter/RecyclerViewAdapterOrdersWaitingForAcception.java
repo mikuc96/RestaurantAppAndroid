@@ -88,7 +88,7 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
     {
         KitchenSockets sc=new KitchenSockets();
         SingleOrder singleOrd = OrderContent.currentOrderList.get(listPosition);
-        sc.sendOrder(singleOrd, START_MEAL_PREPARING);
+        sc.sendToKitchen(singleOrd, START_MEAL_PREPARING);
     }
 
 

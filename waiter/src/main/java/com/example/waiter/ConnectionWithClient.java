@@ -9,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 
 import static java.lang.Thread.sleep;
 
@@ -25,7 +24,7 @@ public class ConnectionWithClient {
 
     private Thread m_objThread;
     private ServerSocket client_server;
-    private OrderCommunicationWithClientInterface orderDisplay;
+    private ClientHandlingInterface orderDisplay;
 
 
     @SuppressLint("HandlerLeak")
@@ -67,7 +66,7 @@ public class ConnectionWithClient {
         }
     };
 
-    void setEventListener(OrderCommunicationWithClientInterface orderCom) {
+    void setEventListener(ClientHandlingInterface orderCom) {
         orderDisplay = orderCom;
     }
     void startListening() {
@@ -106,13 +105,13 @@ public class ConnectionWithClient {
     }
 
 
-    void sendNotificationToClient(final String notificationMsg) {
+    void sendNotificationToClient(final String notificationMsg) { //chyba W OGOLE ZLE
         Log.d("sendNotificationToCnt", "sendNotificationToClient");
         m_objThread=new Thread(new Runnable() {
             public void run()
             {
                 try {
-                    client_server =new ServerSocket(2001);
+                    client_server =new ServerSocket(2001); //chyba pomieszane socket z serversocket
                     Socket connectedSocket = client_server.accept();
                     ObjectOutputStream oos =new ObjectOutputStream(connectedSocket.getOutputStream());
                     oos.writeObject("Waiter: Notification for client: " + notificationMsg);

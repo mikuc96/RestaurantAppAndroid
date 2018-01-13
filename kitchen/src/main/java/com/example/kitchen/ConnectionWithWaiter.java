@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.example.kitchen.dummy.OrderContent;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -20,6 +22,7 @@ public class ConnectionWithWaiter {
 
     private Thread m_objThread;
     private ServerSocket waiter_server;
+    private Socket waiterSocket;
     private OrderCommunicationInterface mealStatusDisplay;
 
     @SuppressLint("HandlerLeak")
@@ -52,7 +55,7 @@ public class ConnectionWithWaiter {
     void setEventListener(OrderCommunicationInterface orderCom) {
         mealStatusDisplay = orderCom;
     }
-    void startListening() {
+    void startListeningWaiter() {
         m_objThread=new Thread(new Runnable() {
             public void run()
             {
@@ -60,17 +63,14 @@ public class ConnectionWithWaiter {
                     waiter_server =new ServerSocket(2002);
                     Socket connectedSocket = waiter_server.accept();
                     ObjectInputStream ois =new ObjectInputStream(connectedSocket.getInputStream());
-                    ObjectOutputStream oos =new ObjectOutputStream(connectedSocket.getOutputStream());
-                    Message waiterMessage;
+                    Message gotMessage;
                     for(int i=0 ; i<100; i++) {
-                        waiterMessage = Message.obtain();
-                        waiterMessage.obj = ois.readObject();
-                        mHandler.sendMessage(waiterMessage);
-                        oos.writeObject("Kitchen: Thank you I got your message: " + waiterMessage.obj.toString());
+                        gotMessage = Message.obtain();
+                        gotMessage.obj = ois.readObject();
+                        mHandler.sendMessage(gotMessage);
                         sleep(1000);
                     }
                     ois.close();
-                    oos.close();
                     waiter_server.close();
                 }
                 catch (Exception e)
@@ -81,6 +81,34 @@ public class ConnectionWithWaiter {
         });
         m_objThread.start();
     }
+
+
+    void sendToWaiter(OrderContent.SingleOrder singleOrd, String request_name) {
+        final String msg = encodeOrder(singleOrd, request_name);
+        m_objThread=new Thread(new Runnable() {
+            public void run()
+            {
+                try {
+                    waiterSocket =new Socket("127.0.0.2",2003); // czy ip ok?
+                    ObjectOutputStream oos =new ObjectOutputStream(waiterSocket.getOutputStream());
+                    oos.writeObject(msg);
+                    sleep(1000);
+                    oos.close();
+//                    waiter_server.close(); // chyba nie trzeba Nie a zamykać
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+        m_objThread.start();
+    }
+
+    public String encodeOrder(OrderContent.SingleOrder singleOrd, String request_name){ //[client_id, orderId, mealId, tableId, req_name]
+        return singleOrd.client_id +'/'+ singleOrd.order_id + '/' + singleOrd.meal_id +'/'+ singleOrd.table_id +'/'+request_name;
+    }
+
     String[] decodeIDsFromClientRequest(String msg){
         return msg.split("/");
     }

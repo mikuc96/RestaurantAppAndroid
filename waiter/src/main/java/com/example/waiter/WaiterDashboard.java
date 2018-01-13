@@ -69,7 +69,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
 
     public void waitForOrder()
     {
-        OrderCommunicationWithClient clientCom = new OrderCommunicationWithClient();
+        ClientHandling clientCom = new ClientHandling();
         clientConnection = new ConnectionWithClient();
         clientConnection.setEventListener(clientCom);
         clientConnection.startListening();

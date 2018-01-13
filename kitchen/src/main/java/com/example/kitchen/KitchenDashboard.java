@@ -37,7 +37,7 @@ public class KitchenDashboard extends AppCompatActivity implements MealsProcessi
         OrderCommunication oCom = new OrderCommunication();
         ConnectionWithWaiter clientComm = new ConnectionWithWaiter();
         clientComm.setEventListener(oCom);
-        clientComm.startListening();
+        clientComm.startListeningWaiter();
         Toast.makeText(getApplicationContext(),	"waiting for order to prepare", Toast.LENGTH_SHORT).show();
     }
     private void bindButtons(){

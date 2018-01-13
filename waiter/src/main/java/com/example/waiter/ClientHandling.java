@@ -5,8 +5,7 @@ import android.util.Log;
 import com.example.waiter.OrderData.OrderContent;
 import static java.lang.Thread.sleep;
 
-public class OrderCommunicationWithClient implements OrderCommunicationWithClientInterface {
-
+public class ClientHandling implements ClientHandlingInterface {
 
 
     @Override
