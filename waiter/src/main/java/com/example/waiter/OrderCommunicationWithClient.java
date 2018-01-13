@@ -2,7 +2,7 @@ package com.example.waiter;
 
 
 import android.util.Log;
-import com.example.waiter.dummy.OrderContent;
+import com.example.waiter.OrderData.OrderContent;
 import static java.lang.Thread.sleep;
 
 public class OrderCommunicationWithClient implements OrderCommunicationWithClientInterface {

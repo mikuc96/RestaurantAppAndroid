@@ -3,9 +3,8 @@ package com.example.waiter;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
 
-import com.example.waiter.dummy.OrderContent;
+import com.example.waiter.OrderData.OrderContent;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

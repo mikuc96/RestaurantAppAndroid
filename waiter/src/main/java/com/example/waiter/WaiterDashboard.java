@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.waiter.dummy.OrderContent;
+import com.example.waiter.OrderData.OrderContent;
 
 import java.util.Random;
 

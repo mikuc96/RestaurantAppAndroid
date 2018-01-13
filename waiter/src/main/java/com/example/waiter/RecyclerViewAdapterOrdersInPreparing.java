@@ -1,19 +1,18 @@
 package com.example.waiter;
 
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Checkable;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.waiter.OrdersInPreparingFragment.OnFragmentOfProcessingOrdersInteractionListener;
-import com.example.waiter.dummy.OrderContent.SingleOrder;
+import com.example.waiter.OrderData.OrderContent.SingleOrder;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -23,7 +22,10 @@ public class RecyclerViewAdapterOrdersInPreparing
 
     private final List<SingleOrder> mOrderListInPreparing;
     private final OnFragmentOfProcessingOrdersInteractionListener mListener;
-
+    private final int NOT_STARTED = Color.BLUE;
+    private final int PREPARING_STATE = Color.YELLOW;
+    private final int FINISHED_STATE = Color.GREEN;
+    private final int REJECTED_STATE = Color.RED;
 
     public RecyclerViewAdapterOrdersInPreparing(List<SingleOrder> items, OnFragmentOfProcessingOrdersInteractionListener listener) {
         mOrderListInPreparing = items;
@@ -44,18 +46,29 @@ public class RecyclerViewAdapterOrdersInPreparing
         holder.mTimerView.setText(formatTime(mOrderListInPreparing.get(position).timer));
         holder.mTableIdView.setText("Stolik: " + String.valueOf(mOrderListInPreparing.get(position).table_id));
 
+        holder.mImageView.setColorFilter(NOT_STARTED, PorterDuff.Mode.SRC);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    holder.mImageView.setColorFilter(R.color.colorPrimary);
+                    holder.mImageView.setColorFilter(REJECTED_STATE, PorterDuff.Mode.SRC);
                     mListener.onFragmentInteraction(holder.mItem);
                 }
             }
         });
-        holder.mImageView.setColorFilter(R.color.colorAccent);
+
+        holder.mGivenToClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mListener) {
+                    int newPosition = holder.getAdapterPosition();
+                    mOrderListInPreparing.get(newPosition).is_just_served = true;
+                    notifyItemChanged(newPosition);
+                }
+            }
+        });
     }
 
     private String formatTime(Integer t){

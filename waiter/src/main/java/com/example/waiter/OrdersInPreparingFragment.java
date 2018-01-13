@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.waiter.dummy.OrderContent;
-import com.example.waiter.dummy.OrderContent.SingleOrder;
+import com.example.waiter.OrderData.OrderContent;
+import com.example.waiter.OrderData.OrderContent.SingleOrder;
 
 
 public class OrdersInPreparingFragment extends Fragment {

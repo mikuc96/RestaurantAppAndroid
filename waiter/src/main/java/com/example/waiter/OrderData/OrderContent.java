@@ -1,9 +1,5 @@
-package com.example.waiter.dummy;
+package com.example.waiter.OrderData;
 
-import android.os.Build;
-import android.util.Log;
-
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

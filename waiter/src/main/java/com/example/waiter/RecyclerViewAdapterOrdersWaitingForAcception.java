@@ -6,14 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.waiter.OrdersWaitingForAcceptionFragment.OnListFragmentInteractionListener;
-import com.example.waiter.dummy.OrderContent;
-import com.example.waiter.dummy.OrderContent.SingleOrder;
+import com.example.waiter.OrderData.OrderContent;
+import com.example.waiter.OrderData.OrderContent.SingleOrder;
 
 import java.util.List;
-import java.util.Random;
 
 
 public class RecyclerViewAdapterOrdersWaitingForAcception

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.waiter.Tables"
+    tools:showIn="@layout/activity_tables">
+
+
+    <ImageView
+        android:id="@+id/table_1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="37dp"
+        app:srcCompat="@android:color/darker_gray" />
+
+    <ImageView
+        android:id="@+id/table_2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/table_1"
+        android:layout_marginBottom="30dp"
+        app:srcCompat="@android:color/darker_gray" />
+
+
+    <ImageView
+    android:id="@+id/table_3"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_alignTop="@+id/table_1"
+    android:layout_marginStart="47dp"
+    android:layout_toEndOf="@+id/table_1"
+    app:srcCompat="@android:color/darker_gray" />
+
+    <ImageView
+        android:id="@+id/table_4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignTop="@+id/table_3"
+        android:layout_marginStart="46dp"
+        android:layout_toEndOf="@+id/table_3"
+        app:srcCompat="@android:color/darker_gray" />
+
+    <ImageView
+        android:id="@+id/table_5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignStart="@+id/table_3"
+        android:layout_alignTop="@+id/table_6"
+        app:srcCompat="@android:color/darker_gray" />
+
+
+    <ImageView
+        android:id="@+id/table_6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignStart="@+id/table_4"
+        android:layout_alignTop="@+id/table_2"
+        app:srcCompat="@android:color/darker_gray" />
+
+    <Button
+        android:id="@+id/refresh_table_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/table_4"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/table_4"
+        android:text="Button" />
+
+
+</RelativeLayout>
