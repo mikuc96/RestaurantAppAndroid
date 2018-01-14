@@ -4,6 +4,7 @@ package com.example.waiter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,11 @@ public class RecyclerViewAdapterOrdersInPreparing
 
     private final List<SingleOrder> mOrderListInPreparing;
     private final OnFragmentOfProcessingOrdersInteractionListener mListener;
-    private final int NOT_STARTED = Color.BLUE;
+    private final int NOT_STARTED = Color.GRAY;
     private final int PREPARING_STATE = Color.YELLOW;
     private final int FINISHED_STATE = Color.GREEN;
     private final int REJECTED_STATE = Color.RED;
+    private final int PAYING = Color.YELLOW;
 
     public RecyclerViewAdapterOrdersInPreparing(List<SingleOrder> items, OnFragmentOfProcessingOrdersInteractionListener listener) {
         mOrderListInPreparing = items;
@@ -45,8 +47,9 @@ public class RecyclerViewAdapterOrdersInPreparing
         holder.mMealNameView.setText(String.valueOf(mOrderListInPreparing.get(position).meal_name));
         holder.mTimerView.setText(formatTime(mOrderListInPreparing.get(position).timer));
         holder.mTableIdView.setText("Stolik: " + String.valueOf(mOrderListInPreparing.get(position).table_id));
+        Log.d("onBindViewHolder prep ", "prep");
 
-        holder.mImageView.setColorFilter(NOT_STARTED, PorterDuff.Mode.SRC);
+        updateOrderStatusImg(holder.mImageView, mOrderListInPreparing.get(position));
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,10 +68,27 @@ public class RecyclerViewAdapterOrdersInPreparing
                 if (null != mListener) {
                     int newPosition = holder.getAdapterPosition();
                     mOrderListInPreparing.get(newPosition).is_just_served = true;
+                    mOrderListInPreparing.get(newPosition).is_prepared = false;
                     notifyItemChanged(newPosition);
                 }
             }
         });
+    }
+
+    private void updateOrderStatusImg(ImageView iv, SingleOrder order){
+        if(order.is_preparing)
+            iv.setColorFilter(PREPARING_STATE, PorterDuff.Mode.SRC);
+        else if(order.is_prepared)
+            iv.setColorFilter(FINISHED_STATE, PorterDuff.Mode.SRC);
+        else if(order.is_just_served)
+            iv.setColorFilter(NOT_STARTED, PorterDuff.Mode.SRC);
+        else if(order.is_rejected_by_kitchen)
+            iv.setColorFilter(REJECTED_STATE, PorterDuff.Mode.SRC);
+        else if(order.is_paying)
+            iv.setColorFilter(PAYING, PorterDuff.Mode.SRC);
+        else{
+            iv.setColorFilter(NOT_STARTED, PorterDuff.Mode.SRC);
+        }
     }
 
     private String formatTime(Integer t){

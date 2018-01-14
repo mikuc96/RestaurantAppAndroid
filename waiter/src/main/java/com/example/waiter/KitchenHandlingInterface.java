@@ -2,8 +2,8 @@ package com.example.waiter;
 
 
 public interface KitchenHandlingInterface {
-    int rejectOrder(Integer[] order);
-    int updateOrderTimer(Integer[] order);
-    int finishOrder(Integer[] order);
-    int startOrderPreparing(Integer[] order);
+    void rejectOrder(Integer order);
+    void updateOrderTimer(Integer order, int timeUnit);
+    void finishOrder(Integer order);
+    void startOrderPreparing(Integer order);
 }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.kitchen.dummy.OrderContent;
+import com.example.kitchen.OrderData.OrderContent;
 
 import java.util.Random;
 
@@ -20,7 +20,6 @@ public class KitchenDashboard extends AppCompatActivity implements MealsProcessi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         bindButtons();
         refreshLists();
         waitForOrder();
@@ -35,7 +34,7 @@ public class KitchenDashboard extends AppCompatActivity implements MealsProcessi
     public void waitForOrder()
     {
         OrderCommunication oCom = new OrderCommunication();
-        ConnectionWithWaiter clientComm = new ConnectionWithWaiter();
+        WaiterSockets clientComm = new WaiterSockets();
         clientComm.setEventListener(oCom);
         clientComm.startListeningWaiter();
         Toast.makeText(getApplicationContext(),	"waiting for order to prepare", Toast.LENGTH_SHORT).show();

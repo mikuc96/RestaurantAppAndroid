@@ -12,7 +12,7 @@ import java.net.Socket;
 
 import static java.lang.Thread.sleep;
 
-public class ConnectionWithClient {
+public class ClientSockets {
     private final String MAKE_ORDER = "ORDER";
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";

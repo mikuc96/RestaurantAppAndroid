@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Helper class for providing sample meal_name for user interfaces created by
- * TODO: Replace all uses of this class before publishing your app.
- */
 public class OrderContent {
 
     public static List<SingleOrder> currentOrderList = new ArrayList<SingleOrder>();

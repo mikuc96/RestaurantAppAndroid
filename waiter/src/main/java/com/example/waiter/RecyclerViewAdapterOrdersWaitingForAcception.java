@@ -1,6 +1,7 @@
 package com.example.waiter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
         holder.mItem = mOrderListToAccept.get(position);
         holder.mNameView.setText(String.valueOf(mOrderListToAccept.get(position).meal_name));
         holder.mTimerView.setText(String.valueOf(mOrderListToAccept.get(position).timer));
-
+        Log.d("onBindViewHolder prep ", "waiting for");
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

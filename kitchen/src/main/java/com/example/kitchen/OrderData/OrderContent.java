@@ -1,7 +1,4 @@
-package com.example.kitchen.dummy;
-
-import android.os.Build;
-import android.util.Log;
+package com.example.kitchen.OrderData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +41,8 @@ public class OrderContent {
         public Boolean is_paying;
         public Boolean is_accepted_by_waiter;
         public Boolean is_prepared;
-        public Boolean is_just_served;
+        public Boolean is_preparing;
+        public Boolean was_served;
         public Boolean is_rejected_by_kitchen;
 
 
@@ -60,7 +58,8 @@ public class OrderContent {
             this.is_paying = false;
             this.is_accepted_by_waiter = false;
             this.is_prepared = false;
-            this.is_just_served = false;
+            this.is_preparing = false;
+            this.was_served = false;
             this.is_rejected_by_kitchen = false;
         }
 

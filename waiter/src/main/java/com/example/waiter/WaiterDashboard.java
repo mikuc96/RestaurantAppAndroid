@@ -1,5 +1,7 @@
 package com.example.waiter;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +15,9 @@ import java.util.Random;
 public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingForAcceptionFragment.OnListFragmentInteractionListener,
         OrdersInPreparingFragment.OnFragmentOfProcessingOrdersInteractionListener{
 
-    private ConnectionWithClient clientConnection;
+    private ClientSockets clientConnection;
+    private KitchenSockets kitchenConnection;
+    private Handler mHandler;
     Button add_meal_btn;
     Button show_tables_btn;
     Random generator = new Random();
@@ -23,8 +27,10 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter_dashboard);
+        mHandler = new Handler();
         bindButtons();
         waitForOrder();
+//        autoRefresh();
     }
 
 
@@ -48,8 +54,10 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),	"Dodac aktywnosc stolikow", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),	"Dodac aktywnosc stolikow", Toast.LENGTH_SHORT).show();
                 //todo Dodac aktywnosc stolikow
+                Intent intent = new Intent(getApplicationContext(), Tables.class);
+                startActivity(intent);
             }
         });
     }
@@ -70,12 +78,25 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     public void waitForOrder()
     {
         ClientHandling clientCom = new ClientHandling();
-        clientConnection = new ConnectionWithClient();
+        clientConnection = new ClientSockets();
         clientConnection.setEventListener(clientCom);
         clientConnection.startListening();
+
+        KitchenHandling kitchenCom = new KitchenHandling();
+        kitchenConnection = new KitchenSockets();
+        kitchenConnection.setEventListener(kitchenCom);
+        kitchenConnection.startListeningKitchen();
         Toast.makeText(getApplicationContext(),	"waiting for order", Toast.LENGTH_SHORT).show();
     }
 
-
+    private void autoRefresh(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.refreshRecyclerLists();
+                mHandler.postDelayed(this, 1000);
+            }
+        });
+    }
 }
 

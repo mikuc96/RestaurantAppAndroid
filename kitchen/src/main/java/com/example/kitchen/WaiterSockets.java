@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.example.kitchen.dummy.OrderContent;
+import com.example.kitchen.OrderData.OrderContent;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -14,11 +14,10 @@ import java.net.Socket;
 
 import static java.lang.Thread.sleep;
 
-public class ConnectionWithWaiter {
+public class WaiterSockets {
     private final String START_MEAL_PREPARING = "START_PREPARING";
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
-    private String mealId = "000"; //id tez bedzie przesylany przez sockety
 
     private Thread m_objThread;
     private ServerSocket waiter_server;
@@ -60,18 +59,20 @@ public class ConnectionWithWaiter {
             public void run()
             {
                 try {
-                    waiter_server =new ServerSocket(2002);
-                    Socket connectedSocket = waiter_server.accept();
-                    ObjectInputStream ois =new ObjectInputStream(connectedSocket.getInputStream());
-                    Message gotMessage;
-                    for(int i=0 ; i<100; i++) {
-                        gotMessage = Message.obtain();
-                        gotMessage.obj = ois.readObject();
-                        mHandler.sendMessage(gotMessage);
-                        sleep(1000);
+                    while (true) {
+                        waiter_server = new ServerSocket(2002);
+                        Socket connectedSocket = waiter_server.accept();
+                        ObjectInputStream ois = new ObjectInputStream(connectedSocket.getInputStream());
+                        Message gotMessage;
+//                        for (int i = 0; i < 100; i++) {
+                            gotMessage = Message.obtain();
+                            gotMessage.obj = ois.readObject();
+                            mHandler.sendMessage(gotMessage);
+                            sleep(1000);
+//                        }
+                        ois.close();
+                        waiter_server.close();
                     }
-                    ois.close();
-                    waiter_server.close();
                 }
                 catch (Exception e)
                 {

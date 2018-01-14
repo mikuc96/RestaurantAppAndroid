@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.waiter.OrderData.OrderContent;
 
+import java.io.BufferedReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -16,9 +17,14 @@ import static java.lang.Thread.sleep;
 
 
 public class KitchenSockets {
+
     private final String START_PREPARING = "START_PREPARING";
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
+    private final String FINISH_ORDER = "FINISH";
+    private final String MORE_TIME = "MORE";
+    private final String LESS_TIME = "LESS";
+    private final int TIME_UNIT = 300;
     private KitchenHandlingInterface kitchenHandling;
     private ServerSocket kitchen_server;
     Thread m_objThreadKitchen;
@@ -39,15 +45,21 @@ public class KitchenSockets {
                 Log.d("el " + String.valueOf(i) + "  ", String.valueOf(order[i]));
             }
             switch (decodedOrd[4]){
-//                case START_MEAL_PREPARING:
-//                    kitchenHandling.startMealPreparing(order);
-//                    break;
-//                case CANCEL_ORDER:
-//                    kitchenHandling.cancelPreparing(order);
-//                    break;
-//                case ORDER_PROGRESS:
-//                    kitchenHandling.notifyOrderProgress(order);
-//                    break;
+                case START_PREPARING:
+                    kitchenHandling.startOrderPreparing(order[1]);
+                    break;
+                case CANCEL_ORDER:
+                    kitchenHandling.rejectOrder(order[1]);
+                    break;
+                case MORE_TIME:
+                    kitchenHandling.updateOrderTimer(order[1], TIME_UNIT);
+                    break;
+                case LESS_TIME:
+                    kitchenHandling.updateOrderTimer(order[1], -TIME_UNIT);
+                    break;
+                case FINISH_ORDER:
+                    kitchenHandling.finishOrder(order[1]);
+                    break;
             }
         }
     };
@@ -63,16 +75,21 @@ public class KitchenSockets {
             {
                 try
                 {
-                    kitchen_server = new ServerSocket(2003);
-                    Socket connectedSocket = kitchen_server.accept();
-                    ObjectInputStream ois =new ObjectInputStream(connectedSocket.getInputStream());
-                    Message gotMessage;
-                    gotMessage = Message.obtain();
-                    gotMessage.obj = ois.readObject();
-                    mKitchenResponseHandler.sendMessage(gotMessage);
-                    sleep(1000);
-                    ois.close();
-                    kitchen_server.close();// chyba nie trzeba
+                    while (true) {
+                        kitchen_server = new ServerSocket(2003);
+                        Socket connectedSocket = kitchen_server.accept();
+                        ObjectInputStream ois = new ObjectInputStream(connectedSocket.getInputStream());
+                        Message gotMessage;
+//                    for(int i =0; i<10000; i++)
+//                    {
+                        gotMessage = Message.obtain();
+                        gotMessage.obj = ois.readObject();
+                        mKitchenResponseHandler.sendMessage(gotMessage);
+//                        sleep(100);
+//                    }
+                        ois.close();
+                        kitchen_server.close();// chyba nie trzeba
+                    }
                 }
                 catch (Exception e)
                 {

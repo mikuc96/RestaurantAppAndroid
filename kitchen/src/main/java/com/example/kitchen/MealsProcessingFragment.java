@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kitchen.dummy.OrderContent;
-import com.example.kitchen.dummy.OrderContent.SingleOrder;
+import com.example.kitchen.OrderData.OrderContent;
+import com.example.kitchen.OrderData.OrderContent.SingleOrder;
 
 
 public class MealsProcessingFragment extends Fragment {
