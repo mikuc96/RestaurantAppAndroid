@@ -63,8 +63,6 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
             iv.setColorFilter(PREPARING_STATE, PorterDuff.Mode.SRC);
         else if(order.is_prepared)
             iv.setColorFilter(FINISHED_STATE, PorterDuff.Mode.SRC);
-        else if(order.was_served)
-            iv.setColorFilter(NOT_STARTED, PorterDuff.Mode.SRC);
         else{
             iv.setColorFilter(NOT_STARTED, PorterDuff.Mode.SRC);
         }
@@ -84,12 +82,11 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
         return fmt.format(args);
     }
 
-    private void removeFromList(Integer position){
+    private void removeFromList(int position){
         mOrderList.remove(position);
         notifyItemRemoved(position);
-//        recycler.removeViewAt(position);
         notifyItemRangeChanged(position, mOrderList.size());
-        Log.d("asaasasssssssssssss", String.valueOf(mOrderList.size()));
+        notifyDataSetChanged();
     }
 
     private SingleOrder getListElement(Integer listPosition){
@@ -117,8 +114,8 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
             @Override
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
-                removeFromList(newPosition);
                 sendInfo(OrderContent.processingOrderList.get(newPosition), CANCEL_ORDER);
+                removeFromList(newPosition);
             }
         });
 

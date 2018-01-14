@@ -20,6 +20,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     private Handler mHandler;
     Button add_meal_btn;
     Button show_tables_btn;
+    Button refreshBtn;
     Random generator = new Random();
     RecyclerViewsManager recyclerView;
 
@@ -54,10 +55,16 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
 
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(),	"Dodac aktywnosc stolikow", Toast.LENGTH_SHORT).show();
-                //todo Dodac aktywnosc stolikow
                 Intent intent = new Intent(getApplicationContext(), Tables.class);
                 startActivity(intent);
+            }
+        });
+        refreshBtn = (Button) findViewById(R.id.refresh_btn);
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                recyclerView.refreshRecyclerLists();
             }
         });
     }

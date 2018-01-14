@@ -19,12 +19,12 @@ public class WaiterSockets {
     private final String CANCEL_ORDER = "CANCEL";
     private final String ORDER_PROGRESS = "PROGRESS";
 
-    private Thread m_objThread;
     private ServerSocket waiter_server;
     private Socket waiterSocket;
     private OrderCommunicationInterface mealStatusDisplay;
 
     @SuppressLint("HandlerLeak")
+    private
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -55,50 +55,41 @@ public class WaiterSockets {
         mealStatusDisplay = orderCom;
     }
     void startListeningWaiter() {
-        m_objThread=new Thread(new Runnable() {
-            public void run()
-            {
+        Thread m_objThreadWaiter = new Thread(new Runnable() {
+            public void run() {
                 try {
                     while (true) {
                         waiter_server = new ServerSocket(2002);
                         Socket connectedSocket = waiter_server.accept();
                         ObjectInputStream ois = new ObjectInputStream(connectedSocket.getInputStream());
                         Message gotMessage;
-//                        for (int i = 0; i < 100; i++) {
-                            gotMessage = Message.obtain();
-                            gotMessage.obj = ois.readObject();
-                            mHandler.sendMessage(gotMessage);
-                            sleep(1000);
-//                        }
+                        gotMessage = Message.obtain();
+                        gotMessage.obj = ois.readObject();
+                        mHandler.sendMessage(gotMessage);
+                        sleep(1000);
                         ois.close();
                         waiter_server.close();
                     }
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        m_objThread.start();
+        m_objThreadWaiter.start();
     }
 
 
     void sendToWaiter(OrderContent.SingleOrder singleOrd, String request_name) {
         final String msg = encodeOrder(singleOrd, request_name);
-        m_objThread=new Thread(new Runnable() {
-            public void run()
-            {
+        Thread m_objThread = new Thread(new Runnable() {
+            public void run() {
                 try {
-                    waiterSocket =new Socket("127.0.0.2",2003); // czy ip ok?
-                    ObjectOutputStream oos =new ObjectOutputStream(waiterSocket.getOutputStream());
+                    waiterSocket = new Socket("127.0.0.2", 2003); // czy ip ok?
+                    ObjectOutputStream oos = new ObjectOutputStream(waiterSocket.getOutputStream());
                     oos.writeObject(msg);
                     sleep(1000);
                     oos.close();
-//                    waiter_server.close(); // chyba nie trzeba Nie a zamykać
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

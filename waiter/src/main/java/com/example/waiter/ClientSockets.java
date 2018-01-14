@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.example.waiter.OrderData.OrderContent;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -18,14 +20,9 @@ public class ClientSockets {
     private final String ORDER_PROGRESS = "PROGRESS";
     private final String PAY = "PAY";
 
-    private String mealId = "000";
-    private String order_id = "010";
-    private String table_id = "001";
-
-    private Thread m_objThread;
     private ServerSocket client_server;
     private ClientHandlingInterface orderDisplay;
-
+    private Socket clientSocket;
 
     @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
@@ -70,70 +67,51 @@ public class ClientSockets {
         orderDisplay = orderCom;
     }
     void startListening() {
-        m_objThread=new Thread(new Runnable() {
-            public void run()
-            {
+        Thread m_objThreadClient = new Thread(new Runnable() {
+            public void run() {
                 try {
-                    Message clientMessage;
-                    Socket connectedSocket;
-                    client_server =new ServerSocket(2001);
-                    connectedSocket = client_server.accept();
-                    ObjectInputStream ois =new ObjectInputStream(connectedSocket.getInputStream());;
-                    ObjectOutputStream oos =new ObjectOutputStream(connectedSocket.getOutputStream());;
-                    for(int i=0 ; i<100000; i++) {
+                    while (true) {
+                        Message clientMessage;
+                        client_server = new ServerSocket(2001);
+                        Socket connectedSocket = client_server.accept();
+                        ObjectInputStream ois = new ObjectInputStream(connectedSocket.getInputStream());
                         clientMessage = Message.obtain();
                         clientMessage.obj = ois.readObject();
-
                         mHandler.sendMessage(clientMessage);
-                        oos.writeObject("Waiter: Thank you I got your message: " + clientMessage.obj.toString());
-                        sleep(1000);
-
+                        ois.close();
+                        client_server.close();
                     }
-                    ois.close();
-                    oos.close();
-                    client_server.close();
-                    Log.d("TTTTTTTT", "koniec watku m_objThread");
-
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-            }
-        });
-        m_objThread.start();
-    }
-
-
-    void sendNotificationToClient(final String notificationMsg) { //chyba W OGOLE ZLE
-        Log.d("sendNotificationToCnt", "sendNotificationToClient");
-        m_objThread=new Thread(new Runnable() {
-            public void run()
-            {
-                try {
-                    client_server =new ServerSocket(2001); //chyba pomieszane socket z serversocket
-                    Socket connectedSocket = client_server.accept();
-                    ObjectOutputStream oos =new ObjectOutputStream(connectedSocket.getOutputStream());
-                    oos.writeObject("Waiter: Notification for client: " + notificationMsg);
-                    sleep(100);
-
-                    oos.close();
-                    client_server.close();
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        m_objThread.start();
-        try {
-            m_objThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        m_objThreadClient.start();
     }
 
+
+    public void sendToClient(OrderContent.SingleOrder singleOrd, String request_name){
+        final String msg = encodeOrder(singleOrd, request_name);
+        Thread m_objThreadWaiter = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    clientSocket = new Socket("127.0.0.2", 2004);
+                    ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
+                    oos.writeObject(msg);
+                    sleep(1000);
+                    oos.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        m_objThreadWaiter.start();
+    }
+
+    //[client_id, orderId, mealId, tableId, req_name]
+    public String encodeOrder(OrderContent.SingleOrder singleOrd, String request_name){
+        return singleOrd.client_id +'/'+ singleOrd.order_id + '/' + singleOrd.meal_id +'/'+ singleOrd.table_id +'/'+request_name;
+    }
 
     String[] decodeIDsFromClientRequest(String msg){
         String[] code = msg.split("/");

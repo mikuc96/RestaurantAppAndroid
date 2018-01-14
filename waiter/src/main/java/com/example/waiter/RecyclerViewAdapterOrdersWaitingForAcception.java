@@ -41,8 +41,7 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
     public void onBindViewHolder(final ViewHolderForWaitingForAcceptionOrders holder, final int position) {
         holder.mItem = mOrderListToAccept.get(position);
         holder.mNameView.setText(String.valueOf(mOrderListToAccept.get(position).meal_name));
-        holder.mTimerView.setText(String.valueOf(mOrderListToAccept.get(position).timer));
-        Log.d("onBindViewHolder prep ", "waiting for");
+        holder.mTimerView.setText("Czas: " + OrderContent.formatTime(mOrderListToAccept.get(position).timer));
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +55,7 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
             @Override
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
+                SendOrderRejected(newPosition);
                 removeFromList(newPosition);
             }
         });
@@ -78,10 +78,11 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
     }
 
 
-    private void removeFromList(Integer position){
+    private void removeFromList(int position){
         mOrderListToAccept.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mOrderListToAccept.size());
+        notifyDataSetChanged();
     }
 
 
@@ -92,6 +93,12 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
         sc.sendToKitchen(singleOrd, START_MEAL_PREPARING);
     }
 
+    private void SendOrderRejected(int listPosition)
+    {
+        ClientSockets sc=new ClientSockets();
+        SingleOrder singleOrd = OrderContent.currentOrderList.get(listPosition);
+        sc.sendToClient(singleOrd, CANCEL_ORDER);
+    }
 
     public class ViewHolderForWaitingForAcceptionOrders extends RecyclerView.ViewHolder {
         public final View mView;

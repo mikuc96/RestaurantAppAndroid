@@ -1,5 +1,6 @@
 package com.example.waiter.OrderData;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,14 @@ public class OrderContent {
         return new SingleOrder(client_id, order_id, meal_id, getRecipe(order_id), table_id);
     }
 
+    public static String formatTime(Integer t){
+        Integer hours = t / 3600;
+        Integer minutes = (t % 3600) / 60;
+        Integer seconds = t % 60;
+        Integer[] args = {hours, minutes, seconds};
+        MessageFormat fmt = new MessageFormat("{0}:{1}:{2}");
+        return fmt.format(args);
+    }
 
     private static String getRecipe(int position) {
         return "Przepis";

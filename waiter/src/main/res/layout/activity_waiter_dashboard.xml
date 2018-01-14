@@ -45,5 +45,14 @@
         android:layout_marginTop="11dp"
         android:layout_weight="1"
         android:text="Add meal" />
+    <Button
+        android:id="@+id/refresh_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/test_add_meal"
+        android:layout_marginTop="11dp"
+        android:layout_weight="1"
+        android:text="Refresh" />
 
 </RelativeLayout>

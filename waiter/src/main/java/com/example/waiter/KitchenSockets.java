@@ -27,8 +27,7 @@ public class KitchenSockets {
     private final int TIME_UNIT = 300;
     private KitchenHandlingInterface kitchenHandling;
     private ServerSocket kitchen_server;
-    Thread m_objThreadKitchen;
-    Socket kitchenSocket;
+    private Socket kitchenSocket;
 
 
     @SuppressLint("HandlerLeak")
@@ -70,29 +69,21 @@ public class KitchenSockets {
     }
 
     public void startListeningKitchen(){
-        m_objThreadKitchen=new Thread(new Runnable() {
-            public void run()
-            {
-                try
-                {
+        Thread m_objThreadKitchen = new Thread(new Runnable() {
+            public void run() {
+                try {
                     while (true) {
                         kitchen_server = new ServerSocket(2003);
                         Socket connectedSocket = kitchen_server.accept();
                         ObjectInputStream ois = new ObjectInputStream(connectedSocket.getInputStream());
                         Message gotMessage;
-//                    for(int i =0; i<10000; i++)
-//                    {
                         gotMessage = Message.obtain();
                         gotMessage.obj = ois.readObject();
                         mKitchenResponseHandler.sendMessage(gotMessage);
-//                        sleep(100);
-//                    }
                         ois.close();
-                        kitchen_server.close();// chyba nie trzeba
+                        kitchen_server.close();
                     }
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -103,37 +94,25 @@ public class KitchenSockets {
 
     public void sendToKitchen(OrderContent.SingleOrder singleOrd, String request_name){
         final String msg = encodeOrder(singleOrd, request_name);
-        m_objThreadKitchen=new Thread(new Runnable() {
-            public void run()
-            {
-                try
-                {
-                    kitchenSocket= new Socket("127.0.0.2",2002);
+        Thread m_objThreadWaiter = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    kitchenSocket = new Socket("127.0.0.2", 2002);
                     ObjectOutputStream oos = new ObjectOutputStream(kitchenSocket.getOutputStream());
                     oos.writeObject(msg);
                     sleep(1000);
                     oos.close();
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        m_objThreadKitchen.start();
+        m_objThreadWaiter.start();
     }
 
 
-    @SuppressLint("HandlerLeak")
-    Handler kitchenResponseDisplay = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-//            String serverMsg = msg.obj.toString();
-    ;
-        }
-    };
-
-    public String encodeOrder(OrderContent.SingleOrder singleOrd, String request_name){ //[client_id, orderId, mealId, tableId, req_name]
+    //[client_id, orderId, mealId, tableId, req_name]
+    public String encodeOrder(OrderContent.SingleOrder singleOrd, String request_name){
         return singleOrd.client_id +'/'+ singleOrd.order_id + '/' + singleOrd.meal_id +'/'+ singleOrd.table_id +'/'+request_name;
     }
 

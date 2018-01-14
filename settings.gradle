@@ -1,1 +1,1 @@
-include ':waiter', ':kitchen'
+include ':client', ':waiter', ':kitchen'
