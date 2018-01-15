@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@drawable/ic_list_black_24dp"
-        android:text="tables"
         />
 
 
@@ -46,7 +45,6 @@
         android:layout_marginTop="11dp"
         android:layout_weight="1"
         android:background="@drawable/ic_add_circle_black_24dp"
-        android:text="Add meal"
         />
 
     <Button
@@ -57,6 +55,6 @@
         android:layout_below="@id/test_add_meal"
         android:layout_marginTop="11dp"
         android:layout_weight="1"
-        android:text="Refresh" />
+         />
 
 </RelativeLayout>

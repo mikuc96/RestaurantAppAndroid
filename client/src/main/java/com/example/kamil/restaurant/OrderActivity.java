@@ -25,7 +25,7 @@ public class OrderActivity extends Activity {
     private Button make_order_btn;
     private final String CLIENT_ID = "123456";
     private String mealId = "100";
-    private String tableId = "9";
+    private String tableId = "2";
 
     private OrderDataBase order;
     protected void onCreate(Bundle savedInstanceState) {

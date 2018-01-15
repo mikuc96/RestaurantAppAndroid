@@ -20,6 +20,11 @@ public class OrderContent {
         processingOrderMap.put(String.valueOf(item.order_id), item);
     }
 
+    public static void updateTimer(int position){
+        SingleOrder el = processingOrderList.get(position);
+        if(el.timer >0)
+            el.timer -= 1;
+    }
 
     private static SingleOrder createSingleOrderData(int client_id, int order_id, int meal_id, int table_id) {
         return new SingleOrder(client_id, order_id, meal_id, getRecipe(order_id), table_id);

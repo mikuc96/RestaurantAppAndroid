@@ -1,5 +1,6 @@
 package com.example.kitchen;
 
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,14 +16,17 @@ public class KitchenDashboard extends AppCompatActivity implements MealsProcessi
     Button refresh_btn;
     Button add_meal;
     Random generator = new Random();
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        mHandler = new Handler();
         bindButtons();
         refreshLists();
         waitForOrder();
+//        autoRefresh();
     }
 
 
@@ -52,22 +56,31 @@ public class KitchenDashboard extends AppCompatActivity implements MealsProcessi
         add_meal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int i = generator.nextInt(10);
-                OrderContent.addSingleOrderToOrderList(i, i*10, i + 100, i % 9);
+                int i = generator.nextInt(5);
+                OrderContent.addSingleOrderToOrderList(i, i*10, i + 100, i % 5);
                 refreshLists();
             }
         });
     }
 
     private void refreshLists(){
-        Toast.makeText(getApplicationContext(),	"refreshing", Toast.LENGTH_SHORT).show();
-
         MealsProcessingFragment f1 = new MealsProcessingFragment();
         FragmentTransaction tr1 = getSupportFragmentManager().beginTransaction();
         tr1.replace(R.id.elements_in_preparing, f1);
         tr1.addToBackStack(null);
         tr1.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         tr1.commit();
+    }
+
+    private void autoRefresh(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                refreshLists();
+                mHandler.postDelayed(this, 5000);
+            }
+        });
+        t.start();
     }
 
 }

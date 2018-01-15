@@ -2,11 +2,12 @@ package com.example.waiter;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.waiter.OrderData.OrderContent;
 
@@ -18,17 +19,19 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     private ClientSockets clientConnection;
     private KitchenSockets kitchenConnection;
     private Handler mHandler;
+    private Handler mConnectionHandler;
+    private Thread refreshThread;
     Button add_meal_btn;
     Button show_tables_btn;
     Button refreshBtn;
     Random generator = new Random();
-    RecyclerViewsManager recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter_dashboard);
         mHandler = new Handler();
+        mConnectionHandler = new Handler();
         bindButtons();
         waitForOrder();
 //        autoRefresh();
@@ -36,17 +39,15 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
 
 
     private void bindButtons(){
-        recyclerView = new RecyclerViewsManager(this);
-        recyclerView.refreshRecyclerLists();
+        refreshRecyclerLists();
 
         add_meal_btn = (Button) findViewById(R.id.test_add_meal);
         add_meal_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),	"Adding  meal", Toast.LENGTH_SHORT).show();
-                int i = generator.nextInt(10);
-                OrderContent.addSingleOrderToOrderList(i, i*10, i + 100, i % 9);
-                recyclerView.refreshRecyclerLists();
+                int i = generator.nextInt(5);
+                OrderContent.addSingleOrderToOrderList(i, i*10, i + 100, i % 5);
+                refreshRecyclerLists();
             }
         });
 
@@ -64,7 +65,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
 
             @Override
             public void onClick(View v) {
-                recyclerView.refreshRecyclerLists();
+                refreshRecyclerLists();
             }
         });
     }
@@ -72,38 +73,85 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
 
     @Override
     public void onListFragmentInteraction(OrderContent.SingleOrder item) {
-        recyclerView.refreshRecyclerLists();
+        refreshRecyclerLists();
     }
 
 
     @Override
+    public void onStart(){
+        super.onStart();
+//        autoRefresh();
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+//        if(refreshThread != null)
+//            refreshThread.interrupt();
+    }
+
+    @Override
     public void onFragmentInteraction(OrderContent.SingleOrder item) {
-        recyclerView.refreshRecyclerLists();
+        refreshRecyclerLists();
     }
 
 
     public void waitForOrder()
     {
-        ClientHandling clientCom = new ClientHandling();
-        clientConnection = new ClientSockets();
-        clientConnection.setEventListener(clientCom);
-        clientConnection.startListening();
-
         KitchenHandling kitchenCom = new KitchenHandling();
+        final ClientHandling clientCom = new ClientHandling();
+
+//        clientConnection = new ClientSockets();
+//        clientConnection.setEventListener(clientCom);
+//        clientConnection.startListening();
+//
+        mConnectionHandler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                clientConnection = new ClientSockets();
+                clientConnection.setEventListener(clientCom);
+                clientConnection.startListening();
+            }
+        });
+//        t.start();
+
         kitchenConnection = new KitchenSockets();
         kitchenConnection.setEventListener(kitchenCom);
         kitchenConnection.startListeningKitchen();
-        Toast.makeText(getApplicationContext(),	"waiting for order", Toast.LENGTH_SHORT).show();
     }
 
     private void autoRefresh(){
-        Thread t = new Thread(new Runnable() {
+        refreshThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                recyclerView.refreshRecyclerLists();
-                mHandler.postDelayed(this, 1000);
+                refreshRecyclerLists();
+                mHandler.postDelayed(this, 5000);
             }
         });
+        refreshThread.start();
+    }
+
+    private void refreshRecyclerLists() {
+        refreshWaitingForAcceptionList();
+        refreshInPreparingList();
+    }
+
+    private void refreshWaitingForAcceptionList(){
+        OrdersWaitingForAcceptionFragment f1 = new OrdersWaitingForAcceptionFragment();
+        replaceFrgments(R.id.elements_waiting_for_acceptation, f1);
+    }
+
+    private void refreshInPreparingList(){
+        OrdersInPreparingFragment f1 = new OrdersInPreparingFragment();
+        replaceFrgments(R.id.elements_preparing_in_kitchen, f1);
+    }
+
+    private void replaceFrgments(int previousFragment, Fragment newFragment){
+        FragmentTransaction tr1 = getSupportFragmentManager().beginTransaction();
+        tr1.replace(previousFragment, newFragment);
+        tr1.addToBackStack(null);
+        tr1.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        tr1.commit();
     }
 }
 

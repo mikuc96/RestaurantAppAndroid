@@ -72,6 +72,10 @@ public class Tables extends AppCompatActivity {
         }
     }
     private void setTableColor(int tableId, int state){
-        table_st[tableId-1].setColorFilter(state, PorterDuff.Mode.SRC);
+        try {
+            table_st[tableId - 1].setColorFilter(state, PorterDuff.Mode.SRC);
+        }catch(ArrayIndexOutOfBoundsException e){
+            ;
+            }
     }
 }

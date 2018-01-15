@@ -16,7 +16,6 @@ import com.example.waiter.OrderData.OrderContent;
 import com.example.waiter.OrdersInPreparingFragment.OnFragmentOfProcessingOrdersInteractionListener;
 import com.example.waiter.OrderData.OrderContent.SingleOrder;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 public class RecyclerViewAdapterOrdersInPreparing
@@ -47,6 +46,7 @@ public class RecyclerViewAdapterOrdersInPreparing
     public void onBindViewHolder(final ViewHolderInProcessing holder, int position) {
         holder.mItem = mOrderListInPreparing.get(position);
         holder.mMealNameView.setText(String.valueOf(mOrderListInPreparing.get(position).meal_name));
+        OrderContent.updateTimer(position);
         holder.mTimerView.setText("Czas: " + OrderContent.formatTime(mOrderListInPreparing.get(position).timer));
         holder.mTableIdView.setText("Stolik: " + String.valueOf(mOrderListInPreparing.get(position).table_id));
 
@@ -95,9 +95,14 @@ public class RecyclerViewAdapterOrdersInPreparing
     private void SendOrderFinished(int listPosition)
     {
         ClientSockets sc=new ClientSockets();
-        SingleOrder singleOrd = OrderContent.currentOrderList.get(listPosition);
-        sc.sendToClient(singleOrd, ORDER_PREPARED);
-    }
+        if(OrderContent.currentOrderList.size() > 0) {
+            SingleOrder singleOrd = OrderContent.currentOrderList.get(listPosition);
+
+            int tabId = Integer.parseInt(singleOrd.table_id);
+            if (tabId > 0 && tabId <= 6)
+                sc.sendToClient(singleOrd, ORDER_PREPARED);
+        }
+        }
 
     @Override
     public int getItemCount() {

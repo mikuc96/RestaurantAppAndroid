@@ -52,8 +52,8 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
     public void onBindViewHolder(final OrderViewHolder holder, int position) {
         holder.mItem = mOrderList.get(position);
         holder.mMealName.setText(mOrderList.get(position).meal_name);
+        OrderContent.updateTimer(position);
         holder.mTimer.setText(formatTime(mOrderList.get(position).timer));
-        Log.d("onBindViewHolder prep ", "kitch");
         bindButtons(holder);
         updateOrderStatusImg(holder.mStatusImg, mOrderList.get(position));
     }
