@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Refresh" />
+        android:background="@drawable/ic_refresh_black_24dp" />
 
     <Button
         android:id="@+id/add_meal"
@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/refresh_tmp_btn"
-        android:text="Add" />
+        android:background="@drawable/ic_add_circle_black_24dp"
+        />
 
 </RelativeLayout>

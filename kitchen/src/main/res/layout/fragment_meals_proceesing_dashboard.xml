@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:text="more" />
+        android:background="@drawable/ic_keyboard_arrow_up_black_24dp" />
 
     <Button
         android:id="@+id/less_btn"
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:text="less" />
+        android:background="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
     <Button
         android:id="@+id/reject_btn"
