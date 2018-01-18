@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.waiter.OrderData.OrderContent;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -18,23 +23,49 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
 
     private ClientSockets clientConnection;
     private KitchenSockets kitchenConnection;
-    private Handler mHandler;
+    private Handler mRefreshingHandler;
     private Handler mConnectionHandler;
     private Thread refreshThread;
     Button add_meal_btn;
     Button show_tables_btn;
     Button refreshBtn;
     Random generator = new Random();
+    Runnable runner;
+    FirebaseDatabase database;
+    public static DatabaseReference menuRef;
+    public static DataSnapshot menuSnap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter_dashboard);
-        mHandler = new Handler();
+        mRefreshingHandler = new Handler();
         mConnectionHandler = new Handler();
         bindButtons();
         waitForOrder();
-//        autoRefresh();
+
+        database = FirebaseDatabase.getInstance();
+        menuRef = database.getReference("Menu");
+
+        menuRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                menuSnap =dataSnapshot;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        runner = new Runnable() {
+                @Override
+                public void run() {
+                refreshRecyclerLists();
+                mRefreshingHandler.postDelayed(this, 5000);
+            }
+        };
     }
 
 
@@ -46,7 +77,8 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
             @Override
             public void onClick(View v) {
                 int i = generator.nextInt(5);
-                OrderContent.addSingleOrderToOrderList(i, i*10, i + 100, i % 5);
+                int orderId = 100;
+                OrderContent.addSingleOrderToOrderList(i, orderId, i + 100, i % 5);
                 refreshRecyclerLists();
             }
         });
@@ -80,13 +112,12 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     @Override
     public void onStart(){
         super.onStart();
-//        autoRefresh();
+        autoRefresh();
     }
     @Override
     public void onStop(){
+        mRefreshingHandler.removeCallbacks(runner);
         super.onStop();
-//        if(refreshThread != null)
-//            refreshThread.interrupt();
     }
 
     @Override
@@ -100,10 +131,6 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
         KitchenHandling kitchenCom = new KitchenHandling();
         final ClientHandling clientCom = new ClientHandling();
 
-//        clientConnection = new ClientSockets();
-//        clientConnection.setEventListener(clientCom);
-//        clientConnection.startListening();
-//
         mConnectionHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -113,7 +140,6 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
                 clientConnection.startListening();
             }
         });
-//        t.start();
 
         kitchenConnection = new KitchenSockets();
         kitchenConnection.setEventListener(kitchenCom);
@@ -121,14 +147,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     }
 
     private void autoRefresh(){
-        refreshThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                refreshRecyclerLists();
-                mHandler.postDelayed(this, 5000);
-            }
-        });
-        refreshThread.start();
+        mRefreshingHandler.postDelayed(runner , 5000);
     }
 
     private void refreshRecyclerLists() {

@@ -1,15 +1,14 @@
 package com.example.kamil.restaurant;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.kamil.restaurant.Dialog.Helper;
 import com.example.kamil.restaurant.Dialog.LoginDialog;
-import com.example.kamil.restaurant.Dialog.RatingDialog;
 import com.example.kamil.restaurant.Dialog.RegisterDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +25,8 @@ public class StartActivity extends AppCompatActivity {
     FirebaseDatabase database;
     public static DatabaseReference userRef;
     public static DataSnapshot userSnap;
+    public static DatabaseReference menuRef;
+    public static DataSnapshot menuSnap;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +36,23 @@ public class StartActivity extends AppCompatActivity {
         // Write a message to the database
         database = FirebaseDatabase.getInstance();
         userRef = database.getReference("Users");
-
+        menuRef = database.getReference("Menu");
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userSnap=dataSnapshot;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        menuRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                menuSnap =dataSnapshot;
             }
 
             @Override

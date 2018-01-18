@@ -3,9 +3,9 @@ package com.example.kamil.restaurant;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,7 +13,6 @@ import com.example.kamil.restaurant.DataBase.DishesDataBase;
 import com.example.kamil.restaurant.DataBase.OrderDataBase;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class OrderActivity extends Activity {
     private final String MAKE_ORDER = "ORDER";
@@ -69,7 +68,7 @@ public class OrderActivity extends Activity {
 
     public void SendInfo()
     {
-        String orderId = String.valueOf(new Random().nextInt());
+        String orderId = "100";
         SocketCommunication sc=new SocketCommunication();
         sc.modifyOrder(CLIENT_ID, orderId, mealId, tableId, MAKE_ORDER);
 

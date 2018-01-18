@@ -1,5 +1,8 @@
 package com.example.waiter.OrderData;
 
+import com.example.waiter.WaiterDashboard;
+import com.google.firebase.database.DataSnapshot;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +18,25 @@ public class OrderContent {
     public static Map<String, SingleOrder> processingOrderMap = new HashMap<String, SingleOrder>();
     static Random tmp_generator = new Random();
 
+
+    public static class DatabaseResponse{
+        String name;
+        int time;
+
+        public DatabaseResponse(DataSnapshot ds){
+            name = ds.child("nazwa").getValue().toString();
+            time = Integer.parseInt(ds.child("czas przygotowywania").getValue().toString());
+        }
+    }
+
+    public static DatabaseResponse getFromDatabase(int order_id) {
+        String orderId = String.valueOf(order_id);
+        if (WaiterDashboard.menuSnap.child(orderId).exists()) {
+            DatabaseResponse dr = new DatabaseResponse(WaiterDashboard.menuSnap.child(orderId));
+            return dr;
+        }
+        return null;
+    }
 
     public static void addSingleOrderToOrderList(int client_id, int order_id, int meal_id, int table_id) {
         SingleOrder item = createSingleOrderData(client_id, order_id , meal_id, table_id);
@@ -54,7 +76,7 @@ public class OrderContent {
 
     public static class SingleOrder {
         public final String order_id;
-        public String meal_name = "Jeszcze Glupsza Nazwa Potrawy"; //final
+        public String meal_name = "Jeszcze Glupsza Nazwa Potrawy";
         public String meal_id = "111";
         public String client_id = "111";
         public final String recipe;
@@ -69,14 +91,15 @@ public class OrderContent {
 
 
         public SingleOrder(int client_id, int order_id, int meal_id, String recipe, int table_id) {
+            DatabaseResponse dr = getFromDatabase(order_id);
             this.order_id = String.valueOf(order_id);
             this.table_id = String.valueOf(table_id);
             this.meal_id = String.valueOf(meal_id);
             this.client_id = String.valueOf(client_id);
-            if(meal_id > 0 ) // todo pobrac z bazy
-                this.meal_name = String.valueOf(tmp_generator.nextInt());
+            if(meal_id > 0 )
+                this.meal_name = dr.name;
             this.recipe = recipe;
-            this.timer = 120;
+            this.timer = dr.time;
             this.is_paying = false;
             this.is_accepted_by_waiter = false;
             this.is_preparing = false;

@@ -1,14 +1,19 @@
 package com.example.kitchen;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.kitchen.OrderData.OrderContent;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -16,19 +21,56 @@ public class KitchenDashboard extends AppCompatActivity implements MealsProcessi
     Button refresh_btn;
     Button add_meal;
     Random generator = new Random();
+    Runnable runner;
     private Handler mHandler;
+    private Handler mRefreshingHandler;
+    FirebaseDatabase database;
+    public static DatabaseReference userRef;
+    public static DataSnapshot userSnap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         mHandler = new Handler();
+        mRefreshingHandler = new Handler();
         bindButtons();
-        refreshLists();
         waitForOrder();
-//        autoRefresh();
+
+        database = FirebaseDatabase.getInstance();
+        userRef = database.getReference("Menu");
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userSnap=dataSnapshot;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        runner = new Runnable() {
+            @Override
+            public void run() {
+                refreshLists();
+                mRefreshingHandler.postDelayed(this, 5000);
+            }
+        };
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        autoRefresh();
+    }
+    @Override
+    public void onStop(){
+        mRefreshingHandler.removeCallbacks(runner);
+        super.onStop();
+    }
 
     @Override
     public void onListFragmentInteraction(OrderContent.SingleOrder item) {
@@ -73,14 +115,7 @@ public class KitchenDashboard extends AppCompatActivity implements MealsProcessi
     }
 
     private void autoRefresh(){
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                refreshLists();
-                mHandler.postDelayed(this, 5000);
-            }
-        });
-        t.start();
+        mRefreshingHandler.postDelayed(runner , 5000);
     }
 
 }

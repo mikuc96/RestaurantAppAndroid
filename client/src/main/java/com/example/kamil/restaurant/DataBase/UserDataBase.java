@@ -1,6 +1,7 @@
 package com.example.kamil.restaurant.DataBase;
 
 import java.util.ArrayList;
+
 public class UserDataBase {
 
     static final ArrayList<UserDataBase> users = new ArrayList<UserDataBase>();

@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "495945108913-fl7grl5qgjmu7d6m062hauk1dhss44af.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kamil.restaurant",
+            "certificate_hash": "6057609c87ac6c1c979067be437773383e191522"
+          }
+        },
+        {
+          "client_id": "495945108913-anrmu0mdharvu7a0o147ukej5dkhh8m1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kamil.restaurant",
+            "certificate_hash": "bde9b12e9096ddf37ded65ed52dcd79ff88f02cd"
+          }
+        },
+        {
           "client_id": "495945108913-hme0gc61aj269j97c9s20s6c7kcinqlv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
