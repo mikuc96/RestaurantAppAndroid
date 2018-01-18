@@ -16,6 +16,14 @@ public class LoginDialog extends AppCompatDialogFragment {
     TextView email, password;
     AlertDialog.Builder builder1;
 
+    public Boolean checkNotNull(TextView email, TextView password)
+    {
+        if(email.getText().toString().isEmpty() || password.getText().toString().isEmpty() )
+        {
+            return Boolean.FALSE;
+        }else return Boolean.TRUE;
+    }
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder ad=new AlertDialog.Builder(getActivity());
@@ -30,16 +38,20 @@ public class LoginDialog extends AppCompatDialogFragment {
         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
-                if (UserDataBase.loginUser(email.getText().toString(), password.getText().toString())) {
-
+            if(StartActivity.userSnap.child(email.getText().toString()).exists() && checkNotNull(email,password) )
+            {
+                if(StartActivity.userSnap.child(email.getText().toString()).child("password").getValue()
+                        .equals(password.getText().toString()))
+                {
+                    Helper.showDialog(builder1,getContext(),"Login ok!");
+                    StartActivity.who=StartActivity.userSnap.child(email.getText().toString()).child("name").getValue().toString();
                     StartActivity.btnProfile.setVisibility(View.VISIBLE);
-                    Helper.showDialog(builder1, getContext(), "Login, ok!");
-                    StartActivity.logged = Boolean.TRUE;
-                    StartActivity.who = email.getText().toString();
+                    StartActivity.logged=Boolean.TRUE;
 
-                } else {
-                    Helper.showDialog(builder1, getContext(), "Login filed!");
-                }
+                }else Helper.showDialog(builder1,getContext(),"Incorect login or password");
+
+            }else Helper.showDialog(builder1,getContext(),"Incorect login or password");
+
             }
         })
         .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
