@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.kamil.restaurant.DataBase.UserDataBase;
 import com.example.kamil.restaurant.R;
+import com.example.kamil.restaurant.StartActivity;
 
 /**
  * Created by mikuc on 1/10/18.
@@ -35,19 +36,20 @@ public class RegisterDialog extends AppCompatDialogFragment {
         ad.setPositiveButton("Register", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                us=new UserDataBase(name.getText().toString(),email.getText().toString(),password.getText().toString());
-                if(UserDataBase.addUser(us)) {
 
-                    Helper.showDialog(builder1,getContext(), "Your registration was successful!");
-
-                }else Helper.showDialog(builder1,getContext(),"Your exist in database, please login!");
-
+                if(StartActivity.userSnap.child(email.getText().toString()).exists())
+                {
+                    Helper.showDialog(builder1,getContext(),"Your exist in database, please login!");
+                }else{
+                    us=new UserDataBase(name.getText().toString(),email.getText().toString(),password.getText().toString());
+                    StartActivity.userRef.child(email.getText().toString()).setValue(us);
+                    Helper.showDialog(builder1,getContext(),"Your registration was succesful!");
+                }
             }
         });
         ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
             }
         });
 
