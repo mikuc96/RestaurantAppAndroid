@@ -29,8 +29,8 @@
 
     <Button
         android:id="@+id/tables_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/ic_list_black_24dp"
         />
@@ -55,6 +55,96 @@
         android:layout_below="@id/test_add_meal"
         android:layout_marginTop="11dp"
         android:layout_weight="1"
+        android:visibility="invisible"
          />
+
+
+    <ImageView
+        android:id="@+id/status"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignEnd="@+id/refresh_btn"
+        android:layout_alignTop="@+id/status3"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/status2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignStart="@+id/status"
+        android:layout_below="@+id/status"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/colorYellow"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/status"
+        android:layout_toEndOf="@+id/refresh_btn"
+        android:text="Podano"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView"
+        android:layout_alignTop="@+id/status2"
+        android:layout_marginTop="19dp"
+        android:textSize="25dp"
+        android:text="Oczekujący na zamówienie"
+        android:id="@+id/textView2" />
+
+    <ImageView
+        android:id="@+id/status3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="89dp"
+        android:layout_marginStart="30dp"
+        android:layout_toEndOf="@+id/elements_waiting_for_acceptation"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/colorGreen"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/status4"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignStart="@+id/status3"
+        android:layout_alignTop="@+id/status2"
+        android:background="@drawable/rounded_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@+id/status3"
+        android:textSize="25dp"
+        android:text="Gotowe do podania" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignStart="@+id/textView3"
+        android:textSize="25dp"
+        android:text="Płatność" />
 
 </RelativeLayout>

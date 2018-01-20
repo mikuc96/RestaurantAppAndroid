@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="368dp"
-        android:layout_height="381dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp">
+
+        <!--android:layout_width="368dp"-->
+        <!--android:layout_height="381dp"-->
+        <!--tools:layout_editor_absoluteX="8dp"-->
+        <!--tools:layout_editor_absoluteY="0dp">-->
 
         <TextView
             android:id="@+id/textView2"
@@ -112,6 +113,6 @@
             android:layout_alignEnd="@+id/editText"
             android:layout_alignRight="@+id/editText"
             android:text="Załaduj" />
-    </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>

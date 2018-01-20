@@ -27,7 +27,6 @@ public class MealsProcessingFragment extends Fragment {
     public MealsProcessingFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static MealsProcessingFragment newInstance(int columnCount) {
         MealsProcessingFragment fragment = new MealsProcessingFragment();

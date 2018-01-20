@@ -4,7 +4,6 @@ package com.example.waiter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.waiter.OrderData.OrderContent;
-import com.example.waiter.OrdersInPreparingFragment.OnFragmentOfProcessingOrdersInteractionListener;
 import com.example.waiter.OrderData.OrderContent.SingleOrder;
+import com.example.waiter.OrdersInPreparingFragment.OnFragmentOfProcessingOrdersInteractionListener;
 
 import java.util.List;
 
@@ -26,8 +25,9 @@ public class RecyclerViewAdapterOrdersInPreparing
     private final int NOT_STARTED = Color.GRAY;
     private final int PREPARING_STATE = Color.YELLOW;
     private final int FINISHED_STATE = Color.GREEN;
-    private final int REJECTED_STATE = Color.RED;
-    private final int PAYING = Color.YELLOW;
+    private final int GIVEN_STATE = Color.RED;
+    private final int REJECTED_STATE = Color.BLACK;
+    private final int PAYING = Color.BLUE;
     private final String ORDER_PREPARED = "PREPARED";
 
     public RecyclerViewAdapterOrdersInPreparing(List<SingleOrder> items, OnFragmentOfProcessingOrdersInteractionListener listener) {
@@ -81,7 +81,7 @@ public class RecyclerViewAdapterOrdersInPreparing
         else if(order.is_prepared)
             iv.setColorFilter(FINISHED_STATE, PorterDuff.Mode.SRC);
         else if(order.is_just_served)
-            iv.setColorFilter(NOT_STARTED, PorterDuff.Mode.SRC);
+            iv.setColorFilter(GIVEN_STATE, PorterDuff.Mode.SRC);
         else if(order.is_rejected_by_kitchen)
             iv.setColorFilter(REJECTED_STATE, PorterDuff.Mode.SRC);
         else if(order.is_paying)

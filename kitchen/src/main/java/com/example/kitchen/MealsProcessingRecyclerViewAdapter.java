@@ -3,7 +3,6 @@ package com.example.kitchen;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,7 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
     private final int NOT_STARTED = Color.GRAY;
     private final int PREPARING_STATE = Color.YELLOW;
     private final int FINISHED_STATE = Color.GREEN;
+    private final int GIVEN_STATE = Color.RED;
 
     public MealsProcessingRecyclerViewAdapter(List<SingleOrder> items, OnListFragmentInteractionListener listener) {
         mOrderList = items;
@@ -97,7 +97,6 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
         SingleOrder singleOrd = getListElement(listPosition);
         singleOrd.timer += val;
         notifyDataSetChanged();
-//        notifyItemChanged(listPosition);
     }
 
     private void bindButtons(final OrderViewHolder holder){
@@ -145,7 +144,6 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
                 SingleOrder singleOrd = getListElement(newPosition);
                 singleOrd.is_preparing = Boolean.TRUE;
                 singleOrd.is_prepared = Boolean.FALSE;
-                //timer start()
                 notifyItemChanged(newPosition);
                 sendInfo(OrderContent.processingOrderList.get(newPosition), START_PREPARING);
             }
@@ -156,9 +154,10 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
             public void onClick(View v) {
                 int newPosition = holder.getAdapterPosition();
                 SingleOrder singleOrd = getListElement(newPosition);
-                singleOrd.is_preparing = Boolean.FALSE;
-                singleOrd.is_prepared = Boolean.TRUE;
-                //timer stop()
+                if(singleOrd.is_preparing) {
+                    singleOrd.is_preparing = Boolean.FALSE;
+                    singleOrd.is_prepared = Boolean.TRUE;
+                }
                 notifyItemChanged(newPosition);
                 sendInfo(OrderContent.processingOrderList.get(newPosition), FINISH_ORDER);
             }

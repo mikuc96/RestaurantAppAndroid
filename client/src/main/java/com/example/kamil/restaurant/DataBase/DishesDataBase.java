@@ -3,6 +3,7 @@ package com.example.kamil.restaurant.DataBase;
 import com.example.kamil.restaurant.R;
 
 public class DishesDataBase {
+    private String id;
     private String name;
     private String price;
     private String description;

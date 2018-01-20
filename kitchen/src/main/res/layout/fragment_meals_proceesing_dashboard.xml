@@ -36,7 +36,7 @@
 
     <CheckBox
         android:id="@+id/start_preparing"
-        android:layout_width="35dp"
+        android:layout_width="50dp"
         android:layout_height="62dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -75,8 +75,8 @@
 
     <Button
         android:id="@+id/reject_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="10dp"
         android:background="@android:drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,8 +86,10 @@
 
     <ImageView
         android:id="@+id/status"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="30dp"
         android:background="@drawable/rounded_corners"
         app:layout_constraintBottom_toBottomOf="parent"
 

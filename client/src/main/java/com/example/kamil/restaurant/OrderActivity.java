@@ -20,6 +20,7 @@ public class OrderActivity extends Activity {
     private ArrayAdapter<String> adapter ;
     TextView tx_price;
     int price=0;
+    ArrayList<DishesDataBase>orderListDish;
     private Button erase_order_btn;
     private Button make_order_btn;
     private final String CLIENT_ID = "123456";
@@ -46,7 +47,7 @@ public class OrderActivity extends Activity {
 
         make_order_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SendInfo();
+                sendInfo();
             }
         });
     }
@@ -54,7 +55,7 @@ public class OrderActivity extends Activity {
     public void setViewOrder()
     {
         order= OrderDataBase.orders.get(0);
-        ArrayList<DishesDataBase>orderListDish=order.getOrder();
+        orderListDish=order.getOrder();
         ArrayList<String> view=new ArrayList<String>();
         for(int i=0;i<orderListDish.size();i++) view.add(orderListDish.get(i).getName());
 
@@ -66,7 +67,7 @@ public class OrderActivity extends Activity {
     }
 
 
-    public void SendInfo()
+    public void sendInfo()
     {
         String orderId = "100";
         SocketCommunication sc=new SocketCommunication();

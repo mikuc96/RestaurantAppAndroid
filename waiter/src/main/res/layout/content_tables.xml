@@ -14,10 +14,10 @@
         android:id="@+id/table_1"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_above="@+id/table_2"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="79dp"
-        android:layout_marginStart="325dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="324dp"
+        android:layout_marginTop="129dp"
         android:background="@drawable/rounded_corners"
         app:srcCompat="@android:color/darker_gray" />
 
@@ -25,21 +25,21 @@
         android:id="@+id/table_2"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/table_1"
-        android:layout_marginBottom="174dp"
-        app:srcCompat="@android:color/darker_gray"
-        android:background="@drawable/rounded_corners"/>
+        android:layout_below="@+id/table_1"
+        android:layout_marginTop="54dp"
+        android:background="@drawable/rounded_corners"
+        app:srcCompat="@android:color/darker_gray" />
 
 
     <ImageView
-    android:id="@+id/table_3"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
-    android:layout_alignTop="@+id/table_1"
-    android:layout_marginStart="47dp"
-    android:layout_toEndOf="@+id/table_1"
-    app:srcCompat="@android:color/darker_gray"
+        android:id="@+id/table_3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignTop="@+id/table_1"
+        android:layout_marginStart="47dp"
+        android:layout_toEndOf="@+id/table_1"
+        app:srcCompat="@android:color/darker_gray"
         android:background="@drawable/rounded_corners"/>
 
     <ImageView
@@ -71,15 +71,93 @@
         app:srcCompat="@android:color/darker_gray"
         android:background="@drawable/rounded_corners"/>
 
-    <Button
-        android:id="@+id/refresh_table_btn"
+    <ImageView
+        android:id="@+id/status"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/table_2"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="42dp"
+        android:background="@drawable/rounded_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/colorAccent" />
+
+    <ImageView
+        android:id="@+id/status2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignStart="@+id/status"
+        android:layout_below="@+id/status"
+        android:layout_marginTop="38dp"
+        android:background="@drawable/rounded_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/colorYellow"
+        />
+
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/table_4"
-        android:layout_marginStart="15dp"
-        android:layout_toEndOf="@+id/table_4"
-        android:background="@drawable/rounded_corners"
-        android:text="Button" />
+        android:layout_alignTop="@+id/status"
+        android:layout_marginStart="51dp"
+        android:layout_toEndOf="@+id/status"
+        android:text="Podano"
+        android:textSize="25dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView"
+        android:layout_alignTop="@+id/status2"
+        android:layout_marginTop="19dp"
+        android:textSize="25dp"
+        android:text="Oczekujący na zamówienie"
+        android:id="@+id/textView2" />
+
+    <ImageView
+        android:id="@+id/status3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignTop="@+id/textView3"
+        android:layout_toStartOf="@+id/table_6"
+        android:background="@drawable/rounded_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/colorGreen"  />
+
+    <ImageView
+        android:id="@+id/status4"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignStart="@+id/status3"
+        android:layout_alignTop="@+id/status2"
+        android:background="@drawable/rounded_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@+id/status3"
+        android:textSize="25dp"
+        android:text="Gotowe do podania" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignStart="@+id/textView3"
+        android:textSize="25dp"
+        android:text="Płatność" />
 
 </RelativeLayout>

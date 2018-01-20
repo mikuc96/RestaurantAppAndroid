@@ -45,7 +45,7 @@ public class OrderContent {
 
     public static void updateTimer(int position){
         SingleOrder el = processingOrderList.get(position);
-        if(el.timer >0)
+        if(el.is_preparing && !el.is_prepared)
             el.timer -= 1;
     }
 

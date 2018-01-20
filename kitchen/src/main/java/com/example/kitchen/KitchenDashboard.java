@@ -56,7 +56,7 @@ public class KitchenDashboard extends AppCompatActivity implements MealsProcessi
             @Override
             public void run() {
                 refreshLists();
-                mRefreshingHandler.postDelayed(this, 5000);
+                mRefreshingHandler.postDelayed(this, 1000);
             }
         };
     }
@@ -115,7 +115,7 @@ public class KitchenDashboard extends AppCompatActivity implements MealsProcessi
     }
 
     private void autoRefresh(){
-        mRefreshingHandler.postDelayed(runner , 5000);
+        mRefreshingHandler.postDelayed(runner , 1000);
     }
 
 }

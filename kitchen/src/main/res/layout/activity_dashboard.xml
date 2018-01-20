@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/refresh_tmp_btn"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/rounded_corners"
-        android:layout_marginLeft="30dp"
+        android:layout_margin="100dp"
         android:layout_marginBottom="30dp"
-        ></FrameLayout>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/rounded_corners"></FrameLayout>
 
 
     <Button
@@ -30,9 +30,99 @@
         android:id="@+id/add_meal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/refresh_tmp_btn"
-        android:background="@drawable/ic_add_circle_black_24dp"
-        />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_add_circle_black_24dp" />
 
+
+    <ImageView
+        android:id="@+id/status"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_above="@+id/status4"
+        android:layout_alignStart="@+id/status2"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/colorYellow"  />
+
+    <ImageView
+        android:id="@+id/status2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignEnd="@+id/add_meal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/colorGreen" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_alignTop="@+id/status"
+        android:layout_marginTop="12dp"
+        android:text="W trakcie przygotowywania"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/status2"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/status2"
+        android:text="Gotowe do podania"
+        android:textSize="25dp" />
+
+
+    <ImageView
+        android:id="@+id/status3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignStart="@+id/elements_in_preparing"
+        android:layout_alignTop="@+id/status"
+        android:layout_marginStart="50dp"
+        android:background="@drawable/rounded_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/colorAccent"
+          />
+
+    <ImageView
+        android:id="@+id/status4"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignStart="@+id/status3"
+        android:layout_alignTop="@+id/status2"
+        android:background="@drawable/rounded_corners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/colorPrimary"  />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@+id/status3"
+        android:textSize="25dp"
+        android:text="Podane" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignStart="@+id/textView3"
+        android:text="Płatność"
+        android:textSize="25dp" />
+    
 </RelativeLayout>

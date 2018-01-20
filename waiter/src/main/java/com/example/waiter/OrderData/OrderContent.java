@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class OrderContent {
 
@@ -16,8 +15,6 @@ public class OrderContent {
     public static List<SingleOrder> processingOrderList = new ArrayList<SingleOrder>();
     public static Map<String, SingleOrder> currentOrderMap = new HashMap<String, SingleOrder>();
     public static Map<String, SingleOrder> processingOrderMap = new HashMap<String, SingleOrder>();
-    static Random tmp_generator = new Random();
-
 
     public static class DatabaseResponse{
         String name;
@@ -52,7 +49,7 @@ public class OrderContent {
     }
     public static void updateTimer(int position){
         SingleOrder el = processingOrderList.get(position);
-        if(el.timer >0)
+        if(el.is_preparing && !el.is_prepared)
             el.timer -= 1;
     }
 

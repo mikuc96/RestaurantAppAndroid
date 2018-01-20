@@ -25,7 +25,6 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     private KitchenSockets kitchenConnection;
     private Handler mRefreshingHandler;
     private Handler mConnectionHandler;
-    private Thread refreshThread;
     Button add_meal_btn;
     Button show_tables_btn;
     Button refreshBtn;
@@ -63,7 +62,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
                 @Override
                 public void run() {
                 refreshRecyclerLists();
-                mRefreshingHandler.postDelayed(this, 5000);
+                mRefreshingHandler.postDelayed(this, 1000);
             }
         };
     }
@@ -105,7 +104,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
 
     @Override
     public void onListFragmentInteraction(OrderContent.SingleOrder item) {
-        refreshRecyclerLists();
+        return ;
     }
 
 
@@ -122,7 +121,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
 
     @Override
     public void onFragmentInteraction(OrderContent.SingleOrder item) {
-        refreshRecyclerLists();
+        return;
     }
 
 
@@ -147,7 +146,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
     }
 
     private void autoRefresh(){
-        mRefreshingHandler.postDelayed(runner , 5000);
+        mRefreshingHandler.postDelayed(runner , 1000);
     }
 
     private void refreshRecyclerLists() {
