@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.kamil.restaurant.DataBase.DishesDataBase;
 import com.example.kamil.restaurant.Dialog.Helper;
 import com.example.kamil.restaurant.Dialog.LoginDialog;
 import com.example.kamil.restaurant.Dialog.RegisterDialog;
@@ -33,8 +34,8 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         btnProfile=(Button)findViewById(R.id.button4);
         btnProfile.setVisibility(View.GONE);
-        // Write a message to the database
         database = FirebaseDatabase.getInstance();
+        DishesDataBase.sentToFirebase();
         userRef = database.getReference("Users");
         menuRef = database.getReference("Menu");
         userRef.addValueEventListener(new ValueEventListener() {
@@ -68,8 +69,6 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void logowanie(View view) {
-//        RatingDialog rd=new RatingDialog();
-//        rd.show(getSupportFragmentManager(),"ds");
         LoginDialog lg=new LoginDialog();
         lg.show(getSupportFragmentManager(),"Login");
     }
