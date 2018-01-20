@@ -48,9 +48,9 @@ public class LoginDialog extends AppCompatDialogFragment {
                     StartActivity.btnProfile.setVisibility(View.VISIBLE);
                     StartActivity.logged=Boolean.TRUE;
 
-                }else Helper.showDialog(builder1,getContext(),"Incorect login or password");
+                }else Helper.showDialog(builder1,getContext(),"Incorect data");
 
-            }else Helper.showDialog(builder1,getContext(),"Incorect login or password");
+            }else Helper.showDialog(builder1,getContext(),"Incorect data");
 
             }
         })

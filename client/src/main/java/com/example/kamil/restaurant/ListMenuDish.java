@@ -22,6 +22,7 @@ public class ListMenuDish extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         String[] names = new String[DishesDataBase.dishes.length];
         for (int i = 0; i < names.length; i++) {
             names[i] = DishesDataBase.dishes[i].getName();
