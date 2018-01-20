@@ -7,15 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 
 public class OrderContent {
 
     public static final List<SingleOrder> processingOrderList = new ArrayList<SingleOrder>();
     public static final Map<String, SingleOrder> processingOrderMap = new HashMap<String, SingleOrder>();
-    static Random tmp_generator = new Random();
-
 
 
     public static class DatabaseResponse{
@@ -23,15 +20,15 @@ public class OrderContent {
         int time;
 
         public DatabaseResponse(DataSnapshot ds){
-            name = ds.child("nazwa").getValue().toString();
-            time = Integer.parseInt(ds.child("czas przygotowywania").getValue().toString());
+            name = ds.child("name").getValue().toString();
+            time = Integer.parseInt(ds.child("time").getValue().toString());
         }
     }
 
-    public static DatabaseResponse getFromDatabase(int order_id) {
-        String orderId = String.valueOf(order_id);
-        if (KitchenDashboard.userSnap.child(orderId).exists()) {
-            DatabaseResponse dr = new DatabaseResponse(KitchenDashboard.userSnap.child(orderId));
+    public static DatabaseResponse getFromDatabase(int meal_id) {
+        String mealId = String.valueOf(meal_id);
+        if (KitchenDashboard.userSnap.child(mealId).exists()) {
+            DatabaseResponse dr = new DatabaseResponse(KitchenDashboard.userSnap.child(mealId));
             return dr;
         }
         return null;
@@ -75,7 +72,7 @@ public class OrderContent {
 
 
         public SingleOrder(int client_id, int order_id, int meal_id, String recipe, int table_id) {
-            DatabaseResponse dr = getFromDatabase(order_id);
+            DatabaseResponse dr = getFromDatabase(meal_id);
             this.order_id = String.valueOf(order_id);
             this.table_id = String.valueOf(table_id);
             this.meal_id = String.valueOf(meal_id);

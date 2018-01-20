@@ -16,20 +16,11 @@ public class OrderContent {
     public static Map<String, SingleOrder> currentOrderMap = new HashMap<String, SingleOrder>();
     public static Map<String, SingleOrder> processingOrderMap = new HashMap<String, SingleOrder>();
 
-    public static class DatabaseResponse{
-        String name;
-        int time;
 
-        public DatabaseResponse(DataSnapshot ds){
-            name = ds.child("nazwa").getValue().toString();
-            time = Integer.parseInt(ds.child("czas przygotowywania").getValue().toString());
-        }
-    }
-
-    public static DatabaseResponse getFromDatabase(int order_id) {
-        String orderId = String.valueOf(order_id);
-        if (WaiterDashboard.menuSnap.child(orderId).exists()) {
-            DatabaseResponse dr = new DatabaseResponse(WaiterDashboard.menuSnap.child(orderId));
+    public static DatabaseResponse getFromDatabase(int meal_id) {
+        String mealId = String.valueOf(meal_id);
+        if (WaiterDashboard.menuSnap.child(mealId).exists()) {
+            DatabaseResponse dr = new DatabaseResponse(WaiterDashboard.menuSnap.child(mealId));
             return dr;
         }
         return null;
@@ -71,9 +62,19 @@ public class OrderContent {
     }
 
 
+    public static class DatabaseResponse{
+        String name;
+        int time;
+
+        public DatabaseResponse(DataSnapshot ds){
+            name = ds.child("name").getValue().toString();
+            time = Integer.parseInt(ds.child("time").getValue().toString());
+        }
+    }
+
     public static class SingleOrder {
         public final String order_id;
-        public String meal_name = "Jeszcze Glupsza Nazwa Potrawy";
+        public String meal_name = "Nazwa Potrawy";
         public String meal_id = "111";
         public String client_id = "111";
         public final String recipe;
@@ -88,7 +89,7 @@ public class OrderContent {
 
 
         public SingleOrder(int client_id, int order_id, int meal_id, String recipe, int table_id) {
-            DatabaseResponse dr = getFromDatabase(order_id);
+            DatabaseResponse dr = getFromDatabase(meal_id);
             this.order_id = String.valueOf(order_id);
             this.table_id = String.valueOf(table_id);
             this.meal_id = String.valueOf(meal_id);

@@ -1,6 +1,8 @@
 package com.example.waiter;
 
 
+import android.util.Log;
+
 import com.example.waiter.OrderData.OrderContent;
 import com.example.waiter.OrderData.OrderContent.SingleOrder;
 
@@ -27,6 +29,7 @@ public class KitchenHandling implements KitchenHandlingInterface {
         int pos = findElementOnList(order);
         OrderContent.processingOrderList.get(pos).is_prepared = true;
         OrderContent.processingOrderList.get(pos).is_preparing = false;
+        OrderContent.processingOrderList.get(pos).timer = 0;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class KitchenHandling implements KitchenHandlingInterface {
                 break;
             i++;
         }
+        Log.d("Position of upgrad el", String.valueOf(i));
         return i;
     }
 }

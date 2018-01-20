@@ -18,7 +18,8 @@ public class Tables extends AppCompatActivity {
     private ImageView table_st[] = new ImageView[6];
     private final int EMPTY = Color.GRAY;
     private final int WAITING_FOR_ORDER = Color.YELLOW;
-    private final int SERVED = Color.GREEN;
+    private final int PREPARED = Color.GREEN;
+    private final int SERVED = Color.RED;
     private final int PAYING = Color.BLUE;
 
     @Override
@@ -50,11 +51,14 @@ public class Tables extends AppCompatActivity {
                 if(so.is_paying){
                     setTableColor(tableId, PAYING);
                 }
-                else if(so.is_preparing){
-                    setTableColor(tableId, WAITING_FOR_ORDER);
-                }
                 else if(so.is_just_served){
                     setTableColor(tableId, SERVED);
+                }
+                else if(so.is_prepared){
+                    setTableColor(tableId, PREPARED);
+                }
+                else if(so.is_preparing){
+                    setTableColor(tableId, WAITING_FOR_ORDER);
                 }
             }
             else{

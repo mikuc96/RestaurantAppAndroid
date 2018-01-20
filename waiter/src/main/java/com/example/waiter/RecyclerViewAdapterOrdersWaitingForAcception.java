@@ -1,7 +1,6 @@
 package com.example.waiter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,9 +79,9 @@ public class RecyclerViewAdapterOrdersWaitingForAcception
 
     private void removeFromList(int position){
         mOrderListToAccept.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mOrderListToAccept.size());
-        notifyDataSetChanged();
+//        notifyItemRemoved(position);
+//        notifyItemRangeChanged(position, mOrderListToAccept.size());
+//        notifyDataSetChanged();
     }
 
 

@@ -9,13 +9,11 @@
 
     <FrameLayout
         android:id="@+id/elements_in_preparing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/refresh_tmp_btn"
-        android:layout_margin="100dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="700dp"
+        android:layout_height="450dp"
+        android:layout_marginBottom="300dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/rounded_corners"></FrameLayout>
 
 
@@ -23,15 +21,20 @@
         android:id="@+id/refresh_tmp_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/ic_refresh_black_24dp" />
 
     <Button
         android:id="@+id/add_meal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/refresh_tmp_btn"
+        android:layout_above="@+id/belka"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
         android:background="@drawable/ic_add_circle_black_24dp" />
 
 
@@ -68,6 +71,7 @@
         android:layout_marginTop="12dp"
         android:text="W trakcie przygotowywania"
         android:textSize="25dp" />
+
 
     <TextView
         android:id="@+id/textView2"
@@ -124,5 +128,16 @@
         android:layout_alignStart="@+id/textView3"
         android:text="Płatność"
         android:textSize="25dp" />
-    
+
+
+    <ImageView
+        android:id="@+id/belka"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_above="@+id/status"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="30dp"
+        app:srcCompat="@android:color/darker_gray" />
+
+
 </RelativeLayout>

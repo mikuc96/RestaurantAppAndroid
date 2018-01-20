@@ -10,14 +10,15 @@
     tools:showIn="@layout/activity_tables">
 
 
+
     <ImageView
         android:id="@+id/table_1"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="324dp"
-        android:layout_marginTop="129dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="61dp"
+        android:layout_toEndOf="@+id/textView"
         android:background="@drawable/rounded_corners"
         app:srcCompat="@android:color/darker_gray" />
 
@@ -77,7 +78,7 @@
         android:layout_height="60dp"
 
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/table_2"
+        android:layout_below="@+id/belka"
         android:layout_marginStart="112dp"
         android:layout_marginTop="42dp"
         android:background="@drawable/rounded_corners"
@@ -159,5 +160,14 @@
         android:layout_alignStart="@+id/textView3"
         android:textSize="25dp"
         android:text="Płatność" />
+
+    <ImageView
+        android:id="@+id/belka"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/table_5"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentStart="true"
+        app:srcCompat="@android:color/darker_gray" />
 
 </RelativeLayout>

@@ -62,7 +62,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
                 @Override
                 public void run() {
                 refreshRecyclerLists();
-                mRefreshingHandler.postDelayed(this, 1000);
+                mRefreshingHandler.postDelayed(this, 5000);
             }
         };
     }
@@ -75,9 +75,9 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
         add_meal_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int i = generator.nextInt(5);
-                int orderId = 100;
-                OrderContent.addSingleOrderToOrderList(i, orderId, i + 100, i % 5);
+                int i = generator.nextInt(100);
+                int orderId = 1;
+                OrderContent.addSingleOrderToOrderList(i, i,orderId, i % 5);
                 refreshRecyclerLists();
             }
         });

@@ -84,9 +84,9 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
 
     private void removeFromList(int position){
         mOrderList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mOrderList.size());
-        notifyDataSetChanged();
+//        notifyItemRemoved(position);
+//        notifyItemRangeChanged(position, mOrderList.size());
+//        notifyDataSetChanged();
     }
 
     private SingleOrder getListElement(Integer listPosition){
@@ -155,8 +155,9 @@ public class MealsProcessingRecyclerViewAdapter extends RecyclerView.Adapter<Mea
                 int newPosition = holder.getAdapterPosition();
                 SingleOrder singleOrd = getListElement(newPosition);
                 if(singleOrd.is_preparing) {
-                    singleOrd.is_preparing = Boolean.FALSE;
-                    singleOrd.is_prepared = Boolean.TRUE;
+                    singleOrd.is_preparing = false;
+                    singleOrd.is_prepared = true;
+                singleOrd.timer = 0;
                 }
                 notifyItemChanged(newPosition);
                 sendInfo(OrderContent.processingOrderList.get(newPosition), FINISH_ORDER);

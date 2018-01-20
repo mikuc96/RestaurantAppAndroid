@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ public class OrdersWaitingForAcceptionFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
-        Log.d("WaitingForAcceptionFr", "new inst");
         return fragment;
     }
 
@@ -52,7 +50,6 @@ public class OrdersWaitingForAcceptionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_orderswaitingforacception_list, container, false);
 
-        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -63,7 +60,6 @@ public class OrdersWaitingForAcceptionFragment extends Fragment {
             }
             recyclerView.setAdapter(new RecyclerViewAdapterOrdersWaitingForAcception(OrderContent.currentOrderList, mListener));
         }
-        Log.d("WaitingFor onCreateView", "ooooo");
         return view;
     }
 
@@ -73,7 +69,6 @@ public class OrdersWaitingForAcceptionFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
-            Log.d("WaitingFor onAttach", "aaaa");
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");

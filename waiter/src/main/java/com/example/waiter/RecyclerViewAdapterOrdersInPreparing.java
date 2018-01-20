@@ -4,10 +4,12 @@ package com.example.waiter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +46,7 @@ public class RecyclerViewAdapterOrdersInPreparing
 
     @Override
     public void onBindViewHolder(final ViewHolderInProcessing holder, int position) {
+        Log.d("on bind -----------",String.valueOf(position));
         holder.mItem = mOrderListInPreparing.get(position);
         holder.mMealNameView.setText(String.valueOf(mOrderListInPreparing.get(position).meal_name));
         OrderContent.updateTimer(position);
@@ -69,8 +72,19 @@ public class RecyclerViewAdapterOrdersInPreparing
                     SendOrderFinished(newPosition);
                     mOrderListInPreparing.get(newPosition).is_just_served = true;
                     mOrderListInPreparing.get(newPosition).is_prepared = false;
-                    notifyItemChanged(newPosition);
+//                    notifyItemChanged(newPosition);
                 }
+            }
+        });
+
+        holder.hideFinishedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                mOrderListInPreparing.remove(position);
+//                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position, mOrderListInPreparing.size());
+//                notifyDataSetChanged();
             }
         });
     }
@@ -113,6 +127,7 @@ public class RecyclerViewAdapterOrdersInPreparing
         public final View mView;
         public final TextView mMealNameView;
         public final TextView mTableIdView;
+        public ImageButton hideFinishedBtn;
         public TextView mTimerView;
         public SingleOrder mItem;
         public ImageView mImageView;
@@ -126,6 +141,7 @@ public class RecyclerViewAdapterOrdersInPreparing
             mTableIdView = (TextView) view.findViewById(R.id.table_id);
             mImageView = (ImageView) view.findViewById(R.id.status);
             mGivenToClient= (CheckBox) view.findViewById(R.id.given_to_client);
+            hideFinishedBtn = (ImageButton) view.findViewById(R.id.hide_prepared);
         }
 
         @Override

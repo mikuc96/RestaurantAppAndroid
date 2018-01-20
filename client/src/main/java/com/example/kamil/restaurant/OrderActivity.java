@@ -13,6 +13,7 @@ import com.example.kamil.restaurant.DataBase.DishesDataBase;
 import com.example.kamil.restaurant.DataBase.OrderDataBase;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class OrderActivity extends Activity {
     private final String MAKE_ORDER = "ORDER";
@@ -69,7 +70,8 @@ public class OrderActivity extends Activity {
 
     public void sendInfo()
     {
-        String orderId = "100";
+        String mealId = "100";
+        String orderId = String.valueOf(new Random().nextInt());
         SocketCommunication sc=new SocketCommunication();
         sc.modifyOrder(CLIENT_ID, orderId, mealId, tableId, MAKE_ORDER);
 

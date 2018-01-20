@@ -84,7 +84,7 @@ public class WaiterSockets {
         Thread m_objThread = new Thread(new Runnable() {
             public void run() {
                 try {
-                    waiterSocket = new Socket("127.0.0.2", 2003); // czy ip ok?
+                    waiterSocket = new Socket("127.0.0.2", 2003);
                     ObjectOutputStream oos = new ObjectOutputStream(waiterSocket.getOutputStream());
                     oos.writeObject(msg);
                     sleep(1000);

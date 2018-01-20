@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/table_id_text"
         android:layout_below="@+id/table_id"
-        android:text="Zaserwowane"
+        android:text="Zaserwowane:"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <CheckBox
@@ -68,4 +68,15 @@
         android:layout_alignBaseline="@+id/is_served"
         android:layout_alignBottom="@+id/is_served"
         android:layout_toEndOf="@+id/is_served" />
+
+    <ImageButton
+        android:id="@+id/hide_prepared"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBottom="@+id/is_served"
+        android:layout_toEndOf="@+id/given_to_client"
+        app:srcCompat="@android:drawable/ic_delete" />
+
 </RelativeLayout>

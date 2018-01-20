@@ -36,18 +36,19 @@
 
     <CheckBox
         android:id="@+id/start_preparing"
-        android:layout_width="50dp"
-        android:layout_height="62dp"
+        android:layout_width="51dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/finish_preparing"
         app:layout_constraintStart_toEndOf="@+id/meal_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.493" />
 
     <CheckBox
         android:id="@+id/finish_preparing"
         android:layout_width="33dp"
-        android:layout_height="60dp"
+        android:layout_height="43dp"
         android:layout_marginEnd="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/more_btn"
@@ -57,7 +58,7 @@
     <Button
         android:id="@+id/more_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
         android:layout_marginEnd="43dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/ic_keyboard_arrow_up_black_24dp"
@@ -68,7 +69,8 @@
     <Button
         android:id="@+id/less_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/more_btn" />
@@ -100,43 +102,34 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="71dp"
-        android:layout_height="17dp"
-        android:text="Rozpocznij"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="36dp"
+        android:text="Start"
+        app:layout_constraintBottom_toTopOf="@+id/start_preparing"
+        app:layout_constraintEnd_toStartOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="40dp"
         android:text="Gotowe"
-        tools:layout_editor_absoluteX="179dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintBottom_toTopOf="@+id/finish_preparing"
+        app:layout_constraintEnd_toStartOf="@+id/more_btn" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Opóźnij"
-        tools:layout_editor_absoluteX="292dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:text="Czas:   5 min"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/less_btn"
+        app:layout_constraintStart_toEndOf="@+id/more_btn"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="44dp"
-        android:layout_height="20dp"
-        android:text="5 min"
-        tools:layout_editor_absoluteX="360dp"
-        tools:layout_editor_absoluteY="46dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Anuluj"
-        tools:layout_editor_absoluteX="425dp"
-        tools:layout_editor_absoluteY="0dp" />
 
 
 </android.support.constraint.ConstraintLayout>
