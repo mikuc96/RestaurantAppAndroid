@@ -2,6 +2,7 @@ package com.example.kamil.restaurant;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +28,8 @@ public class OrderActivity extends Activity {
     private final String CLIENT_ID = "123456";
     private String mealId = "100";
     private String tableId = "2";
+    Handler mConnectionHandler;
+    SocketCommunication clientConnection;
 
     private OrderDataBase order;
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class OrderActivity extends Activity {
         list = (ListView) findViewById(R.id.listView1);
         erase_order_btn =(Button)findViewById(R.id.but_del_order);
         make_order_btn=(Button)findViewById(R.id.make_order_btn);
+        mConnectionHandler = new Handler();
         setViewOrder();
         erase_order_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -51,6 +55,7 @@ public class OrderActivity extends Activity {
                 sendInfo();
             }
         });
+        waitForOrder();
     }
 
     public void setViewOrder()
@@ -81,4 +86,17 @@ public class OrderActivity extends Activity {
         }
         Toast.makeText(getApplicationContext(),"Zamówienie zostało wysłane, czas oczekiwania około 20min", Toast.LENGTH_SHORT).show();
     }
+
+    public void waitForOrder()
+    {
+        final WaiterHandling waiterCom = new WaiterHandling(OrderActivity.this);
+        mConnectionHandler.post(new Runnable() {
+            @Override
+            public void run() {
+            clientConnection = new SocketCommunication();
+            clientConnection.setEventListener(waiterCom);
+            clientConnection.startListeningWaiter();
+            }
+        });
+}
 }

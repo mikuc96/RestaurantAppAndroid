@@ -62,7 +62,7 @@ public class WaiterDashboard extends AppCompatActivity implements OrdersWaitingF
                 @Override
                 public void run() {
                 refreshRecyclerLists();
-                mRefreshingHandler.postDelayed(this, 5000);
+                mRefreshingHandler.postDelayed(this, 2000);
             }
         };
     }

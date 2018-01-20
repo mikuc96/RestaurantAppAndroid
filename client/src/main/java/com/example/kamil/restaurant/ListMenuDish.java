@@ -1,6 +1,5 @@
 package com.example.kamil.restaurant;
 
-import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;

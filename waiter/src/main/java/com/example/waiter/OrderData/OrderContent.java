@@ -68,7 +68,8 @@ public class OrderContent {
 
         public DatabaseResponse(DataSnapshot ds){
             name = ds.child("name").getValue().toString();
-            time = Integer.parseInt(ds.child("time").getValue().toString());
+//            time = Integer.parseInt(ds.child("time").getValue().toString());
+            time = 1000;
         }
     }
 
