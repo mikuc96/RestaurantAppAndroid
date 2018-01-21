@@ -8,15 +8,15 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Witaj"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
         android:background="@drawable/rounded_croners"
-        android:textSize="25sp"
-        android:textAlignment="center"
         android:padding="5dp"
-        android:layout_gravity="center"/>
+        android:text="Witaj"
+        android:textAlignment="center"
+        android:textSize="25sp" />
     <TextView
         android:id="@+id/name_profile"
         android:layout_width="wrap_content"
@@ -26,6 +26,17 @@
         android:padding="5dp"
         android:layout_gravity="center"/>
 
+
+    <TextView
+        android:textAlignment="center"
+        android:id="@+id/editText"
+        android:textSize="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Twoja Zniżka: - 0%" />
+
     <Button
         android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
@@ -33,6 +44,8 @@
         android:text="Logout"
         android:layout_gravity="center"
         android:layout_marginTop="350dp"/>
+
+
 
 
 </LinearLayout>
