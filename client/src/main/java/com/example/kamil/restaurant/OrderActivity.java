@@ -79,12 +79,19 @@ public class OrderActivity extends Activity {
         String orderId = String.valueOf(new Random().nextInt());
         SocketCommunication sc=new SocketCommunication();
         ArrayList<DishesDataBase> temp= order.getOrder();
+
         for(DishesDataBase i:temp)
         {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             sc.modifyOrder(CLIENT_ID, orderId, i.getId(), tableId, MAKE_ORDER);
 
         }
         Toast.makeText(getApplicationContext(),"Zamówienie zostało wysłane, czas oczekiwania około 20min", Toast.LENGTH_SHORT).show();
+
     }
 
     public void waitForOrder()
