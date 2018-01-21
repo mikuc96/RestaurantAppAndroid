@@ -29,7 +29,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
         android:layout_toEndOf="@+id/timer"
-        android:text="Nr stolika:"
+        android:text="        "
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView

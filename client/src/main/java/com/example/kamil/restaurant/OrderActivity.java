@@ -18,15 +18,19 @@ import java.util.Random;
 
 public class OrderActivity extends Activity {
     private final String MAKE_ORDER = "ORDER";
+    private final String PAY = "PAY";
     private ListView list ;
     private ArrayAdapter<String> adapter ;
     TextView tx_price;
     int price=0;
+    String orderId = "1";
+
     ArrayList<DishesDataBase>orderListDish;
     private Button erase_order_btn;
     private Button make_order_btn;
+    private Button pay_btn;
     private final String CLIENT_ID = "123456";
-    private String mealId = "100";
+    private String mealId = "1";
     private String tableId = "2";
     Handler mConnectionHandler;
     SocketCommunication clientConnection;
@@ -39,6 +43,7 @@ public class OrderActivity extends Activity {
         list = (ListView) findViewById(R.id.listView1);
         erase_order_btn =(Button)findViewById(R.id.but_del_order);
         make_order_btn=(Button)findViewById(R.id.make_order_btn);
+        pay_btn=(Button)findViewById(R.id.pay_btn);
         mConnectionHandler = new Handler();
         setViewOrder();
         erase_order_btn.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +51,15 @@ public class OrderActivity extends Activity {
                 OrderDataBase.orders.get(0).eraseOrderList();
                 price=0;
                 Toast.makeText(getApplicationContext(),"Lista dań została skasowana", Toast.LENGTH_SHORT).show();
+                setViewOrder();
+            }
+        });
+
+        pay_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SocketCommunication sc=new SocketCommunication();
+                sc.modifyOrder(CLIENT_ID, orderId, mealId, tableId, PAY);
+                Toast.makeText(getApplicationContext(),"Powiadomiono kelnera o chęci zapłaty", Toast.LENGTH_SHORT).show();
                 setViewOrder();
             }
         });
@@ -76,7 +90,7 @@ public class OrderActivity extends Activity {
     public void sendInfo()
     {
         String mealId = "100";
-        String orderId = String.valueOf(new Random().nextInt());
+        orderId = String.valueOf(new Random().nextInt());
         SocketCommunication sc=new SocketCommunication();
         ArrayList<DishesDataBase> temp= order.getOrder();
 

@@ -90,16 +90,16 @@ public class RecyclerViewAdapterOrdersInPreparing
     }
 
     private void updateOrderStatusImg(ImageView iv, SingleOrder order){
-        if(order.is_preparing)
-            iv.setColorFilter(PREPARING_STATE, PorterDuff.Mode.SRC);
-        else if(order.is_prepared)
-            iv.setColorFilter(FINISHED_STATE, PorterDuff.Mode.SRC);
+        if(order.is_paying)
+            iv.setColorFilter(PAYING, PorterDuff.Mode.SRC);
         else if(order.is_just_served)
             iv.setColorFilter(GIVEN_STATE, PorterDuff.Mode.SRC);
+        else if(order.is_prepared)
+            iv.setColorFilter(FINISHED_STATE, PorterDuff.Mode.SRC);
+        else if(order.is_preparing)
+            iv.setColorFilter(PREPARING_STATE, PorterDuff.Mode.SRC);
         else if(order.is_rejected_by_kitchen)
             iv.setColorFilter(REJECTED_STATE, PorterDuff.Mode.SRC);
-        else if(order.is_paying)
-            iv.setColorFilter(PAYING, PorterDuff.Mode.SRC);
         else{
             iv.setColorFilter(NOT_STARTED, PorterDuff.Mode.SRC);
         }

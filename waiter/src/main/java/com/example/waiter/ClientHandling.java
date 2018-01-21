@@ -2,7 +2,9 @@ package com.example.waiter;
 
 
 import android.util.Log;
+
 import com.example.waiter.OrderData.OrderContent;
+
 import static java.lang.Thread.sleep;
 
 public class ClientHandling implements ClientHandlingInterface {
@@ -16,10 +18,7 @@ public class ClientHandling implements ClientHandlingInterface {
             e.printStackTrace();
         }
 
-        Log.d("WWWWWWWWWW","wwwwwwww");
         OrderContent.addSingleOrderToOrderList(order[0], order[1], order[2], order[3]);
-//        tmpReport("Took order " + String.valueOf(order[2]));
-//        clientComm.sendNotificationToClient("Took order " + mealId);
         return 0;
     }
 
@@ -37,19 +36,27 @@ public class ClientHandling implements ClientHandlingInterface {
             e.printStackTrace();
         }
         tmpReport("Progress: ##% for order: " + String.valueOf(order[2]));
-//        clientComm.sendNotificationToClient("Progress: ##% for order: " + mealId);
         return 0;
     }
 
     @Override
     public int showPaymentNotification(Integer[] order) {
         tmpReport("Client want to pay: " + String.valueOf(order[2]));
+        for(OrderContent.SingleOrder so: OrderContent.processingOrderList){
+            if(so.is_just_served || so.is_prepared) {
+                so.is_paying = true;
+                so.is_just_served = false;
+                so.is_prepared = false;
+                so.is_preparing = false;
+                break;
+            }
+        }
         return 0;
     }
 
 
     private void tmpReport(String info) {
-//        Toast.makeText(getApplicationContext(),	"Waiter: " + info, Toast.LENGTH_SHORT).show();
         Log.d("take order ", info);
     }
+
 }
