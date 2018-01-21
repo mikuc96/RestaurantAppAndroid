@@ -12,11 +12,11 @@ import android.widget.ListView;
 import com.example.kamil.restaurant.DataBase.DishesDataBase;
 
 public class ListMenuDish extends ListFragment {
-    static interface WorkoutListListener {
+    static interface DishListListener {
         void itemClicked(long id);
     };
     
-    private WorkoutListListener listener;
+    private DishListListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,14 +32,13 @@ public class ListMenuDish extends ListFragment {
                                                                 android.R.layout.simple_list_item_1,
                                                                 names);
         setListAdapter(adapter);
-        
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
-        this.listener = (WorkoutListListener)activity;
+        this.listener = (DishListListener)activity;
     }
 
     @Override

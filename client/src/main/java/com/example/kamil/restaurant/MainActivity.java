@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends Activity implements ListMenuDish.WorkoutListListener {
+public class MainActivity extends Activity implements ListMenuDish.DishListListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        itemClicked(0);
     }
 
     @Override

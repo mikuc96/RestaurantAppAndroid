@@ -18,7 +18,7 @@ import com.example.kamil.restaurant.Dialog.RatingDialog;
 
 
 public class DetailDish extends Fragment {
-    public static long  dishId;
+    public static long  dishId=0;
     OrderSent os=new OrderSent();
     Button btnRate;
     @Override
