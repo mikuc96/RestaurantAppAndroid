@@ -34,8 +34,8 @@ public class LoginDialog extends AppCompatDialogFragment {
         password = (TextView) view.findViewById(R.id.login_password);
         ad
         .setView(view)
-        .setTitle("Login")
-        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+        .setTitle("Zaloguj")
+        .setPositiveButton("Zaloguj", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
             if(StartActivity.userSnap.child(email.getText().toString()).exists() && checkNotNull(email,password) )
@@ -43,18 +43,18 @@ public class LoginDialog extends AppCompatDialogFragment {
                 if(StartActivity.userSnap.child(email.getText().toString()).child("password").getValue()
                         .equals(password.getText().toString()))
                 {
-                    Helper.showDialog(builder1,getContext(),"Login ok!");
+                    Helper.showDialog(builder1,getContext(),"Zalogowanie przebiegło pomyślnie!");
                     StartActivity.who=StartActivity.userSnap.child(email.getText().toString()).child("name").getValue().toString();
                     StartActivity.btnProfile.setVisibility(View.VISIBLE);
                     StartActivity.logged=Boolean.TRUE;
 
-                }else Helper.showDialog(builder1,getContext(),"Incorect data");
+                }else Helper.showDialog(builder1,getContext(),"Nieprawidłowe dane");
 
-            }else Helper.showDialog(builder1,getContext(),"Incorect data");
+            }else Helper.showDialog(builder1,getContext(),"Nieprawidłowe dane");
 
             }
         })
-        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+        .setNegativeButton("Wyjdź", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             }
         });

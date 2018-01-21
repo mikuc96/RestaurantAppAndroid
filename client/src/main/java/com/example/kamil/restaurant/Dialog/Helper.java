@@ -12,7 +12,7 @@ public class Helper {
     private AlertDialog.Builder builder1;
     public static void showDialog(AlertDialog.Builder builder1, Context cnx, String msg) {
 
-        builder1.setTitle("Info");
+        builder1.setTitle("Informacja");
         builder1.setMessage(msg);
         builder1.setCancelable(true);
         builder1.setPositiveButton(android.R.string.ok,

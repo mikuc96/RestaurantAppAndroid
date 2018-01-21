@@ -32,22 +32,22 @@ public class RegisterDialog extends AppCompatDialogFragment {
         LayoutInflater li=getActivity().getLayoutInflater();
         View view=li.inflate(R.layout.activity_register, null);
         ad.setView(view);
-        ad.setTitle("Register");
-        ad.setPositiveButton("Register", new DialogInterface.OnClickListener() {
+        ad.setTitle("Zarejestruj");
+        ad.setPositiveButton("Zarejestruj", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 if(StartActivity.userSnap.child(email.getText().toString()).exists())
                 {
-                    Helper.showDialog(builder1,getContext(),"Your exist in database, please login!");
+                    Helper.showDialog(builder1,getContext(),"Istniejesz w bazie danych, zaloguj się!");
                 }else{
                     us=new UserDataBase(name.getText().toString(),email.getText().toString(),password.getText().toString());
                     StartActivity.userRef.child(email.getText().toString()).setValue(us);
-                    Helper.showDialog(builder1,getContext(),"Your registration was succesful!");
+                    Helper.showDialog(builder1,getContext(),"Rejestracja przebiegła pomyślnie!");
                 }
             }
         });
-        ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        ad.setNegativeButton("Wyjdź", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
